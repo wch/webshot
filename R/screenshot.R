@@ -1,3 +1,18 @@
+#' Take a screenshot of a URL
+#'
+#' @param url A URL to visit.
+#' @param file Name of output file. Should end with \code{.png}.
+#' @param vwidth Viewport width. This is the width of the browser "window".
+#' @param vheight Viewport height This is the height of the browser "window".
+#' @param cliprect Clipping rectangle. If unspecified, the clipping rectangle
+#'   matches the viewport size. Otherwise, it should be a four-element numeric
+#'   vector specifying the top, left, width, and height. This option is not
+#'   compatible with \code{selector}.
+#' @param selector A CSS selector specifying a DOM element to set the clipping
+#'   rectangle to. A screenshot of just this DOM element will be taken. If the
+#'   selector has more than one match, only the first one will be used. This
+#'   option is not compatible with \code{cliprect}.
+#'
 #' @export
 app_shot <- function(
   url = NULL,
