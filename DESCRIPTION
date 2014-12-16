@@ -1,8 +1,8 @@
-Package: appshot
-Title: Takes screenshots of Shiny apps
+Package: webshot
+Title: Takes screenshots of web pages, including Shiny apps
 Version: 0.1
 Authors@R: "Winston Chang <winston@rstudio.com> [aut, cre]"
-Description: Takes screenshots of Shiny applications.
+Description: Takes screenshots of web pages, including Shiny applications.
 Depends:
     R (>= 3.0)
 License: What license is it under?

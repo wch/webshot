@@ -14,14 +14,14 @@
 #'   option is not compatible with \code{cliprect}.
 #'
 #' @examples
-#' url_shot("http://www.rstudio.com/", "rstudio-header.png", selector = "#header")
-#' url_shot("https://github.com/rstudio/shiny/", "shiny-stats.png",
+#' web_shot("http://www.rstudio.com/", "rstudio-header.png", selector = "#header")
+#' web_shot("https://github.com/rstudio/shiny/", "shiny-stats.png",
 #'          selector = "ul.numbers-summary")
 #'
 #' @export
-url_shot <- function(
+web_shot <- function(
   url = NULL,
-  file = "appshot.png",
+  file = "webshot.png",
   vwidth = 920,
   vheight = 600,
   cliprect = NULL,
@@ -41,7 +41,7 @@ url_shot <- function(
   }
 
   args <- dropNulls(list(
-    system.file("screenshot.js", package = "appshot"),
+    system.file("screenshot.js", package = "webshot"),
     url,
     file,
     paste0("--vwidth=", vwidth),
