@@ -16,7 +16,7 @@
 #' @export
 app_shot <- function(
   url = NULL,
-  file = "screenshot.png",
+  file = "appshot.png",
   vwidth = 800,
   vheight = 600,
   cliprect = NULL,
