@@ -23,6 +23,7 @@ appshot.shiny.appobj <- function(app, file,..., port = 9000) {
 #' @export
 appshot.character <- function(app, file,..., port = 9000) {
   pidfile <- tempfile("pid")
+  on.exit(unlink(pidfile))
   cmd <- sprintf(
     "'cat(Sys.getpid(), file=\"%s\"); library(shiny); runApp(\"%s\", port=%d)'",
     pidfile,
