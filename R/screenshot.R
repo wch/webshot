@@ -22,7 +22,7 @@
 url_shot <- function(
   url = NULL,
   file = "appshot.png",
-  vwidth = 800,
+  vwidth = 920,
   vheight = 600,
   cliprect = NULL,
   selector = NULL,
@@ -36,7 +36,7 @@ url_shot <- function(
   if (!is.null(cliprect) && !is.null(selector)) {
     stop("Can't specify both cliprect and selector.")
 
-  } else if (is.null(cliprect)) {
+  } else if (is.null(cliprect) && is.null(selector)) {
     cliprect <- c(0, 0, vwidth, vheight)
   }
 

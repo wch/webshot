@@ -10,11 +10,19 @@ exports.parseArgs = function(args) {
     arg = arg.split("=", limit=2);
     // console.log(arg)
     opts[arg[0]] = arg[1];
-  })
+  });
 
   return opts;
 };
 
+// Merge properties from object b into object a
+exports.merge = function(a, b) {
+  var c = {};
+  for (var i in b) {
+    a[i] = b[i];
+  }
+  return a;
+};
 
 // Exit on error, instead of just hanging
 phantom.onError = function(msg, trace) {

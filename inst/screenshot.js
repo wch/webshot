@@ -4,8 +4,15 @@
 // phantomjs screenshot.js <url> <filename> [options]
 
 var utils = require('./utils');
-
 var system = require('system');
+
+var opt_defaults = {
+  delay: 200
+};
+
+// =====================================================================
+// Command line arguments
+// =====================================================================
 var args = system.args;
 
 if (args.length < 3) {
@@ -16,7 +23,17 @@ if (args.length < 3) {
 var url = args[1];
 var filename = args[2];
 var opts = utils.parseArgs(args.slice(3));
+opts = utils.merge(opt_defaults, opts);
 
+// This should be four numbers separated by ","
+if (opts.cliprect) {
+  opts.cliprect = opts.cliprect.split(",");
+}
+
+
+// =====================================================================
+// Screenshot
+// =====================================================================
 var page = require('webpage').create();
 
 page.viewportSize = {
@@ -27,16 +44,20 @@ page.viewportSize = {
 page.open(url, function() {
   // Delay 200ms before taking screenshot
   window.setTimeout(function () {
-    page.clipRect = findClipRect(opts);
+    page.clipRect = findClipRect(opts, page);
     page.render(filename);
     phantom.exit();
-  }, 200);
+  }, opts.delay);
 });
 
 
+// =====================================================================
+// Utility functions
+// =====================================================================
+
 // Given the options object, return an object representing the clipping
 // rectangle.
-function findClipRect(opts) {
+function findClipRect(opts, page) {
   if (opts.cliprect) {
     return {
       top:    opts.cliprect[0],
@@ -45,7 +66,10 @@ function findClipRect(opts) {
       height: opts.cliprect[3]
     };
   } else if (opts.selector) {
-    var cr = document.querySelector(opts.selector).getBoundingClientRect();
+    var cr = page.evaluate(function (s) {
+      return document.querySelector(s).getBoundingClientRect();
+    }, opts.selector);
+
     return {
       top:    cr.top,
       left:   cr.left,
