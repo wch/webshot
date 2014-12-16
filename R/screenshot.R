@@ -13,8 +13,13 @@
 #'   selector has more than one match, only the first one will be used. This
 #'   option is not compatible with \code{cliprect}.
 #'
+#' @examples
+#' url_shot("http://www.rstudio.com/", "rstudio-header.png", selector = "#header")
+#' url_shot("https://github.com/rstudio/shiny/", "shiny-stats.png",
+#'          selector = "ul.numbers-summary")
+#'
 #' @export
-app_shot <- function(
+url_shot <- function(
   url = NULL,
   file = "appshot.png",
   vwidth = 800,
