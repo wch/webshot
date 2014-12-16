@@ -4,7 +4,7 @@
 \title{Take a screenshot of a URL}
 \usage{
 web_shot(url = NULL, file = "webshot.png", vwidth = 920, vheight = 600,
-  cliprect = NULL, selector = NULL, port = NULL)
+  cliprect = NULL, selector = NULL)
 }
 \arguments{
 \item{url}{A URL to visit.}
@@ -29,8 +29,13 @@ compatible with \code{selector}.}
 Take a screenshot of a URL
 }
 \examples{
+\donttest{
 web_shot("http://www.rstudio.com/", "rstudio-header.png", selector = "#header")
 web_shot("https://github.com/rstudio/shiny/", "shiny-stats.png",
          selector = "ul.numbers-summary")
+}
+}
+\seealso{
+\code{\link{web_shot}} for taking screenshots of Shiny applications.
 }
 

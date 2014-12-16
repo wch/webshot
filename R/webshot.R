@@ -14,10 +14,13 @@
 #'   option is not compatible with \code{cliprect}.
 #'
 #' @examples
+#' \donttest{
 #' web_shot("http://www.rstudio.com/", "rstudio-header.png", selector = "#header")
 #' web_shot("https://github.com/rstudio/shiny/", "shiny-stats.png",
 #'          selector = "ul.numbers-summary")
+#' }
 #'
+#' @seealso \code{\link{web_shot}} for taking screenshots of Shiny applications.
 #' @export
 web_shot <- function(
   url = NULL,
@@ -25,8 +28,7 @@ web_shot <- function(
   vwidth = 920,
   vheight = 600,
   cliprect = NULL,
-  selector = NULL,
-  port = NULL
+  selector = NULL
 ) {
 
   if (is.null(url)) {
