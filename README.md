@@ -33,3 +33,11 @@ You can also get screenshots of a portion of a web page using CSS selectors. If 
 ```R
 webshot("http://www.rstudio.com/", "rstudio-header.png", selector = "#header")
 ```
+
+The `appshot()` function will run a Shiny app locally in a separate R process, and take a screenshot of it. After taking the screenshot, it will kill the R process that is running the Shiny app.
+
+```R
+# Get the directory of one of the Shiny examples
+appdir <- system.file("examples", "01_hello", package="shiny")
+appshot(appdir, "01_hello.png")
+```
