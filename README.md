@@ -6,7 +6,7 @@ webshot
 
 ## Installation
 
-It requires an external installation of the external program [PhantomJS](http://phantomjs.org/). Once that's installed you can install webshot with:
+It requires an installation of the external program [PhantomJS](http://phantomjs.org/). Once that's installed you can install webshot with:
 
 ```R
 devtools::install_github("wch/webshot")
