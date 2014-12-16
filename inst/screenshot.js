@@ -42,10 +42,11 @@ page.viewportSize = {
 };
 
 page.open(url, function() {
-  // Delay 200ms before taking screenshot
+  // Delay before taking screenshot
   window.setTimeout(function () {
     page.clipRect = findClipRect(opts, page);
     page.render(filename);
+    console.log("Wrote " + filename);
     phantom.exit();
   }, opts.delay);
 });
