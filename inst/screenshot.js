@@ -7,7 +7,7 @@ var utils = require('./utils');
 var system = require('system');
 
 var opt_defaults = {
-  delay: 200
+  delay: 0.2
 };
 
 // =====================================================================
@@ -53,7 +53,7 @@ page.open(url, function() {
     page.render(filename);
     console.log("Wrote " + filename);
     phantom.exit();
-  }, opts.delay);
+  }, opts.delay * 1000);
 });
 
 

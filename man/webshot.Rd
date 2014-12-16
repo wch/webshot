@@ -4,7 +4,7 @@
 \title{Take a screenshot of a URL}
 \usage{
 webshot(url = NULL, file = "webshot.png", vwidth = 920, vheight = 600,
-  cliprect = NULL, selector = NULL, delay = 200)
+  cliprect = NULL, selector = NULL, delay = 0.2)
 }
 \arguments{
 \item{url}{A URL to visit.}
@@ -23,9 +23,12 @@ vector specifying the top, left, width, and height. This option is not
 compatible with \code{selector}.}
 
 \item{selector}{A CSS selector specifying a DOM element to set the clipping
-  rectangle to. A screenshot of just this DOM element will be taken. If the
-  selector has more than one match, only the first one will be used. This
-  option is not compatible with \code{cliprect}.}
+rectangle to. A screenshot of just this DOM element will be taken. If the
+selector has more than one match, only the first one will be used. This
+option is not compatible with \code{cliprect}.}
+
+\item{delay}{Time to wait before taking screenshot, in seconds. Sometimes a
+  longer delay is needed for all assets to display properly.}
 }
 \description{
 Take a screenshot of a URL
