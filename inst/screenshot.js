@@ -44,7 +44,12 @@ page.viewportSize = {
 page.open(url, function() {
   // Delay before taking screenshot
   window.setTimeout(function () {
-    page.clipRect = findClipRect(opts, page);
+
+    var cr = findClipRect(opts, page);
+    if (cr) {
+      page.clipRect = cr;
+    }
+
     page.render(filename);
     console.log("Wrote " + filename);
     phantom.exit();
@@ -57,7 +62,8 @@ page.open(url, function() {
 // =====================================================================
 
 // Given the options object, return an object representing the clipping
-// rectangle.
+// rectangle. If opts.cliprect and opts.selector are both not present,
+// return null.
 function findClipRect(opts, page) {
   if (opts.cliprect) {
     return {
@@ -78,11 +84,6 @@ function findClipRect(opts, page) {
       height: cr.height
     };
   } else {
-    return {
-      top:    0,
-      left:   0,
-      width:  opts.vwidth,
-      height: opts.vheight
-    };
+    return null;
   }
 }
