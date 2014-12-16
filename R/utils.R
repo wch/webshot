@@ -1,7 +1,7 @@
 phantom_run <- function(args, wait = TRUE) {
   phantom_bin <- Sys.which("phantomjs")
   if (phantom_bin == "")
-    exit("phantomjs not found in path. phantomjs must be installed and in path.")
+    stop("phantomjs not found in path. phantomjs must be installed and in path.")
 
   # Make sure args is a char vector
   args <- as.character(args)
