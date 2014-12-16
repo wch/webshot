@@ -1,27 +1,27 @@
 #' Take a screenshot of a Shiny app
 #'
-#' @inheritParams web_shot
+#' @inheritParams webshot
 #' @param app A Shiny app object, or a string naming an app directory.
 #' @param port Port that Shiny will listen on.
-#' @param ... Other arguments to pass on to \code{\link{web_shot}}.
+#' @param ... Other arguments to pass on to \code{\link{webshot}}.
 #'
 #' @examples
 #' \donttest{
 #' appdir <- system.file("examples", "01_hello", package="shiny")
-#' app_shot(appdir, "01_hello.png")
+#' appshot(appdir, "01_hello.png")
 #' }
 #'
 #' @export
-app_shot <- function(app, file, ..., port = 9000) UseMethod("app_shot")
+appshot <- function(app, file, ..., port = 9000) UseMethod("appshot")
 
 #' @export
-app_shot.shiny.appobj <- function(app, file,..., port = 9000) {
-  stop("app_shot of Shiny app objects is not yet supported.")
+appshot.shiny.appobj <- function(app, file,..., port = 9000) {
+  stop("appshot of Shiny app objects is not yet supported.")
   # This would require running the app object in this R process
 }
 
 #' @export
-app_shot.character <- function(app, file,..., port = 9000) {
+appshot.character <- function(app, file,..., port = 9000) {
   pidfile <- tempfile("pid")
   cmd <- sprintf(
     "'cat(Sys.getpid(), file=\"%s\"); library(shiny); runApp(\"%s\", port=%d)'",
@@ -36,7 +36,7 @@ app_shot.character <- function(app, file,..., port = 9000) {
   # Wait for app to start
   Sys.sleep(0.5)
 
-  web_shot(sprintf("http://127.0.0.1:%d/", port), file = file, ...)
+  webshot(sprintf("http://127.0.0.1:%d/", port), file = file, ...)
 
   # Kill app
   pid <- readLines(pidfile, warn = FALSE)

@@ -15,14 +15,14 @@
 #'
 #' @examples
 #' \donttest{
-#' web_shot("http://www.rstudio.com/", "rstudio-header.png", selector = "#header")
-#' web_shot("https://github.com/rstudio/shiny/", "shiny-stats.png",
+#' webshot("http://www.rstudio.com/", "rstudio-header.png", selector = "#header")
+#' webshot("https://github.com/rstudio/shiny/", "shiny-stats.png",
 #'          selector = "ul.numbers-summary")
 #' }
 #'
-#' @seealso \code{\link{web_shot}} for taking screenshots of Shiny applications.
+#' @seealso \code{\link{webshot}} for taking screenshots of Shiny applications.
 #' @export
-web_shot <- function(
+webshot <- function(
   url = NULL,
   file = "webshot.png",
   vwidth = 920,
