@@ -3,7 +3,7 @@
 \alias{appshot}
 \title{Take a screenshot of a Shiny app}
 \usage{
-appshot(app, file, ..., port = 9000)
+appshot(app, file = "webshot.png", ..., port = 9000)
 }
 \arguments{
 \item{app}{A Shiny app object, or a string naming an app directory.}

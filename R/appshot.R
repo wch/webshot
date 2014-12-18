@@ -12,16 +12,18 @@
 #' }
 #'
 #' @export
-appshot <- function(app, file, ..., port = 9000) UseMethod("appshot")
+appshot <- function(app, file = "webshot.png", ..., port = 9000) {
+  UseMethod("appshot")
+}
 
 #' @export
-appshot.shiny.appobj <- function(app, file,..., port = 9000) {
+appshot.shiny.appobj <- function(app, file = "webshot.png", ..., port = 9000) {
   stop("appshot of Shiny app objects is not yet supported.")
   # This would require running the app object in this R process
 }
 
 #' @export
-appshot.character <- function(app, file,..., port = 9000) {
+appshot.character <- function(app, file = "webshot.png", ..., port = 9000) {
   pidfile <- tempfile("pid")
   on.exit(unlink(pidfile))
   cmd <- sprintf(
