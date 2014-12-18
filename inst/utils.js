@@ -7,7 +7,7 @@ exports.parseArgs = function(args) {
 
   args.forEach(function(arg) {
     arg = arg.replace(/^--/, "");
-    arg = arg.split("=", limit=2);
+    arg = arg.split(/=(.*)/, 2);
     // console.log(arg)
     opts[arg[0]] = arg[1];
   });

@@ -11,7 +11,9 @@ phantom.injectJs(phantom.casperPath + '/bin/bootstrap.js');
 var casper = require('casper').create();
 
 var opt_defaults = {
-  delay: 0.2
+  delay: 0.2,
+  vwidth: 992,
+  vheight: 744
 };
 
 // =====================================================================
@@ -38,27 +40,17 @@ if (opts.cliprect) {
 // =====================================================================
 // Screenshot
 // =====================================================================
-var page = require('webpage').create();
+casper.start(url).viewport(opts.vwidth, opts.vheight);
 
-page.viewportSize = {
-  width: opts.vwidth,
-  height: opts.vheight
-};
+if (+opts.delay > 0)
+  casper.wait(opts.delay * 1000);
 
-page.open(url, function() {
-  // Delay before taking screenshot
-  window.setTimeout(function () {
-
-    var cr = findClipRect(opts, page);
-    if (cr) {
-      page.clipRect = cr;
-    }
-
-    page.render(filename);
-    console.log("Wrote " + filename);
-    phantom.exit();
-  }, opts.delay * 1000);
+casper.then(function() {
+  var cr = findClipRect(opts, null);
+  this.capture(filename, cr);
 });
+
+casper.run();
 
 
 // =====================================================================
