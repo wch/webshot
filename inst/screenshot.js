@@ -6,6 +6,10 @@
 var utils = require('./utils');
 var system = require('system');
 
+phantom.casperPath = './casperjs';
+phantom.injectJs(phantom.casperPath + '/bin/bootstrap.js');
+var casper = require('casper').create();
+
 var opt_defaults = {
   delay: 0.2
 };
