@@ -38,7 +38,11 @@ if (opts.vheight) opts.vheight = +opts.vheight;
 // This should be four numbers separated by ","
 if (opts.cliprect) {
   opts.cliprect = opts.cliprect.split(",");
-  opts.cliprect = opts.cliprect.map(function(x) { return +x });
+  opts.cliprect = opts.cliprect.map(function(x) { return +x; });
+}
+
+if (opts.selector) {
+  opts.selector = opts.selector.split(",");
 }
 
 
@@ -74,8 +78,39 @@ function findClipRect(opts, casper) {
       height: opts.cliprect[3]
     };
   } else if (opts.selector) {
-    var cr =  casper.getElementBounds(opts.selector)
-    return cr;
+    var selector = opts.selector;
+
+    // Get bounds, in absolute coordinates so that we can find a bounding
+    // rectangle around multiple items.
+    var bounds = selector.map(function(s) {
+      var b = casper.getElementBounds(s);
+      return {
+        top:    b.top,
+        left:   b.left,
+        bottom: b.top + b.height,
+        right:  b.left + b.width
+      };
+    });
+
+    // Get bounding rectangle around multiple
+    bounds = bounds.reduce(function(a, b) {
+      return {
+        top:    Math.min(a.top, b.top),
+        left:   Math.min(a.left, b.left),
+        bottom: Math.max(a.bottom, b.bottom),
+        right:  Math.max(a.right, b.right)
+      };
+    });
+
+    // Convert back to width + height format
+    bounds = {
+      top:    bounds.top,
+      left:   bounds.left,
+      width:  bounds.right - bounds.left,
+      height: bounds.bottom - bounds.top
+    };
+
+    return bounds;
   } else {
     return null;
   }
