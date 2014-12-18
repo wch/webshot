@@ -31,16 +31,21 @@ var filename = args[2];
 var opts = utils.parseArgs(args.slice(3));
 opts = utils.merge(opt_defaults, opts);
 
+// vwidth and vheight should be numbers
+if (opts.vwidth)  opts.vwidth  = +opts.vwidth;
+if (opts.vheight) opts.vheight = +opts.vheight;
+
 // This should be four numbers separated by ","
 if (opts.cliprect) {
   opts.cliprect = opts.cliprect.split(",");
+  opts.cliprect = opts.cliprect.map(function(x) { return +x });
 }
 
 
 // =====================================================================
 // Screenshot
 // =====================================================================
-casper.start(url).viewport(+opts.vwidth, +opts.vheight);
+casper.start(url).viewport(opts.vwidth, opts.vheight);
 
 if (+opts.delay > 0)
   casper.wait(opts.delay * 1000);
