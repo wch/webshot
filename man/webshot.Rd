@@ -52,7 +52,7 @@ Take a screenshot of a URL
 webshot("http://www.rstudio.com/")
 
 # Might need a longer delay for all assets to display
-webshot("http://www.rstudio.com/", delay = 500)
+webshot("http://www.rstudio.com/", delay = 0.5)
 
 # Clip to the viewport
 webshot("http://www.rstudio.com/", "rstudio-viewport.png",
