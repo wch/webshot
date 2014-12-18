@@ -47,8 +47,8 @@
 webshot <- function(
   url = NULL,
   file = "webshot.png",
-  vwidth = 920,
-  vheight = 600,
+  vwidth = 992,
+  vheight = 744,
   cliprect = NULL,
   selector = NULL,
   delay = 0.2
