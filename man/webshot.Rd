@@ -3,8 +3,8 @@
 \alias{webshot}
 \title{Take a screenshot of a URL}
 \usage{
-webshot(url = NULL, file = "webshot.png", vwidth = 920, vheight = 600,
-  cliprect = NULL, selector = NULL, delay = 0.2)
+webshot(url = NULL, file = "webshot.png", vwidth = 992, vheight = 744,
+  cliprect = NULL, selector = NULL, expand = NULL, delay = 0.2)
 }
 \arguments{
 \item{url}{A URL to visit.}
@@ -22,13 +22,18 @@ rectangle matches the viewport size, or it can be a four-element numeric
 vector specifying the top, left, width, and height. This option is not
 compatible with \code{selector}.}
 
-\item{selector}{A CSS selector specifying a DOM element to set the clipping
-rectangle to. A screenshot of just this DOM element will be taken. If the
-selector has more than one match, only the first one will be used. This
-option is not compatible with \code{cliprect}.}
+\item{selector}{One or more CSS selectors specifying a DOM element to set the
+clipping rectangle to. The screenshot will contain these DOM elements. For
+a given selector, if it has more than one match, only the first one will be
+used. This option is not compatible with \code{cliprect}.}
+
+\item{expand}{A numeric vector specifying how many pixels to expand the
+  clipping rectangle by. If one number, the rectangle will be expanded by
+  that many pixels on all sides. If four numbers, they specify the top,
+  right, bottom, and left, in that order.}
 
 \item{delay}{Time to wait before taking screenshot, in seconds. Sometimes a
-  longer delay is needed for all assets to display properly.}
+longer delay is needed for all assets to display properly.}
 }
 \description{
 Take a screenshot of a URL
@@ -51,8 +56,15 @@ webshot("http://www.rstudio.com/", "rstudio-clip.png",
 
 # Using CSS selectors to pick out regions
 webshot("http://www.rstudio.com/", "rstudio-header.png", selector = "#header")
+webshot("http://reddit.com/", "reddit-top.png",
+        selector = c("input[type='text']", "#header-bottom-left"))
 
-# If multiple matches for a selector, it uses the first match
+# Expand selection region
+webshot("http://rstudio.com/", "rstudio-boxes.png",
+        selector = "#content-boxes-1",
+        expand = c(40, 10, 0, 10))
+
+# If multiple matches for a given selector, it uses the first match
 webshot("http://www.rstudio.com/", "rstudio-block.png", selector = "article.col")
 webshot("https://github.com/rstudio/shiny/", "shiny-stats.png",
          selector = "ul.numbers-summary")
