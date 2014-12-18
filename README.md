@@ -6,7 +6,9 @@ webshot
 
 ## Installation
 
-It requires an installation of the external program [PhantomJS](http://phantomjs.org/). Once that's installed you can install webshot with:
+It requires an installation of the external program [PhantomJS](http://phantomjs.org/). If you're on a Mac, the widely used Font Awesome icons [may not render properly](https://github.com/ariya/phantomjs/issues/12132) unless you install the .ttf font [from here](http://fortawesome.github.io/Font-Awesome/).
+
+Once PhantomJS is installed you can install webshot with:
 
 ```R
 devtools::install_github("wch/webshot")
