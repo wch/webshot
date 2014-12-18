@@ -24,5 +24,5 @@ srcdir <- file.path(dirname(thisFile()), "../../casperjs")
 destdir <- file.path(dirname(thisFile()), "../inst/casperjs")
 
 file.copy(file.path(srcdir, "package.json"), destdir)
-file.copy(file.path(srcdir, "bin"), destdir, recursive = TRUE)
+file.copy(file.path(srcdir, "bin/bootstrap.js"), file.path(destdir, "bin"))
 file.copy(file.path(srcdir, "modules"), destdir, recursive = TRUE)
