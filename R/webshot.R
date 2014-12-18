@@ -20,6 +20,12 @@
 #'   clipping rectangle by. If one number, the rectangle will be expanded by
 #'   that many pixels on all sides. If four numbers, they specify the top,
 #'   right, bottom, and left, in that order.
+#' @param eval An optional string with JavaScript code which will be evaluated
+#'   after opening the page and waiting for \code{delay}, but before calculating
+#'   the clipping region and taking the screenshot. See the Casper API
+#'   (\url{http://docs.casperjs.org/en/latest/modules/casper.html}) for more
+#'   information about what commands can be used to control the web page. NOTE:
+#'   This is experimental and likely to change!
 #'
 #' @examples
 #' \donttest{
@@ -51,6 +57,25 @@
 #' webshot("http://www.rstudio.com/", "rstudio-block.png", selector = "article.col")
 #' webshot("https://github.com/rstudio/shiny/", "shiny-stats.png",
 #'          selector = "ul.numbers-summary")
+#'
+#'
+#' # Send commands to eval
+#' webshot("http://www.reddit.com/", "reddit-input.png",
+#'   selector = c("#search", "#login_login-main"),
+#'   eval = "casper.then(function() {
+#'     // Check the remember me box
+#'     this.click('#rem-login-main');
+#'     // Enter username and password
+#'     this.sendKeys('#login_login-main input[type=\"text\"]', 'my_username');
+#'     this.sendKeys('#login_login-main input[type=\"password\"]', 'password');
+#'
+#'     // Now click in the search box. This results in a box expanding below
+#'     this.click('#search input[type=\"text\"]');
+#'     // Wait 500ms
+#'     this.wait(500);
+#'   });"
+#' )
+#'
 #' }
 #'
 #' @seealso \code{\link{webshot}} for taking screenshots of Shiny applications.
@@ -63,7 +88,8 @@ webshot <- function(
   cliprect = NULL,
   selector = NULL,
   expand = NULL,
-  delay = 0.2
+  delay = 0.2,
+  eval = NULL
 ) {
 
   if (is.null(url)) {
@@ -100,9 +126,10 @@ webshot <- function(
     paste0("--vwidth=", vwidth),
     paste0("--vheight=", vheight),
     if (!is.null(cliprect)) paste0("--cliprect=", paste(cliprect, collapse=",")),
-    if (!is.null(selector)) paste0("--selector=", paste(selector, collapse=",")),
+    if (!is.null(selector)) paste0("--selector=", paste(shQuote(selector), collapse=",")),
     if (!is.null(delay)) paste0("--delay=", delay),
-    if (!is.null(expand)) paste0("--expand=", paste(expand, collapse=","))
+    if (!is.null(expand)) paste0("--expand=", paste(expand, collapse=",")),
+    if (!is.null(eval)) paste0("--eval=", shQuote(eval))
   ))
 
   phantom_run(args)

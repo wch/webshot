@@ -58,7 +58,6 @@ if (opts.selector) {
   opts.selector = opts.selector.split(",");
 }
 
-
 // =====================================================================
 // Screenshot
 // =====================================================================
@@ -66,6 +65,10 @@ casper.start(url).viewport(opts.vwidth, opts.vheight);
 
 if (opts.delay > 0)
   casper.wait(opts.delay * 1000);
+
+if (opts.eval) {
+  eval(opts.eval);
+}
 
 casper.then(function() {
   var cr = findClipRect(opts, this);
