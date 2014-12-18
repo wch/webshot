@@ -1,7 +1,7 @@
 
 // This must be executed with phantomjs
 // Take a screenshot of a URL and saves it to a .png file
-// phantomjs screenshot.js <url> <filename> [options]
+// phantomjs webshot.js <url> <filename> [options]
 
 var utils = require('./utils');
 var system = require('system');
@@ -21,7 +21,7 @@ var args = system.args;
 
 if (args.length < 3) {
   console.log('Usage:\n' +
-    '  phantomjs screenshot.js <url> <name>.png [options]');
+    '  phantomjs webshot.js <url> <name>.png [options]');
 }
 
 var url = args[1];
