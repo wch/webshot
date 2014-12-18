@@ -6,7 +6,7 @@
 var utils = require('./utils');
 var system = require('system');
 
-phantom.casperPath = './casperjs';
+phantom.casperPath = phantom.libraryPath + '/casperjs';
 phantom.injectJs(phantom.casperPath + '/bin/bootstrap.js');
 var casper = require('casper').create();
 
