@@ -41,6 +41,15 @@ if (opts.cliprect) {
   opts.cliprect = opts.cliprect.map(function(x) { return +x; });
 }
 
+if (opts.expand) {
+  opts.expand = opts.expand.split(",");
+  opts.expand = opts.expand.map(function(x) { return +x; });
+  if (opts.expand.length !== 1 && opts.expand.length !== 4) {
+    console.log("'expand' must have either 1 or 4 values.");
+    phantom.exit(1);
+  }
+}
+
 if (opts.selector) {
   opts.selector = opts.selector.split(",");
 }
@@ -70,13 +79,35 @@ casper.run();
 // rectangle. If opts.cliprect and opts.selector are both not present,
 // return null.
 function findClipRect(opts, casper) {
-  if (opts.cliprect) {
+  // Convert top,right,bottom,left object to top,left,width,height
+  function rel2abs(r) {
     return {
+      top:    r.top,
+      left:   r.left,
+      bottom: r.top + r.height,
+      right:  r.left + r.width
+    };
+  }
+  // Convert top,left,width,height object to top,right,bottom,left
+  function abs2rel(r) {
+    return {
+      top:    r.top,
+      left:   r.left,
+      width:  r.right - r.left,
+      height: r.bottom - r.top
+    };
+  }
+
+  var rect;
+
+  if (opts.cliprect) {
+    rect = {
       top:    opts.cliprect[0],
       left:   opts.cliprect[1],
       width:  opts.cliprect[2],
       height: opts.cliprect[3]
     };
+
   } else if (opts.selector) {
     var selector = opts.selector;
 
@@ -84,12 +115,7 @@ function findClipRect(opts, casper) {
     // rectangle around multiple items.
     var bounds = selector.map(function(s) {
       var b = casper.getElementBounds(s);
-      return {
-        top:    b.top,
-        left:   b.left,
-        bottom: b.top + b.height,
-        right:  b.left + b.width
-      };
+      return rel2abs(b);
     });
 
     // Get bounding rectangle around multiple
@@ -103,17 +129,28 @@ function findClipRect(opts, casper) {
     });
 
     // Convert back to width + height format
-    bounds = {
-      top:    bounds.top,
-      left:   bounds.left,
-      width:  bounds.right - bounds.left,
-      height: bounds.bottom - bounds.top
-    };
+    rect = abs2rel(bounds);
 
-    return bounds;
   } else {
     return null;
   }
+
+  // Expand clipping rectangle
+  if (opts.expand) {
+    var expand = opts.expand;
+    if (expand.length === 1) {
+      expand = [expand[0], expand[0], expand[0], expand[0]];
+    }
+
+    rect = rel2abs(rect);
+    rect.top    -= expand[0];
+    rect.right  += expand[1];
+    rect.bottom += expand[2];
+    rect.left   -= expand[3];
+    rect = abs2rel(rect);
+  }
+
+  return rect;
 }
 
 
