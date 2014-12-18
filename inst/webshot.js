@@ -24,6 +24,7 @@ var args = system.args;
 if (args.length < 3) {
   console.log('Usage:\n' +
     '  phantomjs webshot.js <url> <name>.png [options]');
+  phantom.exit(1);
 }
 
 var url = args[1];
