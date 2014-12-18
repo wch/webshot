@@ -40,13 +40,13 @@ if (opts.cliprect) {
 // =====================================================================
 // Screenshot
 // =====================================================================
-casper.start(url).viewport(opts.vwidth, opts.vheight);
+casper.start(url).viewport(+opts.vwidth, +opts.vheight);
 
 if (+opts.delay > 0)
   casper.wait(opts.delay * 1000);
 
 casper.then(function() {
-  var cr = findClipRect(opts, null);
+  var cr = findClipRect(opts, this);
   this.capture(filename, cr);
 });
 
@@ -60,7 +60,7 @@ casper.run();
 // Given the options object, return an object representing the clipping
 // rectangle. If opts.cliprect and opts.selector are both not present,
 // return null.
-function findClipRect(opts, page) {
+function findClipRect(opts, casper) {
   if (opts.cliprect) {
     return {
       top:    opts.cliprect[0],
@@ -69,16 +69,8 @@ function findClipRect(opts, page) {
       height: opts.cliprect[3]
     };
   } else if (opts.selector) {
-    var cr = page.evaluate(function (s) {
-      return document.querySelector(s).getBoundingClientRect();
-    }, opts.selector);
-
-    return {
-      top:    cr.top,
-      left:   cr.left,
-      width:  cr.width,
-      height: cr.height
-    };
+    var cr =  casper.getElementBounds(opts.selector)
+    return cr;
   } else {
     return null;
   }
