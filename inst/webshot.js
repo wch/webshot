@@ -32,9 +32,10 @@ var filename = args[2];
 var opts = utils.parseArgs(args.slice(3));
 opts = utils.merge(opt_defaults, opts);
 
-// vwidth and vheight should be numbers
+// These should be numbers
 if (opts.vwidth)  opts.vwidth  = +opts.vwidth;
 if (opts.vheight) opts.vheight = +opts.vheight;
+if (opts.delay)   opts.delay = +opts.delay;
 
 // This should be four numbers separated by ","
 if (opts.cliprect) {
@@ -42,6 +43,7 @@ if (opts.cliprect) {
   opts.cliprect = opts.cliprect.map(function(x) { return +x; });
 }
 
+// Can be 1 or 4 numbers separated by ","
 if (opts.expand) {
   opts.expand = opts.expand.split(",");
   opts.expand = opts.expand.map(function(x) { return +x; });
@@ -51,6 +53,7 @@ if (opts.expand) {
   }
 }
 
+// Can have multiple selectors
 if (opts.selector) {
   opts.selector = opts.selector.split(",");
 }
@@ -61,7 +64,7 @@ if (opts.selector) {
 // =====================================================================
 casper.start(url).viewport(opts.vwidth, opts.vheight);
 
-if (+opts.delay > 0)
+if (opts.delay > 0)
   casper.wait(opts.delay * 1000);
 
 casper.then(function() {

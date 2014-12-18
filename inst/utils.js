@@ -17,9 +17,9 @@ exports.parseArgs = function(args) {
 
 // Merge properties from object b into object a
 exports.merge = function(a, b) {
-  var c = {};
   for (var i in b) {
-    a[i] = b[i];
+    if (b.hasOwnProperty(i))
+      a[i] = b[i];
   }
   return a;
 };
