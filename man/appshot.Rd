@@ -8,7 +8,8 @@ appshot(app, file = "webshot.png", ..., port = 9000)
 \arguments{
 \item{app}{A Shiny app object, or a string naming an app directory.}
 
-\item{file}{Name of output file. Should end with \code{.png}.}
+\item{file}{Name of output file. Should end with \code{.png}, \code{.pdf}, or
+\code{.jpeg}.}
 
 \item{...}{Other arguments to pass on to \code{\link{webshot}}.}
 

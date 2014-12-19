@@ -10,7 +10,8 @@ webshot(url = NULL, file = "webshot.png", vwidth = 992, vheight = 744,
 \arguments{
 \item{url}{A URL to visit.}
 
-\item{file}{Name of output file. Should end with \code{.png}.}
+\item{file}{Name of output file. Should end with \code{.png}, \code{.pdf}, or
+\code{.jpeg}.}
 
 \item{vwidth}{Viewport width. This is the width of the browser "window".}
 

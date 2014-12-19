@@ -1,7 +1,8 @@
 #' Take a screenshot of a URL
 #'
 #' @param url A URL to visit.
-#' @param file Name of output file. Should end with \code{.png}.
+#' @param file Name of output file. Should end with \code{.png}, \code{.pdf}, or
+#'   \code{.jpeg}.
 #' @param vwidth Viewport width. This is the width of the browser "window".
 #' @param vheight Viewport height This is the height of the browser "window".
 #' @param cliprect Clipping rectangle. If \code{cliprect} and \code{selector}

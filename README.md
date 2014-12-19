@@ -17,11 +17,12 @@ devtools::install_github("wch/webshot")
 
 ## Usage
 
-By default, `webshot` will use a 992x744 pixel viewport (a virtual browser window) and take a screenshot of the entire page, even the portion outside the viewport:
+By default, `webshot` will use a 992x744 pixel viewport (a virtual browser window) and take a screenshot of the entire page, even the portion outside the viewport.
 
 ```R
 library(webshot)
 webshot("http://www.rstudio.com/", "rstudio.png")
+webshot("http://www.rstudio.com/", "rstudio.pdf") # Can also output to PDF
 ```
 
 You can clip it to just the viewport region:
