@@ -2,5 +2,7 @@
 
 S3method(appshot,character)
 S3method(appshot,shiny.appobj)
+export("%>%")
 export(appshot)
 export(webshot)
+importFrom(magrittr,"%>%")

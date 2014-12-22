@@ -5,4 +5,6 @@ Authors@R: "Winston Chang <winston@rstudio.com> [aut, cre]"
 Description: Takes screenshots of web pages, including Shiny applications.
 Depends:
     R (>= 3.0)
+Imports:
+    magrittr
 License: GPL-2
