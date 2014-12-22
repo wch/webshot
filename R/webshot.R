@@ -133,5 +133,11 @@ webshot <- function(
     if (!is.null(eval)) paste0("--eval=", shQuote(eval))
   ))
 
-  phantom_run(args)
+  res <- phantom_run(args)
+
+  if (res != 0) {
+    stop("webshot.js returned failure value: ", res)
+  }
+
+  invisible(file)
 }

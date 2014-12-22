@@ -39,13 +39,15 @@ appshot.character <- function(app, file = "webshot.png", ..., port = 9000) {
   # Wait for app to start
   Sys.sleep(0.5)
 
-  webshot(sprintf("http://127.0.0.1:%d/", port), file = file, ...)
+  fileout <- webshot(sprintf("http://127.0.0.1:%d/", port), file = file, ...)
 
   # Kill app
   pid <- readLines(pidfile, warn = FALSE)
   res <- system2("kill", pid)
 
   if (res != 0) {
-    warning(sprintf("`kill %s` didn't return success code. Value: %d", pid, res))
+    stop(sprintf("`kill %s` didn't return success code. Value: %d", pid, res))
   }
+
+  invisible(fileout)
 }
