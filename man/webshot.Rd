@@ -96,6 +96,10 @@ webshot("http://www.reddit.com/", "reddit-input.png",
   });"
 )
 
+# Result can be piped to other commands like resize() and shrink()
+webshot("http://www.google.com/", "google-small.png") \%>\%
+ resize("75\%") \%>\%
+ shrink()
 }
 }
 \seealso{

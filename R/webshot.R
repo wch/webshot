@@ -77,6 +77,10 @@
 #'   });"
 #' )
 #'
+#' # Result can be piped to other commands like resize() and shrink()
+#' webshot("http://www.google.com/", "google-small.png") %>%
+#'  resize("75%") %>%
+#'  shrink()
 #' }
 #'
 #' @seealso \code{\link{webshot}} for taking screenshots of Shiny applications.
