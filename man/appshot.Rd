@@ -3,7 +3,7 @@
 \alias{appshot}
 \title{Take a screenshot of a Shiny app}
 \usage{
-appshot(app, file = "webshot.png", ..., port = 9000)
+appshot(app, file = "webshot.png", ..., port = 9000, envvars = NULL)
 }
 \arguments{
 \item{app}{A Shiny app object, or a string naming an app directory.}
@@ -14,6 +14,11 @@ appshot(app, file = "webshot.png", ..., port = 9000)
 \item{...}{Other arguments to pass on to \code{\link{webshot}}.}
 
 \item{port}{Port that Shiny will listen on.}
+
+\item{envvars}{A named character vector or named list of environment
+  variables and values to set for the Shiny app's R process. These will be
+  unset after the process exits. This can be used to pass configuration
+  information to a Shiny app.}
 }
 \description{
 Take a screenshot of a Shiny app

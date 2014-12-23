@@ -3,6 +3,11 @@
 #' @inheritParams webshot
 #' @param app A Shiny app object, or a string naming an app directory.
 #' @param port Port that Shiny will listen on.
+#' @param envvars A named character vector or named list of environment
+#'   variables and values to set for the Shiny app's R process. These will be
+#'   unset after the process exits. This can be used to pass configuration
+#'   information to a Shiny app.
+#'
 #' @param ... Other arguments to pass on to \code{\link{webshot}}.
 #'
 #' @examples
@@ -12,18 +17,21 @@
 #' }
 #'
 #' @export
-appshot <- function(app, file = "webshot.png", ..., port = 9000) {
+appshot <- function(app, file = "webshot.png", ..., port = 9000,
+                    envvars = NULL) {
   UseMethod("appshot")
 }
 
 #' @export
-appshot.shiny.appobj <- function(app, file = "webshot.png", ..., port = 9000) {
+appshot.shiny.appobj <- function(app, file = "webshot.png", ..., port = 9000,
+                                 envvars = NULL) {
   stop("appshot of Shiny app objects is not yet supported.")
   # This would require running the app object in this R process
 }
 
 #' @export
-appshot.character <- function(app, file = "webshot.png", ..., port = 9000) {
+appshot.character <- function(app, file = "webshot.png", ..., port = 9000,
+                              envvars = NULL) {
   pidfile <- tempfile("pid")
   on.exit(unlink(pidfile))
   cmd <- sprintf(
@@ -33,11 +41,30 @@ appshot.character <- function(app, file = "webshot.png", ..., port = 9000) {
     port
   )
 
+  # Save existing env vars and set new ones
+  old_unset_vars <- NULL
+  old_set_vars <- NULL
+  if (length(envvars) != 0) {
+    old_vars <- Sys.getenv(names(envvars), unset = NA, names = TRUE)
+    # Char vector of variables that weren't set
+    old_unset_vars <- names(old_vars)[is.na(old_vars)]
+    # Named list of variables that were set
+    old_set_vars <- as.list(old_vars[!is.na(old_vars)])
+
+    do.call(Sys.setenv, as.list(envvars))
+  }
+
   # Run app in background
   system2("R", args = c("--slave", "-e", cmd), wait = FALSE)
 
-  # Kill app on exit
   on.exit({
+    # Restore old env vars
+    if (length(old_set_vars) != 0 )
+      do.call(Sys.setenv, old_set_vars)
+    if (length(old_unset_vars) != 0)
+      Sys.unsetenv(old_unset_vars)
+
+    # Kill app on exit
     pid <- readLines(pidfile, warn = FALSE)
     res <- system2("kill", pid)
     if (res != 0) {
