@@ -36,18 +36,19 @@ appshot.character <- function(app, file = "webshot.png", ..., port = 9000) {
   # Run app in background
   system2("R", args = c("--slave", "-e", cmd), wait = FALSE)
 
+  # Kill app on exit
+  on.exit({
+    pid <- readLines(pidfile, warn = FALSE)
+    res <- system2("kill", pid)
+    if (res != 0) {
+      stop(sprintf("`kill %s` didn't return success code. Value: %d", pid, res))
+    }
+  })
+
   # Wait for app to start
   Sys.sleep(0.5)
 
   fileout <- webshot(sprintf("http://127.0.0.1:%d/", port), file = file, ...)
-
-  # Kill app
-  pid <- readLines(pidfile, warn = FALSE)
-  res <- system2("kill", pid)
-
-  if (res != 0) {
-    stop(sprintf("`kill %s` didn't return success code. Value: %d", pid, res))
-  }
 
   invisible(fileout)
 }
