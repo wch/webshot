@@ -14,6 +14,7 @@ Once PhantomJS is installed you can install webshot with:
 devtools::install_github("wch/webshot")
 ```
 
+Even with the font installed, there may be other font rendering issues. If you are brave, you can [build and install](https://github.com/ariya/phantomjs/wiki/PhantomJS-2) the development version of PhantomJS 2, which should fix font issues.
 
 ## Usage
 
