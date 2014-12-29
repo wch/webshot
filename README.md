@@ -41,8 +41,7 @@ If you supply multiple CSS selectors, it will take a screenshot containing all o
 
 ```R
 webshot("http://rstudio.com/", "rstudio-selectors.png",
-        selector = c(".header-v1", "#content-boxes-1")),
-        expand = c(40, 10, 0, 10))
+        selector = c(".header-v1", "#content-boxes-1")))
 ```
 
 The clipping rectangle can be expanded to capture some area outside the selected items:
