@@ -66,6 +66,7 @@ appshot.character <- function(app, file = "webshot.png", ..., port = 9000,
 
     # Kill app on exit
     pid <- readLines(pidfile, warn = FALSE)
+    file.remove(pidfile)
     res <- system2("kill", pid)
     if (res != 0) {
       stop(sprintf("`kill %s` didn't return success code. Value: %d", pid, res))
