@@ -81,7 +81,9 @@ CasperError.prototype = Object.getPrototypeOf(new Error());
     // phantom args
     // NOTE: we can't use require('system').args here for some very obscure reason
     //       do not even attempt at using it as it creates infinite recursion
-    var phantomArgs = phantom.args;
+    // NOTE: This has been hacked in to support PhantomJS 2.
+    //       See https://github.com/n1k0/casperjs/issues/987
+    var phantomArgs = require('system').args;
 
     if (phantom.casperLoaded) {
         return;
