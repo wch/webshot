@@ -13,6 +13,11 @@ This does not change size of the image in pixels, nor does it affect
 appearance -- it is lossless compression. This requires the program
 \code{optipng} to be installed.
 }
+\details{
+If other operations like resizing are performed, shrinking should occur as
+the last step. Otherwise, if the resizing happens after file shrinking, it
+will be as if the shrinking didn't happen at all.
+}
 \examples{
 \donttest{
 # Can be chained with webshot() or appshot()

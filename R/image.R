@@ -1,8 +1,8 @@
 #' Resize an image
 #'
 #' This does not change size of the image in pixels, nor does it affect
-#' appearance -- it is lossless compression. This requires GraphicsMagick or
-#' ImageMagick to be installed.
+#' appearance -- it is lossless compression. This requires GraphicsMagick
+#' (recommended) or ImageMagick to be installed.
 #'
 #' @param filename Name of image to resize.
 #' @param geometry Scaling specification. Can be a percent, as in \code{"50\%"},
@@ -18,13 +18,23 @@
 #' }
 #' @export
 resize <- function(filename, geometry) {
-  convert <- Sys.which("convert")
-  if (convert == "")
-    stop("convert not found in path. convert must be installed and in path.")
+  progs <- Sys.which(c("gm", "convert"))
+  if (all(progs == ""))
+    stop("Neither `gm` nor `convert` were found in path. GraphicsMagick or ImageMagick must be installed and in path.")
 
-  res <- system2("convert", args = c(filename, "-resize", geometry, filename))
+  args <- c(filename, "-resize", geometry, filename)
+
+  if (progs["gm"] != "") {
+    prog <- progs["gm"]
+    args <- c("convert", args)
+  } else {
+    prog <- progs["convert"]
+  }
+
+  res <- system2(prog, args)
+
   if (res != 0)
-    stop ("Resizing with `convert` failed.")
+    stop ("Resizing with `gm convert` or `convert` failed.")
 
   invisible(filename)
 }
@@ -35,6 +45,10 @@ resize <- function(filename, geometry) {
 #' This does not change size of the image in pixels, nor does it affect
 #' appearance -- it is lossless compression. This requires the program
 #' \code{optipng} to be installed.
+#'
+#' If other operations like resizing are performed, shrinking should occur as
+#' the last step. Otherwise, if the resizing happens after file shrinking, it
+#' will be as if the shrinking didn't happen at all.
 #'
 #' @param filename Name of image to shrink. Must be a PNG file.
 #'
