@@ -15,6 +15,11 @@
 #' webshot("http://www.google.com/", "google-small.png") %>%
 #'  resize("75%") %>%
 #'  shrink()
+#'
+#' # Generate image that is 400 pixels wide
+#' webshot("http://www.google.com/", "google-small.png") %>%
+#'  resize("400x") %>%
+#'  shrink()
 #' }
 #' @export
 resize <- function(filename, geometry) {

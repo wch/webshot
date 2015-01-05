@@ -61,3 +61,17 @@ The `appshot()` function will run a Shiny app locally in a separate R process, a
 appdir <- system.file("examples", "01_hello", package="shiny")
 appshot(appdir, "01_hello.png")
 ```
+
+If you have GraphicsMagic (recommended) or ImageMagick installed, you can pass the result to `resize()` to resize the image after taking the screenshot. This can take any valid ImageMagick geometry specifictaion, like `"75%"`, or `"400x"` (for an image 400 pixels wide).
+
+You can also call `shrink()` function, which runs [OptiPNG](http://optipng.sourceforge.net/) to shrink the PNG file losslessly.
+
+```R
+webshot("http://www.google.com/", "google-small.png") %>%
+ resize("75%") %>%
+ shrink()
+
+webshot("http://www.google.com/", "google-small.png") %>%
+ resize("400x") %>%
+ shrink()
+```
