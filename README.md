@@ -54,6 +54,8 @@ webshot("http://rstudio.com/", "rstudio-boxes.png",
 ```
 
 
+### Screenshots of Shiny applications
+
 The `appshot()` function will run a Shiny app locally in a separate R process, and take a screenshot of it. After taking the screenshot, it will kill the R process that is running the Shiny app.
 
 ```R
@@ -62,7 +64,9 @@ appdir <- system.file("examples", "01_hello", package="shiny")
 appshot(appdir, "01_hello.png")
 ```
 
-If you have GraphicsMagic (recommended) or ImageMagick installed, you can pass the result to `resize()` to resize the image after taking the screenshot. This can take any valid ImageMagick geometry specifictaion, like `"75%"`, or `"400x"` (for an image 400 pixels wide).
+### Manipulating images
+
+If you have GraphicsMagick (recommended) or ImageMagick installed, you can pass the result to `resize()` to resize the image after taking the screenshot. This can take any valid ImageMagick geometry specifictaion, like `"75%"`, or `"400x"` (for an image 400 pixels wide).
 
 You can also call `shrink()` function, which runs [OptiPNG](http://optipng.sourceforge.net/) to shrink the PNG file losslessly.
 
