@@ -6,7 +6,7 @@ webshot
 
 ## Installation
 
-It requires an installation of the external program [PhantomJS](http://phantomjs.org/). If you're on a Mac, the widely used Font Awesome icons [may not render properly](https://github.com/ariya/phantomjs/issues/12132) unless you install the .ttf font [from here](http://fortawesome.github.io/Font-Awesome/).
+It requires an installation of the external program [PhantomJS](http://phantomjs.org/). Please make sure you have PhantomJS version 2 or higher installed. Previous versions may have trouble rendering some fonts.
 
 Once PhantomJS is installed you can install webshot with:
 
@@ -14,7 +14,6 @@ Once PhantomJS is installed you can install webshot with:
 devtools::install_github("wch/webshot")
 ```
 
-Even with the font installed, there may be other font rendering issues. If you are brave, you can [build and install](https://github.com/ariya/phantomjs/wiki/PhantomJS-2) the development version of PhantomJS 2, which should fix font issues.
 
 ## Usage
 
