@@ -1,6 +1,6 @@
 Package: webshot
 Title: Takes screenshots of web pages, including Shiny apps
-Version: 0.1
+Version: 0.2
 Authors@R: "Winston Chang <winston@rstudio.com> [aut, cre]"
 Description: Takes screenshots of web pages, including Shiny applications.
 Depends:
