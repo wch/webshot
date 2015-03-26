@@ -179,7 +179,9 @@ var Casper = function Casper(options) {
             throw new CasperError('casper.test property is only available using the `casperjs test` command');
         }
         if (!utils.isObject(this._test)) {
-            this._test = tester.create(this);
+            this._test = tester.create(this, {
+                concise: this.cli.get('concise')
+            });
         }
         return this._test;
     });
@@ -756,7 +758,7 @@ Casper.prototype.exists = function exists(selector) {
 Casper.prototype.exit = function exit(status) {
     "use strict";
     this.emit('exit', status);
-    phantom.exit(status);
+    setTimeout(function() { phantom.exit(status); }, 0);
 };
 
 /**
@@ -1251,7 +1253,7 @@ Casper.prototype.injectClientScripts = function injectClientScripts() {
         if (this.page.injectJs(script)) {
             this.log(f('Automatically injected %s client side', script), "debug");
         } else {
-            this.warn('Failed injecting %s client side', script);
+            this.warn(f('Failed injecting %s client side', script));
         }
     }.bind(this));
     return this;
@@ -1409,7 +1411,7 @@ Casper.prototype.open = function open(location, settings) {
     // http data
     if (settings.data) {
         if (utils.isObject(settings.data)) { // query object
-            if (settings.headers && settings.headers["Content-Type"].match(/application\/json/)) {
+            if (settings.headers && settings.headers["Content-Type"] && settings.headers["Content-Type"].match(/application\/json/)) {
                 settings.data = JSON.stringify(settings.data); // convert object to JSON notation
             } else {
                 settings.data = qs.encode(settings.data); // escapes all characters except alphabetic, decimal digits and ,-_.!~*'()
@@ -2119,14 +2121,13 @@ Casper.prototype.waitFor = function waitFor(testFx, then, onTimeout, timeout, de
                     if (!self.options.silentErrors) {
                         throw error;
                     }
-                } finally {
-                    return;
                 }
-            }
-            self.log(f("waitFor() finished in %dms.", new Date().getTime() - start), "info");
-            clearInterval(interval);
-            if (then) {
-                self.then(then);
+            } else {
+                self.log(f("waitFor() finished in %dms.", new Date().getTime() - start), "info");
+                clearInterval(interval);
+                if (then) {
+                    self.then(then);
+                }
             }
         }, this.options.retryTimeout, this);
         this.waiters.push(interval);

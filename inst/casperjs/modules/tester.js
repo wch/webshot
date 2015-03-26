@@ -667,7 +667,7 @@ Tester.prototype.assertNotVisible =
 Tester.prototype.assertInvisible = function assertNotVisible(selector, message) {
     "use strict";
     return this.assert(!this.casper.visible(selector), message, {
-        type: "assertVisible",
+        type: "assertNotVisible",
         standard: "Selector is not visible",
         values: {
             selector: selector
@@ -1063,7 +1063,7 @@ Tester.prototype.begin = function begin() {
         config = getConfig([].slice.call(arguments)),
         next = function() {
             config.test(this, this.casper);
-            if (this.options.concise)
+            if (!this.options.concise) {
                 this.casper.echo([
                     this.colorize('PASS', 'INFO'),
                     this.formatMessage(description),
@@ -1071,6 +1071,7 @@ Tester.prototype.begin = function begin() {
                                     config.planned,
                                     config.planned > 1 ? 's' : ''), 'INFO')
                 ].join(' '));
+            }
         }.bind(this);
 
     if (!this.options.concise)
