@@ -11,19 +11,20 @@ phantom_run <- function(args, wait = TRUE) {
 
 
 # Try really hard to find bower in Windows
-find_phantom <- function(){
+find_phantom <- function() {
   # a slightly more robust finder of bower for windows
   # which does not require PATH environment variable to be set
-  phantom_path = if(Sys.which("phantomjs") == "") {
+  phantom_path <-  if (Sys.which( "phantomjs" ) == "") {
     # if it does not find Sys.which('bower')
     # also check APPDATA to see if found there
-    if(identical(.Platform$OS.type,"windows")) {
-      Sys.which(file.path(Sys.getenv("APPDATA"),"npm","phantomjs."))
+    if( identical(.Platform$OS.type, "windows") ) {
+      Sys.which( file.path(Sys.getenv("APPDATA"), "npm", "phantomjs.cmd") )
     }
   } else {
-    Sys.which("phantomjs")
+    Sys.which( "phantomjs" )
   }
-  return(phantom_path)
+
+  phantom_path
 }
 
 
