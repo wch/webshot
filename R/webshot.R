@@ -125,7 +125,7 @@ webshot <- function(
   }
 
   args <- dropNulls(list(
-    system.file("webshot.js", package = "webshot"),
+    paste0("'",system.file("webshot.js", package = "webshot"),"'"),
     url,
     file,
     paste0("--vwidth=", vwidth),
