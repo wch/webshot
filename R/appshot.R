@@ -34,12 +34,8 @@ appshot.character <- function(app, file = "webshot.png", ..., port = 9000,
                               envvars = NULL) {
   pidfile <- tempfile("pid")
   on.exit(unlink(pidfile))
-  cmd <- sprintf(
-    "'cat(Sys.getpid(), file=\"%s\"); library(shiny); runApp(\"%s\", port=%d)'",
-    pidfile,
-    app,
-    port
-  )
+  cmd <- 'cat(Sys.getpid(), file="%s"); shiny::runApp("%s", port=%d, display.mode="normal")'
+  cmd <- shQuote(sprintf(cmd, pidfile, app, port))
 
   # Save existing env vars and set new ones
   old_unset_vars <- NULL
