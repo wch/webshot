@@ -28,8 +28,6 @@
  *
  */
 
-/*global CasperError, exports, phantom, __utils__, patchRequire, require:true*/
-
 var require = patchRequire(require);
 var fs = require('fs');
 var events = require('events');
@@ -84,7 +82,7 @@ exports.create = function create(casper, options) {
  */
 var Tester = function Tester(casper, options) {
     "use strict";
-    /*jshint maxstatements:99*/
+    /*eslint max-statements:0*/
     if (!utils.isCasperObject(casper)) {
         throw new CasperError("Tester needs a Casper instance");
     }
@@ -224,7 +222,7 @@ var Tester = function Tester(casper, options) {
     };
 
     this.casper.options.onWaitTimeout = function test_onWaitTimeout(timeout, details) {
-        /*jshint maxcomplexity:10*/
+        /*eslint complexity:0*/
         var message = f("Wait timeout occured (%dms)", timeout);
         details = details || {};
 
@@ -285,6 +283,55 @@ Tester.prototype.skip = function skip(nb, message) {
         number: nb,
         skipped: true
     });
+};
+
+/**
+ * Skip `nb` test on specific engine(s).
+ *
+ * A skip specifier is an object of the form:
+ * {
+ *     name: 'casperjs' | 'phantomjs',
+ *     version: {
+ *         min:   Object,
+ *         max:   Object
+ *     },
+ *     message: String
+ * }
+ *
+ * Minimal and maximal versions to be skipped are determined using
+ * utils.matchEngine.
+ *
+ * @param  Integer  nb        Number of tests to skip
+ * @param  Mixed    skipSpec  a single skip specifier object or
+ *                            an Array of skip specifier objects
+ * @return Object
+ */
+Tester.prototype.skipIfEngine = function skipIfEngine(nb, skipSpec) {
+    skipSpec = utils.matchEngine(skipSpec);
+    if (skipSpec) {
+        var message = skipSpec.name;
+        var version = skipSpec.version;
+        var skipMessage = skipSpec.message;
+        if (version) {
+            var min = version.min;
+            var max = version.max;
+            if (min && min === max) {
+                message += ' ' + min;
+            } else {
+                if (min) {
+                    message += ' from ' + min;
+                }
+                if (max) {
+                    message += ' to ' + max;
+                }
+            }
+        }
+        if (skipMessage) {
+            message += ' ' + skipMessage;
+        }
+        return this.skip(nb, message);
+    }
+    return false;
 };
 
 /**
@@ -450,7 +497,6 @@ Tester.prototype.assertEvalEqual = function assertEvalEquals(fn, expected, messa
 };
 
 function baseFieldAssert(inputName, expected, actual, message) {
-    /*jshint validthis:true */
     "use strict";
 
     return this.assert(utils.equals(actual, expected),  message, {
@@ -777,7 +823,7 @@ Tester.prototype.assertTextExist = function assertTextExists(text, message) {
  */
 Tester.prototype.assertTruthy = function assertTruthy(subject, message) {
     "use strict";
-    /*jshint eqeqeq:false*/
+    /*eslint eqeqeq:0*/
     return this.assert(utils.isTruthy(subject), message, {
         type: "assertTruthy",
         standard: "Subject is truthy",
@@ -796,7 +842,7 @@ Tester.prototype.assertTruthy = function assertTruthy(subject, message) {
  */
 Tester.prototype.assertFalsy = function assertFalsy(subject, message) {
     "use strict";
-    /*jshint eqeqeq:false*/
+    /*eslint eqeqeq:0*/
     return this.assert(utils.isFalsy(subject), message, {
         type: "assertFalsy",
         standard: "Subject is falsy",
@@ -1134,7 +1180,7 @@ Tester.prototype.comment = function comment(message) {
  */
 Tester.prototype.done = function done() {
     "use strict";
-    /*jshint maxstatements:20, maxcomplexity:20*/
+    /*eslint max-statements:0, complexity:0*/
     var planned, config = this.currentSuite && this.currentSuite.config || {};
 
     if (arguments.length && utils.isNumber(arguments[0])) {
@@ -1340,15 +1386,15 @@ function getStackEntry(error, testFile) {
     if (! ('stack' in error))
         return null;
 
-    var r = /^\s*(.*)@(.*):(\d+)\s*$/gm;
+    var r = /\r?\n\s*(.*?)(at |@)([^:]*?):(\d+):?(\d*)/g;
     var m;
     while ((m = r.exec(error.stack))) {
-        var sourceURL = m[2];
+        var sourceURL = m[3];
         if (sourceURL.indexOf('->') !== -1) {
             sourceURL = sourceURL.split('->')[1].trim();
         }
         if (sourceURL === testFile) {
-            return { sourceURL: sourceURL, line: m[3]}
+            return { sourceURL: sourceURL, line: m[4], column: m[5]};
         }
     }
     return null;
@@ -1490,7 +1536,7 @@ Tester.prototype.renderFailureDetails = function renderFailureDetails() {
  */
 Tester.prototype.renderResults = function renderResults(exit, status, save) {
     "use strict";
-    /*jshint maxstatements:25*/
+    /*eslint max-statements:0*/
     save = save || this.options.save;
     var exitStatus = 0,
         failed = this.suiteResults.countFailed(),
@@ -1959,13 +2005,14 @@ TestCaseResult.prototype.addSkip = function addSkip(skipped, time) {
 
 
 /**
- * Adds a warning record.
+ * Adds a warning message.
+ * NOTE: quite contrary to addError, addSuccess, and addSkip
+ * this adds a String value, NOT an Object
  *
- * @param Object  warning
+ * @param String  warning
  */
 TestCaseResult.prototype.addWarning = function addWarning(warning) {
     "use strict";
-    warning.suite = this.name;
     this.warnings.push(warning);
 };
 
