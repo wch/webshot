@@ -54,6 +54,7 @@ exports.create = function create(type) {
  */
 var Colorizer = function Colorizer() {
     "use strict";
+    /*eslint no-multi-spaces:0*/
     var options    = { bold: 1, underscore: 4, blink: 5, reverse: 7, conceal: 8 };
     var foreground = { black: 30, red: 31, green: 32, yellow: 33, blue: 34, magenta: 35, cyan: 36, white: 37 };
     var background = { black: 40, red: 41, green: 42, yellow: 43, blue: 44, magenta: 45, cyan: 46, white: 47 };
@@ -80,7 +81,7 @@ var Colorizer = function Colorizer() {
      * @return  String
      */
     this.colorize = function colorize(text, styleName, pad) {
-        if ((fs.isWindows() && !env['ANSICON']) || !(styleName in styles)) {
+        if ((fs.isWindows() && (!env['ANSICON'] && env['ConEmuANSI'] !== 'ON')) || !(styleName in styles)) {
             return text;
         }
         return this.format(text, styles[styleName], pad);
@@ -94,7 +95,7 @@ var Colorizer = function Colorizer() {
      * @return String
      */
     this.format = function format(text, style, pad) {
-        if ((fs.isWindows() && !env['ANSICON']) || !utils.isObject(style)) {
+        if ((fs.isWindows() && (!env['ANSICON'] && env['ConEmuANSI'] !== 'ON')) || !utils.isObject(style)) {
             return text;
         }
         var codes = [];
