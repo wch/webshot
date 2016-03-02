@@ -65,7 +65,7 @@ appshot.character <- function(app, file = "webshot.png", ...,
     pid <- readLines(pidfile, warn = FALSE)
     file.remove(pidfile)
     res <- if (is_windows()) {
-      system2("taskkill", c("/pid", pid))
+      system2("taskkill", c("/pid", pid, "/f"))
     } else {
       system2("kill", pid)
     }
