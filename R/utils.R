@@ -34,3 +34,18 @@ dropNulls <- function(x) {
 }
 
 is_windows <- function() .Platform$OS.type == "windows"
+
+# Find an available TCP port (to launch Shiny apps)
+available_port <- function(port) {
+  if (!is.null(port)) return(port)
+  for (p in sample(3000:8000, 20)) {
+    tmp <- try(httpuv::startServer('127.0.0.1', p, list()), silent = TRUE)
+    if (!inherits(tmp, 'try-error')) {
+      httpuv::stopServer(tmp)
+      port <- p
+      break
+    }
+  }
+  if (is.null(port)) stop("Cannot find an available port")
+  port
+}

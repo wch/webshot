@@ -7,6 +7,8 @@ Depends:
     R (>= 3.0)
 Imports:
     magrittr
+Suggests:
+    httpuv
 License: GPL-2
 SystemRequirements: PhantomJS (http://phantomjs.org) for taking screenshots,
     ImageMagick (http://www.imagemagick.org) or GraphicsMagick

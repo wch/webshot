@@ -17,23 +17,24 @@
 #' }
 #'
 #' @export
-appshot <- function(app, file = "webshot.png", ..., port = 9000,
-                    envvars = NULL) {
+appshot <- function(app, file = "webshot.png", ...,
+                    port = getOption("shiny.port"), envvars = NULL) {
   UseMethod("appshot")
 }
 
 #' @export
-appshot.shiny.appobj <- function(app, file = "webshot.png", ..., port = 9000,
-                                 envvars = NULL) {
+appshot.shiny.appobj <- function(app, file = "webshot.png", ...,
+                                 port = getOption("shiny.port"), envvars = NULL) {
   stop("appshot of Shiny app objects is not yet supported.")
   # This would require running the app object in this R process
 }
 
 #' @export
-appshot.character <- function(app, file = "webshot.png", ..., port = 9000,
-                              envvars = NULL) {
+appshot.character <- function(app, file = "webshot.png", ...,
+                              port = getOption("shiny.port"), envvars = NULL) {
   pidfile <- tempfile("pid")
   on.exit(unlink(pidfile))
+  port <- available_port(port)
   cmd <- 'cat(Sys.getpid(), file="%s"); shiny::runApp("%s", port=%d, display.mode="normal")'
   cmd <- shQuote(sprintf(cmd, pidfile, app, port))
 
