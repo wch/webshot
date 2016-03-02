@@ -20,11 +20,9 @@ the last step. Otherwise, if the resizing happens after file shrinking, it
 will be as if the shrinking didn't happen at all.
 }
 \examples{
-\donttest{
-# Can be chained with webshot() or appshot()
-webshot("http://www.google.com/", "google-small.png") \%>\%
- resize("75\%") \%>\%
- shrink()
+if (interactive()) {
+  webshot("http://www.google.com/", "google-shrink.png") \%>\%
+    shrink()
 }
 }
 

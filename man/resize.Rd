@@ -19,16 +19,14 @@ appearance -- it is lossless compression. This requires GraphicsMagick
 (recommended) or ImageMagick to be installed.
 }
 \examples{
-\donttest{
-# Can be chained with webshot() or appshot()
-webshot("http://www.google.com/", "google-small.png") \%>\%
- resize("75\%") \%>\%
- shrink()
+if (interactive()) {
+  # Can be chained with webshot() or appshot()
+  webshot("http://www.google.com/", "google-small-1.png") \%>\%
+    resize("75\%")
 
-# Generate image that is 400 pixels wide
-webshot("http://www.google.com/", "google-small.png") \%>\%
- resize("400x") \%>\%
- shrink()
+  # Generate image that is 400 pixels wide
+  webshot("http://www.google.com/", "google-small-2.png") \%>\%
+    resize("400x")
 }
 }
 

@@ -4,7 +4,8 @@
 \alias{appshot}
 \title{Take a screenshot of a Shiny app}
 \usage{
-appshot(app, file = "webshot.png", ..., port = 9000, envvars = NULL)
+appshot(app, file = "webshot.png", ..., port = getOption("shiny.port"),
+  envvars = NULL)
 }
 \arguments{
 \item{app}{A Shiny app object, or a string naming an app directory.}
@@ -25,9 +26,9 @@ information to a Shiny app.}
 Take a screenshot of a Shiny app
 }
 \examples{
-\donttest{
-appdir <- system.file("examples", "01_hello", package="shiny")
-appshot(appdir, "01_hello.png")
+if (interactive()) {
+  appdir <- system.file("examples", "01_hello", package="shiny")
+  appshot(appdir, "01_hello.png")
 }
 
 }
