@@ -1,0 +1,95 @@
+---
+title: "An Introduction to the webshot Package"
+author: "Winston Chang and Yihui Xie"
+date: "`r Sys.Date()`"
+output: knitr:::html_vignette
+vignette: >
+  %\VignetteIndexEntry{An Introduction to the webshot Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+
+```{r setup, include=FALSE}
+# Exit early if PhantomJS is not found
+if (webshot:::find_phantom() == "") knitr::knit_exit()
+
+knitr::opts_chunk$set(tidy = FALSE)
+
+# Default image paths
+fig_path <- local({
+  i <- 0
+  path <- knitr::opts_chunk$get('fig.path')
+  function() {
+    i <<- i + 1
+    paste0(path, 'webshot', i, '.png')
+  }
+})
+
+# A hack to automatically include the webshot output as images in R Markdown
+webshot <- function(..., file = fig_path()) {
+  opts <- knitr::opts_current$get()
+  if (is.null(opts)) {
+    vwidth <- 992; vheight <- 744
+  } else {
+    vwidth <- opts$fig.width * opts$dpi
+    vheight <- opts$fig.height * opts$dpi
+  }
+  knitr::include_graphics(
+    webshot::webshot(..., file = file, vwidth = vwidth, vheight = vheight)
+  )
+}
+```
+
+```{r fig.width=9, fig.align='center'}
+URL <- "http://rstudio.github.io/leaflet/"
+# Might need a longer delay for all assets to display
+webshot(URL, delay = 0.5)
+
+# Clip to the viewport
+webshot(URL, cliprect = "viewport")
+
+# Manual clipping rectangle
+webshot(URL, cliprect = c(200, 5, 400, 300))
+
+# Using CSS selectors to pick out regions
+webshot(URL, selector = ".list-group")
+webshot(URL, selector = c("#features", "#installation"))
+
+# Expand selection region
+webshot(URL, selector = "#installation", expand = c(10, 50, 0, 50))
+
+# If multiple matches for a given selector, it uses the first match
+webshot(URL, selector = "p")
+webshot("https://github.com/rstudio/shiny/", selector = "ul.numbers-summary")
+```
+
+```{r eval=FALSE}
+# Send commands to eval
+webshot("http://www.reddit.com/", "reddit-input.png",
+  selector = c("#search", "#login_login-main"),
+  eval = "casper.then(function() {
+    // Check the remember me box
+    this.click('#rem-login-main');
+    // Enter username and password
+    this.sendKeys('#login_login-main input[type=\"text\"]', 'my_username');
+    this.sendKeys('#login_login-main input[type=\"password\"]', 'password');
+
+    // Now click in the search box. This results in a box expanding below
+    this.click('#search input[type=\"text\"]');
+    // Wait 500ms
+    this.wait(500);
+  });"
+)
+```
+
+
+
+```{r eval=FALSE}
+# Result can be piped to other commands like resize() and shrink()
+webshot("http://www.google.com/", "google-small.png") %>%
+ resize("75%") %>%
+ shrink()
+```
+

@@ -29,61 +29,11 @@
 #'   This is experimental and likely to change!
 #'
 #' @examples
-#' \donttest{
-#' # Whole web page
-#' webshot("http://www.rstudio.com/")
+#' if (interactive()) webshot("https://github.com/rstudio/shiny")
 #'
-#' # Might need a longer delay for all assets to display
-#' webshot("http://www.rstudio.com/", delay = 0.5)
-#'
-#' # Clip to the viewport
-#' webshot("http://www.rstudio.com/", "rstudio-viewport.png",
-#'         cliprect = "viewport")
-#'
-#' # Manual clipping rectangle
-#' webshot("http://www.rstudio.com/", "rstudio-clip.png",
-#'         cliprect = c(510, 5, 290, 350))
-#'
-#' # Using CSS selectors to pick out regions
-#' webshot("http://www.rstudio.com/", "rstudio-header.png", selector = "#header")
-#' webshot("http://reddit.com/", "reddit-top.png",
-#'         selector = c("input[type='text']", "#header-bottom-left"))
-#'
-#' # Expand selection region
-#' webshot("http://rstudio.com/", "rstudio-boxes.png",
-#'         selector = "#content-boxes-1",
-#'         expand = c(40, 10, 0, 10))
-#'
-#' # If multiple matches for a given selector, it uses the first match
-#' webshot("http://www.rstudio.com/", "rstudio-block.png", selector = "article.col")
-#' webshot("https://github.com/rstudio/shiny/", "shiny-stats.png",
-#'          selector = "ul.numbers-summary")
-#'
-#'
-#' # Send commands to eval
-#' webshot("http://www.reddit.com/", "reddit-input.png",
-#'   selector = c("#search", "#login_login-main"),
-#'   eval = "casper.then(function() {
-#'     // Check the remember me box
-#'     this.click('#rem-login-main');
-#'     // Enter username and password
-#'     this.sendKeys('#login_login-main input[type=\"text\"]', 'my_username');
-#'     this.sendKeys('#login_login-main input[type=\"password\"]', 'password');
-#'
-#'     // Now click in the search box. This results in a box expanding below
-#'     this.click('#search input[type=\"text\"]');
-#'     // Wait 500ms
-#'     this.wait(500);
-#'   });"
-#' )
-#'
-#' # Result can be piped to other commands like resize() and shrink()
-#' webshot("http://www.google.com/", "google-small.png") %>%
-#'  resize("75%") %>%
-#'  shrink()
-#' }
-#'
-#' @seealso \code{\link{webshot}} for taking screenshots of Shiny applications.
+#' # See more examples in the package vignette
+#' vignette("intro", package = "webshot")
+#' @seealso \code{\link{appshot}} for taking screenshots of Shiny applications.
 #' @export
 webshot <- function(
   url = NULL,

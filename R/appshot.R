@@ -11,9 +11,9 @@
 #' @param ... Other arguments to pass on to \code{\link{webshot}}.
 #'
 #' @examples
-#' \donttest{
-#' appdir <- system.file("examples", "01_hello", package="shiny")
-#' appshot(appdir, "01_hello.png")
+#' if (interactive()) {
+#'   appdir <- system.file("examples", "01_hello", package="shiny")
+#'   appshot(appdir, "01_hello.png")
 #' }
 #'
 #' @export
