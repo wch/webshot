@@ -17,7 +17,7 @@ find_phantom <- function() {
   phantom_path <-  if (Sys.which( "phantomjs" ) == "") {
     # if it does not find Sys.which('bower')
     # also check APPDATA to see if found there
-    if( identical(.Platform$OS.type, "windows") ) {
+    if (is_windows()) {
       Sys.which( file.path(Sys.getenv("APPDATA"), "npm", "phantomjs.cmd") )
     }
   } else {
@@ -32,3 +32,5 @@ find_phantom <- function() {
 dropNulls <- function(x) {
   x[!vapply(x, is.null, FUN.VALUE=logical(1))]
 }
+
+is_windows <- function() .Platform$OS.type == "windows"
