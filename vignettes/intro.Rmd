@@ -32,7 +32,7 @@ fig_path <- local({
 })
 
 # A hack to automatically include the webshot output as images in R Markdown
-webshot <- function(..., file = fig_path()) {
+shot <- function(..., file = fig_path(), FUN) {
   opts <- knitr::opts_current$get()
   if (is.null(opts)) {
     vwidth <- 992; vheight <- 744
@@ -41,9 +41,11 @@ webshot <- function(..., file = fig_path()) {
     vheight <- opts$fig.height * opts$dpi
   }
   knitr::include_graphics(
-    webshot::webshot(..., file = file, vwidth = vwidth, vheight = vheight)
+    FUN(..., file = file, vwidth = vwidth, vheight = vheight)
   )
 }
+webshot <- function(...) shot(..., FUN = webshot::webshot)
+appshot <- function(...) shot(..., FUN = webshot::appshot)
 ```
 
 The main function in this package is `webshot()`. Below are some examples of taking screenshots of the website http://rstudio.github.io/leaflet/:
@@ -91,6 +93,13 @@ webshot("http://www.reddit.com/", "reddit-input.png",
     this.wait(500);
   });"
 )
+```
+
+You can also take screenshots of Shiny apps using the `appshot()` function, e.g.
+
+```{r fig.align='center'}
+appdir <- system.file("examples", "01_hello", package="shiny")
+appshot(appdir, delay = 3)
 ```
 
 There are two functions `resize()` and `shrink()` to manipulate images, which require GraphicsMagick (or ImageMagick) and OptiPNG, respectively. A simple example:
