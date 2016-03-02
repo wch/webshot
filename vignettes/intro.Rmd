@@ -1,6 +1,6 @@
 ---
 title: "An Introduction to the webshot Package"
-author: "Winston Chang and Yihui Xie"
+author: "Winston Chang"
 date: "`r Sys.Date()`"
 output: knitr:::html_vignette
 vignette: >
@@ -9,11 +9,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+The [**webshot**](https://github.com/wch/webshot) package makes it easy to take screenshots of web pages from R. It requires an installation of the external program [PhantomJS](http://phantomjs.org) (Windows users need to make the executable `phantomjs.exe` can be found from the `PATH` variable, i.e. `Sys.getenv('PATH')`; OS X users may install PhantomJS from Homebrew).
 
-
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, warning=FALSE}
+library(webshot)
 # Exit early if PhantomJS is not found
-if (webshot:::find_phantom() == "") knitr::knit_exit()
+if (webshot:::find_phantom() == "") {
+  warning('PhantomJS is not found. This vignette will terminate from here.')
+  knitr::knit_exit()
+}
 
 knitr::opts_chunk$set(tidy = FALSE)
 
@@ -42,7 +46,10 @@ webshot <- function(..., file = fig_path()) {
 }
 ```
 
+The main function in this package is `webshot()`. Below are some examples of taking screenshots of the website http://rstudio.github.io/leaflet/:
+
 ```{r fig.width=9, fig.align='center'}
+library(webshot)
 URL <- "http://rstudio.github.io/leaflet/"
 # Might need a longer delay for all assets to display
 webshot(URL, delay = 0.5)
@@ -65,6 +72,8 @@ webshot(URL, selector = "p")
 webshot("https://github.com/rstudio/shiny/", selector = "ul.numbers-summary")
 ```
 
+If you are familiar with JavaScript, you may run some JavaScript code on the page before taking the screenshot. Here is an example of logging into reddit:
+
 ```{r eval=FALSE}
 # Send commands to eval
 webshot("http://www.reddit.com/", "reddit-input.png",
@@ -84,7 +93,7 @@ webshot("http://www.reddit.com/", "reddit-input.png",
 )
 ```
 
-
+There are two functions `resize()` and `shrink()` to manipulate images, which require GraphicsMagick (or ImageMagick) and OptiPNG, respectively. A simple example:
 
 ```{r eval=FALSE}
 # Result can be piped to other commands like resize() and shrink()
@@ -92,4 +101,3 @@ webshot("http://www.google.com/", "google-small.png") %>%
  resize("75%") %>%
  shrink()
 ```
-
