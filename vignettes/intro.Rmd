@@ -14,7 +14,7 @@ The [**webshot**](https://github.com/wch/webshot) package makes it easy to take 
 ```{r setup, include=FALSE, warning=FALSE}
 library(webshot)
 # Exit early if PhantomJS is not found
-if (inherits(webshot:::find_phantom(), "try-error")) {
+if (inherits(try(webshot:::find_phantom()), "try-error")) {
   warning('PhantomJS is not found. This vignette will terminate from here.')
   knitr::knit_exit()
 }
