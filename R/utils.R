@@ -18,8 +18,8 @@ find_phantom <- function() {
     if (utils::file_test("-x", path)) break else path <- ""
   }
   if (path == "") {
-    stop("PhantomJS not found. You may try webshot::install_phantomjs() ",
-         "if it is not installed, otherwise make sure the phantomjs executable ",
+    stop("PhantomJS not found. You can install it with webshot::install_phantomjs(). ",
+         "If it is installed, please make sure the phantomjs executable ",
          "can be found via the PATH variable.")
   }
   path
