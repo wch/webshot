@@ -21,35 +21,35 @@ By default, `webshot` will use a 992x744 pixel viewport (a virtual browser windo
 
 ```R
 library(webshot)
-webshot("http://www.rstudio.com/", "rstudio.png")
-webshot("http://www.rstudio.com/", "rstudio.pdf") # Can also output to PDF
+webshot("https://www.r-project.org/", "r.png")
+webshot("https://www.r-project.org/", "r.pdf") # Can also output to PDF
 ```
 
 You can clip it to just the viewport region:
 
 ```R
-webshot("http://www.rstudio.com/", "rstudio-viewport.png", cliprect = "viewport")
+webshot("https://www.r-project.org/", "r-viewport.png", cliprect = "viewport")
 ```
 
 You can also get screenshots of a portion of a web page using CSS selectors. If there are multiple matches for the CSS selector, it will use the first match.
 
 ```R
-webshot("http://www.rstudio.com/", "rstudio-header.png", selector = "#header")
+webshot("https://www.r-project.org/", "r-sidebar.png", selector = ".sidebar")
 ```
 
 If you supply multiple CSS selectors, it will take a screenshot containing all of the selected items.
 
 ```R
-webshot("http://rstudio.com/", "rstudio-selectors.png",
-        selector = c(".header-v1", "#content-boxes-1")))
+webshot("https://www.r-project.org/", "r-selectors.png",
+        selector = c("#getting-started", "#news"))
 ```
 
 The clipping rectangle can be expanded to capture some area outside the selected items:
 
 ```R
-webshot("http://rstudio.com/", "rstudio-boxes.png",
-        selector = "#content-boxes-1",
-        expand = c(40, 10, 0, 10))
+webshot("https://www.r-project.org/", "r-expand.png",
+        selector = "#getting-started",
+        expand = c(40, 20, 40, 20))
 ```
 
 
