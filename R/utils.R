@@ -47,7 +47,7 @@ find_phantom <- function() {
 #' @return \code{NULL} (the executable is written to a system directory).
 #' @export
 install_phantomjs <- function(version = '2.1.1') {
-  dirs <- phantom_paths(create = TRUE)
+  dirs <- phantom_paths()
 
   owd <- setwd(tempdir())
   on.exit(setwd(owd), add = TRUE)
