@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The [**webshot**](https://github.com/wch/webshot) package makes it easy to take screenshots of web pages from R. It requires an installation of the external program [PhantomJS](http://phantomjs.org) (Windows users need to make the executable `phantomjs.exe` can be found from the `PATH` variable, i.e. `Sys.getenv('PATH')`; OS X users may install PhantomJS from Homebrew).
+The [**webshot**](https://github.com/wch/webshot) package makes it easy to take screenshots of web pages from R. It requires an installation of the external program [PhantomJS](http://phantomjs.org) (Windows users may use `webshot::install_phantomjs()` to install PhantomJS; OS X users may install it from Homebrew: `brew install phantomjs`).
 
 ```{r setup, include=FALSE, warning=FALSE}
 library(webshot)
