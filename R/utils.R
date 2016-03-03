@@ -65,7 +65,7 @@ install_phantomjs <- function(version = '2.1.1') {
   utils::unzip(zipfile)
   zipdir <- sub('.zip$', '', zipfile)
   file.copy(file.path(zipdir, 'bin', 'phantomjs.exe'), destdir, overwrite = TRUE)
-  message('phantomjs.exe has been installed to ', destdir)
+  message('phantomjs.exe has been installed to ', normalizePath(destdir))
   unlink(c(zipdir, zipfile), recursive = TRUE)
   invisible()
 }
