@@ -32,7 +32,7 @@ appshot.shiny.appobj <- function(app, file = "webshot.png", ...,
 #' @export
 appshot.character <- function(app, file = "webshot.png", ...,
                               port = getOption("shiny.port"), envvars = NULL) {
-  pidfile <- tempfile("pid")
+  pidfile <- normalizePath(tempfile("pid"), winslash = '/', mustWork = FALSE)
   on.exit(unlink(pidfile))
   port <- available_port(port)
   cmd <- "cat(Sys.getpid(), file='%s'); shiny::runApp('%s', port=%d, display.mode='normal')"
