@@ -1,10 +1,24 @@
 Package: webshot
-Title: Takes screenshots of web pages, including Shiny apps
-Version: 0.2.1
-Authors@R: "Winston Chang <winston@rstudio.com> [aut, cre]"
+Title: Take Screenshots of Web Pages
+Version: 0.3
+Authors@R: c(
+    person("Winston", "Chang", email = "winston@rstudio.com", role = c("aut", "cre")),
+    person("Yihui", "Xie", role = "ctb"),
+    person("Nicolas", "Perriault", role = "ctb", comment = "The CasperJS library")
+    )
 Description: Takes screenshots of web pages, including Shiny applications.
 Depends:
     R (>= 3.0)
 Imports:
     magrittr
+Suggests:
+    httpuv,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
 License: GPL-2
+SystemRequirements: PhantomJS (http://phantomjs.org) for taking screenshots,
+    ImageMagick (http://www.imagemagick.org) or GraphicsMagick
+    (http://www.graphicsmagick.org) and OptiPNG (http://optipng.sourceforge.net)
+    for manipulating images.
+RoxygenNote: 5.0.1

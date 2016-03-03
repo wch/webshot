@@ -1,0 +1,112 @@
+---
+title: "An Introduction to the webshot Package"
+author: "Winston Chang"
+date: "`r Sys.Date()`"
+output: knitr:::html_vignette
+vignette: >
+  %\VignetteIndexEntry{An Introduction to the webshot Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The [**webshot**](https://github.com/wch/webshot) package makes it easy to take screenshots of web pages from R. It requires an installation of the external program [PhantomJS](http://phantomjs.org) (Windows users may use `webshot::install_phantomjs()` to install PhantomJS; OS X users may install it from Homebrew: `brew install phantomjs`).
+
+```{r setup, include=FALSE, warning=FALSE}
+library(webshot)
+# Exit early if PhantomJS is not found
+if (webshot:::find_phantom() == "") {
+  warning('PhantomJS is not found. This vignette will terminate from here.')
+  knitr::knit_exit()
+}
+
+knitr::opts_chunk$set(tidy = FALSE)
+
+# Default image paths
+fig_path <- local({
+  i <- 0
+  path <- knitr::opts_chunk$get('fig.path')
+  function() {
+    i <<- i + 1
+    paste0(path, 'webshot', i, '.png')
+  }
+})
+
+# A hack to automatically include the webshot output as images in R Markdown
+shot <- function(..., file = fig_path(), FUN) {
+  opts <- knitr::opts_current$get()
+  if (is.null(opts)) {
+    vwidth <- 992; vheight <- 744
+  } else {
+    vwidth <- opts$fig.width * opts$dpi
+    vheight <- opts$fig.height * opts$dpi
+  }
+  knitr::include_graphics(
+    FUN(..., file = file, vwidth = vwidth, vheight = vheight)
+  )
+}
+webshot <- function(...) shot(..., FUN = webshot::webshot)
+appshot <- function(...) shot(..., FUN = webshot::appshot)
+```
+
+The main function in this package is `webshot()`. Below are some examples of taking screenshots of the website http://rstudio.github.io/leaflet/:
+
+```{r fig.width=9, fig.align='center'}
+library(webshot)
+URL <- "http://rstudio.github.io/leaflet/"
+# Might need a longer delay for all assets to display
+webshot(URL, delay = 0.5)
+
+# Clip to the viewport
+webshot(URL, cliprect = "viewport")
+
+# Manual clipping rectangle
+webshot(URL, cliprect = c(200, 5, 400, 300))
+
+# Using CSS selectors to pick out regions
+webshot(URL, selector = ".list-group")
+webshot(URL, selector = c("#features", "#installation"))
+
+# Expand selection region
+webshot(URL, selector = "#installation", expand = c(10, 50, 0, 50))
+
+# If multiple matches for a given selector, it uses the first match
+webshot(URL, selector = "p")
+webshot("https://github.com/rstudio/shiny/", selector = "ul.numbers-summary")
+```
+
+If you are familiar with JavaScript, you may run some JavaScript code on the page before taking the screenshot. Here is an example of logging into reddit:
+
+```{r eval=FALSE}
+# Send commands to eval
+webshot("http://www.reddit.com/", "reddit-input.png",
+  selector = c("#search", "#login_login-main"),
+  eval = "casper.then(function() {
+    // Check the remember me box
+    this.click('#rem-login-main');
+    // Enter username and password
+    this.sendKeys('#login_login-main input[type=\"text\"]', 'my_username');
+    this.sendKeys('#login_login-main input[type=\"password\"]', 'password');
+
+    // Now click in the search box. This results in a box expanding below
+    this.click('#search input[type=\"text\"]');
+    // Wait 500ms
+    this.wait(500);
+  });"
+)
+```
+
+You can also take screenshots of Shiny apps using the `appshot()` function, e.g.
+
+```{r fig.align='center'}
+appdir <- system.file("examples", "01_hello", package="shiny")
+appshot(appdir, delay = 3)
+```
+
+There are two functions `resize()` and `shrink()` to manipulate images, which require GraphicsMagick (or ImageMagick) and OptiPNG, respectively. A simple example:
+
+```{r eval=FALSE}
+# Result can be piped to other commands like resize() and shrink()
+webshot("http://www.google.com/", "google-small.png") %>%
+ resize("75%") %>%
+ shrink()
+```

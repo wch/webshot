@@ -11,30 +11,31 @@
 #' @param ... Other arguments to pass on to \code{\link{webshot}}.
 #'
 #' @examples
-#' \donttest{
-#' appdir <- system.file("examples", "01_hello", package="shiny")
-#' appshot(appdir, "01_hello.png")
+#' if (interactive()) {
+#'   appdir <- system.file("examples", "01_hello", package="shiny")
+#'   appshot(appdir, "01_hello.png")
 #' }
 #'
 #' @export
-appshot <- function(app, file = "webshot.png", ..., port = 9000,
-                    envvars = NULL) {
+appshot <- function(app, file = "webshot.png", ...,
+                    port = getOption("shiny.port"), envvars = NULL) {
   UseMethod("appshot")
 }
 
 #' @export
-appshot.shiny.appobj <- function(app, file = "webshot.png", ..., port = 9000,
-                                 envvars = NULL) {
+appshot.shiny.appobj <- function(app, file = "webshot.png", ...,
+                                 port = getOption("shiny.port"), envvars = NULL) {
   stop("appshot of Shiny app objects is not yet supported.")
   # This would require running the app object in this R process
 }
 
 #' @export
-appshot.character <- function(app, file = "webshot.png", ..., port = 9000,
-                              envvars = NULL) {
+appshot.character <- function(app, file = "webshot.png", ...,
+                              port = getOption("shiny.port"), envvars = NULL) {
   pidfile <- tempfile("pid")
   on.exit(unlink(pidfile))
-  cmd <- 'cat(Sys.getpid(), file="%s"); shiny::runApp("%s", port=%d, display.mode="normal")'
+  port <- available_port(port)
+  cmd <- "cat(Sys.getpid(), file='%s'); shiny::runApp('%s', port=%d, display.mode='normal')"
   cmd <- shQuote(sprintf(cmd, pidfile, app, port))
 
   # Save existing env vars and set new ones
@@ -63,7 +64,11 @@ appshot.character <- function(app, file = "webshot.png", ..., port = 9000,
     # Kill app on exit
     pid <- readLines(pidfile, warn = FALSE)
     file.remove(pidfile)
-    res <- system2("kill", pid)
+    res <- if (is_windows()) {
+      system2("taskkill", c("/pid", pid, "/f"))
+    } else {
+      system2("kill", pid)
+    }
     if (res != 0) {
       stop(sprintf("`kill %s` didn't return success code. Value: %d", pid, res))
     }

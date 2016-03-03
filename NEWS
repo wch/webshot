@@ -1,4 +1,6 @@
-webshot 0.2.1
+webshot 0.3
 --------------------------------------------------------------------------------
 
-* Better Windows support. (#9, #11. Thanks to @timelyportfolio and @hoxo-m)
+* The first CRAN release. Provided functions webshot()/appshot() to take
+  screenshots via PhantomJS, and resize()/shrink() to manipulate images via
+  GraphicsMagick/ImageMagick and OptiPNG.

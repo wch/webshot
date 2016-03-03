@@ -29,36 +29,35 @@
 #'   This is experimental and likely to change!
 #'
 #' @examples
-#' \donttest{
+#' if (interactive()) {
+#'
 #' # Whole web page
-#' webshot("http://www.rstudio.com/")
+#' webshot("https://github.com/rstudio/shiny")
 #'
 #' # Might need a longer delay for all assets to display
-#' webshot("http://www.rstudio.com/", delay = 0.5)
+#' webshot("http://rstudio.github.io/leaflet", delay = 0.5)
 #'
 #' # Clip to the viewport
-#' webshot("http://www.rstudio.com/", "rstudio-viewport.png",
+#' webshot("http://rstudio.github.io/leaflet", "leaflet-viewport.png",
 #'         cliprect = "viewport")
 #'
 #' # Manual clipping rectangle
-#' webshot("http://www.rstudio.com/", "rstudio-clip.png",
-#'         cliprect = c(510, 5, 290, 350))
+#' webshot("http://rstudio.github.io/leaflet", "leaflet-clip.png",
+#'         cliprect = c(200, 5, 400, 300))
 #'
 #' # Using CSS selectors to pick out regions
-#' webshot("http://www.rstudio.com/", "rstudio-header.png", selector = "#header")
+#' webshot("http://rstudio.github.io/leaflet", "leaflet-menu.png", selector = ".list-group")
 #' webshot("http://reddit.com/", "reddit-top.png",
 #'         selector = c("input[type='text']", "#header-bottom-left"))
 #'
 #' # Expand selection region
-#' webshot("http://rstudio.com/", "rstudio-boxes.png",
-#'         selector = "#content-boxes-1",
-#'         expand = c(40, 10, 0, 10))
+#' webshot("http://rstudio.github.io/leaflet", "leaflet-boxes.png",
+#'         selector = "#installation", expand = c(10, 50, 0, 50))
 #'
 #' # If multiple matches for a given selector, it uses the first match
-#' webshot("http://www.rstudio.com/", "rstudio-block.png", selector = "article.col")
+#' webshot("http://rstudio.github.io/leaflet", "leaflet-p.png", selector = "p")
 #' webshot("https://github.com/rstudio/shiny/", "shiny-stats.png",
 #'          selector = "ul.numbers-summary")
-#'
 #'
 #' # Send commands to eval
 #' webshot("http://www.reddit.com/", "reddit-input.png",
@@ -81,9 +80,12 @@
 #' webshot("http://www.google.com/", "google-small.png") %>%
 #'  resize("75%") %>%
 #'  shrink()
+#'
 #' }
 #'
-#' @seealso \code{\link{webshot}} for taking screenshots of Shiny applications.
+#' # See more examples in the package vignette
+#' vignette("intro", package = "webshot")
+#' @seealso \code{\link{appshot}} for taking screenshots of Shiny applications.
 #' @export
 webshot <- function(
   url = NULL,

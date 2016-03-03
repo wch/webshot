@@ -10,16 +10,14 @@
 #'   Any valid ImageMagick geometry specifation can be used.
 #'
 #' @examples
-#' \donttest{
-#' # Can be chained with webshot() or appshot()
-#' webshot("http://www.google.com/", "google-small.png") %>%
-#'  resize("75%") %>%
-#'  shrink()
+#' if (interactive()) {
+#'   # Can be chained with webshot() or appshot()
+#'   webshot("http://www.google.com/", "google-small-1.png") %>%
+#'     resize("75%")
 #'
-#' # Generate image that is 400 pixels wide
-#' webshot("http://www.google.com/", "google-small.png") %>%
-#'  resize("400x") %>%
-#'  shrink()
+#'   # Generate image that is 400 pixels wide
+#'   webshot("http://www.google.com/", "google-small-2.png") %>%
+#'     resize("400x")
 #' }
 #' @export
 resize <- function(filename, geometry) {
@@ -58,11 +56,9 @@ resize <- function(filename, geometry) {
 #' @param filename Name of image to shrink. Must be a PNG file.
 #'
 #' @examples
-#' \donttest{
-#' # Can be chained with webshot() or appshot()
-#' webshot("http://www.google.com/", "google-small.png") %>%
-#'  resize("75%") %>%
-#'  shrink()
+#' if (interactive()) {
+#'   webshot("http://www.google.com/", "google-shrink.png") %>%
+#'     shrink()
 #' }
 #' @export
 shrink <- function(filename) {
