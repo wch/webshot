@@ -45,6 +45,7 @@ find_phantom <- function() {
 #' will have to install PhantomJS by yourself.
 #' @param version The version number of PhantomJS.
 #' @return \code{NULL} (the executable is written to a system directory).
+#' @import utils
 #' @export
 install_phantomjs <- function(version = '2.1.1') {
   owd <- setwd(tempdir())
