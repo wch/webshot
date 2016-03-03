@@ -77,8 +77,9 @@ install_phantomjs <- function(version = '2.1.1') {
     Sys.chmod(exec, '0755')  # chmod +x
   }
   success <- FALSE
-  dirs <- phantom_paths(create = TRUE)
+  dirs <- phantom_paths()
   for (destdir in dirs) {
+    dir.create(destdir, showWarnings = FALSE)
     success <- file.copy(exec, destdir, overwrite = TRUE)
     if (success) break
   }
@@ -92,7 +93,7 @@ install_phantomjs <- function(version = '2.1.1') {
 }
 
 # Possible locations of the PhantomJS executable
-phantom_paths <- function(create = FALSE) {
+phantom_paths <- function() {
   if (is_windows()) {
     path <- Sys.getenv('APPDATA', '')
     path <- if (dir_exists(path)) file.path(appdata, 'PhantomJS')
@@ -103,7 +104,6 @@ phantom_paths <- function(create = FALSE) {
     path <- '~/bin'
   }
   path <- c(path, system.file('PhantomJS', package = 'webshot'))
-  if (create) lapply(path, dir.create, showWarnings = FALSE)
   path
 }
 
