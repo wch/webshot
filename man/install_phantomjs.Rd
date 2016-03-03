@@ -15,9 +15,20 @@ install_phantomjs(version = "2.1.1")
 \description{
 Download the zip package, unzip it, and copy the executable to a system
 directory in which \pkg{webshot} can look for the PhantomJS executable.
-Currently this function only works for Windows. Mac OS X users are
-recommended to install PhantomJS via Homebrew. If you download the package
-from the PhantomJS website instead, please make sure the executable can be
-found via the \code{PATH} variable.
+}
+\details{
+This function was designed primarily to help Windows users since it is
+cumbersome to modify the \code{PATH} variable. Mac OS X users may install
+PhantomJS via Homebrew. If you download the package from the PhantomJS
+website instead, please make sure the executable can be found via the
+\code{PATH} variable.
+
+On Windows, the directory specified by the environment variable
+\code{APPDATA} is used to store \file{phantomjs.exe}. On OS X, the directory
+\file{~/Library/Application Support} is used. On other platforms (such as
+Linux), the directory \file{~/bin} is used. If these directories are not
+writable, the directory \file{PhantomJS} under the installation directory of
+the \pkg{webshot} package will be tried. If this directory still fails, you
+will have to install PhantomJS by yourself.
 }
 

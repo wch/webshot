@@ -1,9 +1,5 @@
 phantom_run <- function(args, wait = TRUE) {
   phantom_bin <- find_phantom()
-  if (phantom_bin == "") {
-    stop("phantomjs not found. phantomjs must be installed and in PATH. ",
-         if (is_windows()) "You may use install_phantomjs() to install it.")
-  }
 
   # Make sure args is a char vector
   args <- as.character(args)
@@ -12,63 +8,106 @@ phantom_run <- function(args, wait = TRUE) {
 }
 
 
-# Try really hard to find bower in Windows
+# Find PhantomJS from PATH, APPDATA, system.file('webshot'), ~/bin, etc
 find_phantom <- function() {
-  # a slightly more robust finder of bower for windows
-  # which does not require PATH environment variable to be set
-  phantom_path <-  if (Sys.which( "phantomjs" ) == "") {
-    # if it does not find Sys.which('bower')
-    # also check APPDATA to see if found there
-    if (is_windows()) {
-      appdata <- Sys.getenv('APPDATA', NA)
-      if (is.na(appdata)) "" else {
-        path <- file.path(appdata, "PhantomJS", "phantomjs.exe")
-        if (utils::file_test('-x', path)) path else {
-          Sys.which(file.path(appdata, "npm", "phantomjs.cmd"))
-        }
-      }
-    }
-  } else {
-    Sys.which( "phantomjs" )
+  path <- Sys.which( "phantomjs" )
+  if (path != "") return(path)
+  for (d in phantom_paths()) {
+    exec <- if (is_windows()) "phantomjs.exe" else "phantomjs"
+    path <- file.path(d, exec)
+    if (utils::file_test("-x", path)) break else path <- ""
   }
-
-  phantom_path
+  if (path == "") {
+    stop("PhantomJS not found. You may try webshot::install_phantomjs() ",
+         "if it is not installed, otherwise make sure the phantomjs executable ",
+         "can be found via the PATH variable.")
+  }
+  path
 }
 
 #' Install PhantomJS
 #'
 #' Download the zip package, unzip it, and copy the executable to a system
 #' directory in which \pkg{webshot} can look for the PhantomJS executable.
-#' Currently this function only works for Windows. Mac OS X users are
-#' recommended to install PhantomJS via Homebrew. If you download the package
-#' from the PhantomJS website instead, please make sure the executable can be
-#' found via the \code{PATH} variable.
+#'
+#' This function was designed primarily to help Windows users since it is
+#' cumbersome to modify the \code{PATH} variable. Mac OS X users may install
+#' PhantomJS via Homebrew. If you download the package from the PhantomJS
+#' website instead, please make sure the executable can be found via the
+#' \code{PATH} variable.
+#'
+#' On Windows, the directory specified by the environment variable
+#' \code{APPDATA} is used to store \file{phantomjs.exe}. On OS X, the directory
+#' \file{~/Library/Application Support} is used. On other platforms (such as
+#' Linux), the directory \file{~/bin} is used. If these directories are not
+#' writable, the directory \file{PhantomJS} under the installation directory of
+#' the \pkg{webshot} package will be tried. If this directory still fails, you
+#' will have to install PhantomJS by yourself.
 #' @param version The version number of PhantomJS.
 #' @return \code{NULL} (the executable is written to a system directory).
 #' @export
 install_phantomjs <- function(version = '2.1.1') {
-  if (!is_windows()) {
-    warning('This function is currently for Windows only')
-    return()
-  }
-
-  appdata <- Sys.getenv('APPDATA', NA)
-  if (is.na(appdata)) stop('The environment variable APPDATA is not set')
-  destdir <- file.path(appdata, 'PhantomJS')
-  dir.create(destdir, showWarnings = FALSE)
+  dirs <- phantom_paths(create = TRUE)
 
   owd <- setwd(tempdir())
   on.exit(setwd(owd), add = TRUE)
-  zipfile <- sprintf('phantomjs-%s-windows.zip', version)
-  link <- paste0('https://bitbucket.org/ariya/phantomjs/downloads/', zipfile)
-  download.file(link, zipfile, mode = 'wb')
-  utils::unzip(zipfile)
-  zipdir <- sub('.zip$', '', zipfile)
-  file.copy(file.path(zipdir, 'bin', 'phantomjs.exe'), destdir, overwrite = TRUE)
-  message('phantomjs.exe has been installed to ', normalizePath(destdir))
+  base <- 'https://bitbucket.org/ariya/phantomjs/downloads/'
+  if (is_windows()) {
+    zipfile <- sprintf('phantomjs-%s-windows.zip', version)
+    download.file(paste0(base, zipfile), zipfile, mode = 'wb')
+    utils::unzip(zipfile)
+    zipdir <- sub('.zip$', '', zipfile)
+    exec <- file.path(zipdir, 'bin', 'phantomjs.exe')
+  } else if (is_osx()) {
+    zipfile <- sprintf('phantomjs-%s-macosx.zip', version)
+    download.file(paste0(base, zipfile), zipfile, mode = 'wb')
+    utils::unzip(zipfile)
+    zipdir <- sub('.zip$', '', zipfile)
+    exec <- file.path(zipdir, 'bin', 'phantomjs')
+    Sys.chmod(exec, '0755')  # chmod +x
+  } else {
+    zipfile <- sprintf(
+      'phantomjs-%s-linux-%s.tar.bz2', version,
+      if (grepl('64', Sys.info()[['machine']])) 'x86_64' else 'i686'
+    )
+    download.file(paste0(base, zipfile), zipfile, mode = 'wb')
+    utils::untar(zipfile)
+    zipdir <- sub('.tar.bz2$', '', zipfile)
+    exec <- file.path(zipdir, 'bin', 'phantomjs')
+    Sys.chmod(exec, '0755')  # chmod +x
+  }
+  success <- FALSE
+  dirs <- phantom_paths(create = TRUE)
+  for (destdir in dirs) {
+    success <- file.copy(exec, destdir, overwrite = TRUE)
+    if (success) break
+  }
   unlink(c(zipdir, zipfile), recursive = TRUE)
+  if (!success) stop(
+    'Unable to install PhantomJS to any of these dirs: ',
+    paste(dirs, collapse = ', ')
+  )
+  message('phantomjs.exe has been installed to ', normalizePath(destdir))
   invisible()
 }
+
+# Possible locations of the PhantomJS executable
+phantom_paths <- function(create = FALSE) {
+  if (is_windows()) {
+    path <- Sys.getenv('APPDATA', '')
+    path <- if (dir_exists(path)) file.path(appdata, 'PhantomJS')
+  } else if (is_osx()) {
+    path <- '~/Library/Application Support'
+    path <- if (dir_exists(path)) file.path(appdata, 'PhantomJS')
+  } else {
+    path <- '~/bin'
+  }
+  path <- c(path, system.file('PhantomJS', package = 'webshot'))
+  if (create) dir.create(path, showWarnings = FALSE)
+  path
+}
+
+dir_exists <- function(path) utils::file_test('-d', path)
 
 # Given a vector or list, drop all the NULL items in it
 dropNulls <- function(x) {
@@ -76,6 +115,7 @@ dropNulls <- function(x) {
 }
 
 is_windows <- function() .Platform$OS.type == "windows"
+is_osx <- function() Sys.info()[['sysname']] == 'Darwin'
 
 # Find an available TCP port (to launch Shiny apps)
 available_port <- function(port) {
