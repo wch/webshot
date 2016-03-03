@@ -103,7 +103,7 @@ phantom_paths <- function(create = FALSE) {
     path <- '~/bin'
   }
   path <- c(path, system.file('PhantomJS', package = 'webshot'))
-  if (create) dir.create(path, showWarnings = FALSE)
+  if (create) lapply(path, dir.create, showWarnings = FALSE)
   path
 }
 
