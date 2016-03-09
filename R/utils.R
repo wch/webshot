@@ -22,7 +22,7 @@ find_phantom <- function() {
          "If it is installed, please make sure the phantomjs executable ",
          "can be found via the PATH variable.")
   }
-  path
+  path.expand(path)
 }
 
 #' Install PhantomJS
