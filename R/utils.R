@@ -44,21 +44,25 @@ find_phantom <- function() {
 #' the \pkg{webshot} package will be tried. If this directory still fails, you
 #' will have to install PhantomJS by yourself.
 #' @param version The version number of PhantomJS.
+#' @param baseURL The base URL for the location of PhantomJS binaries for download. If the default 
+#' download site is unavailable, users may specify alternative mirrors such as 
+#' https://github.com/paladox/phantomjs/releases/download/, or 
+#' other sites functional at that time.
 #' @return \code{NULL} (the executable is written to a system directory).
 #' @export
 install_phantomjs <- function(version = '2.1.1', 
-    base = 'https://bitbucket.org/ariya/phantomjs/downloads/') {
+    baseURL = 'https://bitbucket.org/ariya/phantomjs/downloads/') {
   owd <- setwd(tempdir())
   on.exit(setwd(owd), add = TRUE)
   if (is_windows()) {
     zipfile <- sprintf('phantomjs-%s-windows.zip', version)
-    utils::download.file(paste0(base, zipfile), zipfile, mode = 'wb')
+    utils::download.file(paste0(baseURL, zipfile), zipfile, mode = 'wb')
     utils::unzip(zipfile)
     zipdir <- sub('.zip$', '', zipfile)
     exec <- file.path(zipdir, 'bin', 'phantomjs.exe')
   } else if (is_osx()) {
     zipfile <- sprintf('phantomjs-%s-macosx.zip', version)
-    utils::download.file(paste0(base, zipfile), zipfile, mode = 'wb')
+    utils::download.file(paste0(baseURL, zipfile), zipfile, mode = 'wb')
     utils::unzip(zipfile)
     zipdir <- sub('.zip$', '', zipfile)
     exec <- file.path(zipdir, 'bin', 'phantomjs')
@@ -68,7 +72,7 @@ install_phantomjs <- function(version = '2.1.1',
       'phantomjs-%s-linux-%s.tar.bz2', version,
       if (grepl('64', Sys.info()[['machine']])) 'x86_64' else 'i686'
     )
-    utils::download.file(paste0(base, zipfile), zipfile, mode = 'wb')
+    utils::download.file(paste0(baseURL, zipfile), zipfile, mode = 'wb')
     utils::untar(zipfile)
     zipdir <- sub('.tar.bz2$', '', zipfile)
     exec <- file.path(zipdir, 'bin', 'phantomjs')
