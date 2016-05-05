@@ -46,10 +46,10 @@ find_phantom <- function() {
 #' @param version The version number of PhantomJS.
 #' @return \code{NULL} (the executable is written to a system directory).
 #' @export
-install_phantomjs <- function(version = '2.1.1') {
+install_phantomjs <- function(version = '2.1.1', 
+    base = 'https://bitbucket.org/ariya/phantomjs/downloads/') {
   owd <- setwd(tempdir())
   on.exit(setwd(owd), add = TRUE)
-  base <- 'https://bitbucket.org/ariya/phantomjs/downloads/'
   if (is_windows()) {
     zipfile <- sprintf('phantomjs-%s-windows.zip', version)
     utils::download.file(paste0(base, zipfile), zipfile, mode = 'wb')
