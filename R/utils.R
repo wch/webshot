@@ -46,12 +46,13 @@ find_phantom <- function() {
 #' @param version The version number of PhantomJS.
 #' @param baseURL The base URL for the location of PhantomJS binaries for download. If the default 
 #' download site is unavailable, users may specify alternative mirrors such as 
-#' https://github.com/paladox/phantomjs/releases/download/, or 
+#'  https://github.com/paladox/phantomjs/releases/download/2.1.7/, or 
 #' other sites functional at that time.
 #' @return \code{NULL} (the executable is written to a system directory).
 #' @export
 install_phantomjs <- function(version = '2.1.1', 
     baseURL = 'https://bitbucket.org/ariya/phantomjs/downloads/') {
+  if (substr(baseURL, start=nchar(baseURL), stop=nchar(baseURL))!='/') baseURL <- paste0(baseURL,"/",sep="")
   owd <- setwd(tempdir())
   on.exit(setwd(owd), add = TRUE)
   if (is_windows()) {
