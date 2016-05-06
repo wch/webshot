@@ -12,7 +12,7 @@ install_phantomjs(version = "2.1.1",
 
 \item{baseURL}{The base URL for the location of PhantomJS binaries for download. If the default 
 download site is unavailable, users may specify alternative mirrors such as 
-https://github.com/paladox/phantomjs/releases/download/, or 
+ https://github.com/paladox/phantomjs/releases/download/2.1.7/, or 
 other sites functional at that time.}
 }
 \value{
