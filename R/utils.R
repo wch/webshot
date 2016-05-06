@@ -52,7 +52,8 @@ find_phantom <- function() {
 #' @export
 install_phantomjs <- function(version = '2.1.1', 
     baseURL = 'https://bitbucket.org/ariya/phantomjs/downloads/') {
-  if (substr(baseURL, start=nchar(baseURL), stop=nchar(baseURL))!='/') baseURL <- paste0(baseURL,"/",sep="")
+    if (!grepl("/$", baseURL))
+      baseURL <- paste0(baseURL, "/")
   owd <- setwd(tempdir())
   on.exit(setwd(owd), add = TRUE)
   if (is_windows()) {
