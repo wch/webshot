@@ -10,10 +10,10 @@ install_phantomjs(version = "2.1.1",
 \arguments{
 \item{version}{The version number of PhantomJS.}
 
-\item{baseURL}{The base URL for the location of PhantomJS binaries for download. If the default 
-download site is unavailable, users may specify alternative mirrors such as 
- https://github.com/paladox/phantomjs/releases/download/2.1.7/, or 
-other sites functional at that time.}
+\item{baseURL}{The base URL for the location of PhantomJS binaries for
+download. If the default download site is unavailable, you may specify an
+alternative mirror like
+\url{https://github.com/paladox/phantomjs/releases/download/}.}
 }
 \value{
 \code{NULL} (the executable is written to a system directory).

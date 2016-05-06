@@ -44,13 +44,13 @@ find_phantom <- function() {
 #' the \pkg{webshot} package will be tried. If this directory still fails, you
 #' will have to install PhantomJS by yourself.
 #' @param version The version number of PhantomJS.
-#' @param baseURL The base URL for the location of PhantomJS binaries for download. If the default 
-#' download site is unavailable, users may specify alternative mirrors such as 
-#'  https://github.com/paladox/phantomjs/releases/download/2.1.7/, or 
-#' other sites functional at that time.
+#' @param baseURL The base URL for the location of PhantomJS binaries for
+#'   download. If the default download site is unavailable, you may specify an
+#'   alternative mirror, such as
+#'   \code{"https://github.com/paladox/phantomjs/releases/download/2.1.7/"}.
 #' @return \code{NULL} (the executable is written to a system directory).
 #' @export
-install_phantomjs <- function(version = '2.1.1', 
+install_phantomjs <- function(version = '2.1.1',
     baseURL = 'https://bitbucket.org/ariya/phantomjs/downloads/') {
     if (!grepl("/$", baseURL))
       baseURL <- paste0(baseURL, "/")
