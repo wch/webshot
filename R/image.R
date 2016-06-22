@@ -21,6 +21,9 @@
 #' }
 #' @export
 resize <- function(filename, geometry) {
+  # Handle missing phantomjs
+  if (is.null(filename)) return(NULL)
+
   progs <- Sys.which(c("gm", "convert"))
   if (all(progs == ""))
     stop("Neither `gm` nor `convert` were found in path. GraphicsMagick or ImageMagick must be installed and in path.")
@@ -62,6 +65,9 @@ resize <- function(filename, geometry) {
 #' }
 #' @export
 shrink <- function(filename) {
+  # Handle missing phantomjs
+  if (is.null(filename)) return(NULL)
+
   optipng <- Sys.which("optipng")
   if (optipng == "")
     stop("optipng not found in path. optipng must be installed and in path.")

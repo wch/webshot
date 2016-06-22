@@ -141,6 +141,9 @@ webshot <- function(
 
   res <- phantom_run(args)
 
+  # Handle missing phantomjs
+  if (is.null(res)) return(NULL)
+
   if (res != 0) {
     stop("webshot.js returned failure value: ", res)
   }

@@ -1,6 +1,9 @@
 phantom_run <- function(args, wait = TRUE) {
   phantom_bin <- find_phantom()
 
+  # Handle missing phantomjs
+  if (is.null(phantom_bin)) return(NULL)
+
   # Make sure args is a char vector
   args <- as.character(args)
 
@@ -12,15 +15,25 @@ phantom_run <- function(args, wait = TRUE) {
 find_phantom <- function() {
   path <- Sys.which( "phantomjs" )
   if (path != "") return(path)
+
   for (d in phantom_paths()) {
     exec <- if (is_windows()) "phantomjs.exe" else "phantomjs"
     path <- file.path(d, exec)
     if (utils::file_test("-x", path)) break else path <- ""
   }
+
   if (path == "") {
-    stop("PhantomJS not found. You can install it with webshot::install_phantomjs(). ",
-         "If it is installed, please make sure the phantomjs executable ",
-         "can be found via the PATH variable.")
+    # It would make the most sense to throw an error here. However, that would
+    # cause problems with CRAN. The CRAN checking systems may not have phantomjs
+    # and may not be capable of installing phantomjs (like on Solaris), and any
+    # packages which use webshot in their R CMD check (in examples or vignettes)
+    # will get an ERROR. We'll issue a message and return NULL; other
+    message(
+      "PhantomJS not found. You can install it with webshot::install_phantomjs(). ",
+      "If it is installed, please make sure the phantomjs executable ",
+      "can be found via the PATH variable."
+    )
+    return(NULL)
   }
   path.expand(path)
 }
@@ -125,8 +138,9 @@ dropNulls <- function(x) {
 }
 
 is_windows <- function() .Platform$OS.type == "windows"
-is_osx <- function() Sys.info()[['sysname']] == 'Darwin'
-is_linux <- function() Sys.info()[['sysname']] == 'Linux'
+is_osx     <- function() Sys.info()[['sysname']] == 'Darwin'
+is_linux   <- function() Sys.info()[['sysname']] == 'Linux'
+is_solaris <- function() Sys.info()[['sysname']] == 'SunOS'
 
 # Find an available TCP port (to launch Shiny apps)
 available_port <- function(port) {
