@@ -254,3 +254,46 @@ fix_windows_url <- function(url) {
     url
   }
 }
+
+
+# Borrowed from animation package, with some adaptations.
+find_magic = function() {
+  # try to look for ImageMagick in the Windows Registry Hive, the Program Files
+  # directory and the LyX installation
+  if (!inherits(try({
+    magick.path = utils::readRegistry('SOFTWARE\\ImageMagick\\Current')$BinPath
+  }, silent = TRUE), 'try-error')) {
+    if (nzchar(magick.path)) {
+      convert = normalizePath(file.path(magick.path, 'convert.exe'), "/", mustWork = FALSE)
+    }
+  } else if (
+    nzchar(prog <- Sys.getenv('ProgramFiles')) &&
+      length(magick.dir <- list.files(prog, '^ImageMagick.*')) &&
+      length(magick.path <- list.files(file.path(prog, magick.dir), pattern = '^convert\\.exe$',
+                                       full.names = TRUE, recursive = TRUE))
+  ) {
+    convert = normalizePath(magick.path[1], "/", mustWork = FALSE)
+  } else if (!inherits(try({
+    magick.path = utils::readRegistry('LyX.Document\\Shell\\open\\command', 'HCR')
+  }, silent = TRUE), 'try-error')) {
+    convert = file.path(dirname(gsub('(^\"|\" \"%1\"$)', '', magick.path[[1]])), c('..', '../etc'),
+                        'imagemagick', 'convert.exe')
+    convert = convert[file.exists(convert)]
+    if (length(convert)) {
+      convert = normalizePath(convert, "/", mustWork = FALSE)
+    } else {
+      warning('No way to find ImageMagick!')
+      return("")
+    }
+  } else {
+    warning('ImageMagick not installed yet!')
+    return("")
+  }
+
+  if (!file.exists(convert)) {
+    # Found an ImageMagick installation, but not the convert.exe binary.
+    warning("ImageMagick's convert.exe not found at ", convert)
+    return("")
+  }
+  return(convert)
+}

@@ -24,23 +24,35 @@ resize <- function(filename, geometry) {
   # Handle missing phantomjs
   if (is.null(filename)) return(NULL)
 
-  progs <- Sys.which(c("gm", "convert"))
-  if (all(progs == ""))
-    stop("Neither `gm` nor `convert` were found in path. GraphicsMagick or ImageMagick must be installed and in path.")
+  # First look for graphicsmagick, then imagemagick
+  prog <- Sys.which("gm")
+
+  if (prog == "") {
+    # ImageMagick 7 has a "magick" binary
+    prog <- Sys.which("magick")
+  }
+
+  if (prog == "") {
+    if (is_windows()) {
+      prog <- find_magic()
+    } else {
+      prog <- Sys.which("convert")
+    }
+  }
+
+  if (prog == "")
+    stop("None of `gm`, `magick`, or `convert` were found in path. GraphicsMagick or ImageMagick must be installed and in path.")
 
   args <- c(filename, "-resize", geometry, filename)
 
-  if (progs["gm"] != "") {
-    prog <- progs["gm"]
+  if (names(prog) %in% c("gm", "magick")) {
     args <- c("convert", args)
-  } else {
-    prog <- progs["convert"]
   }
 
   res <- system2(prog, args)
 
   if (res != 0)
-    stop ("Resizing with `gm convert` or `convert` failed.")
+    stop ("Resizing with `gm convert`, `magick convert` or `convert` failed.")
 
   invisible(filename)
 }
