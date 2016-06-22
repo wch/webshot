@@ -239,3 +239,18 @@ download_old_win <- function(url, ...) {
   # so we supress that
   utils::download.file(url, method = method, ...)
 }
+
+
+# Fix local filenames like "c:/path/file.html" to "file:///c:/path/file.html"
+# because that's the format used by casperjs and the webshot.js script.
+fix_windows_url <- function(url) {
+  if (!is_windows()) return(url)
+
+  # If it's a "c:/path/file.html" path, or contains any backslashs, like
+  # "c:\path", "\\path\\file.html", or "/path\\file.html", we need to fix it up.
+  if (grepl("^[a-zA-Z]:/", url) || grepl("\\", url, fixed = TRUE)) {
+    paste0("file:///", normalizePath(url, winslash = "/"))
+  } else {
+    url
+  }
+}

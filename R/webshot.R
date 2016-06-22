@@ -103,6 +103,10 @@ webshot <- function(
     stop("Need url.")
   }
 
+  if (is_windows()) {
+    url <- fix_windows_url(url)
+  }
+
   if (!is.null(cliprect) && !is.null(selector)) {
     stop("Can't specify both cliprect and selector.")
 
