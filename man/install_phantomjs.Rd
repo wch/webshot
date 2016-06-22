@@ -5,15 +5,15 @@
 \title{Install PhantomJS}
 \usage{
 install_phantomjs(version = "2.1.1",
-  baseURL = "https://bitbucket.org/ariya/phantomjs/downloads/")
+  baseURL = "https://github.com/wch/webshot/releases/download/v0.3.1/")
 }
 \arguments{
 \item{version}{The version number of PhantomJS.}
 
 \item{baseURL}{The base URL for the location of PhantomJS binaries for
 download. If the default download site is unavailable, you may specify an
-alternative mirror like
-\url{https://github.com/paladox/phantomjs/releases/download/}.}
+alternative mirror, such as
+\code{"https://bitbucket.org/ariya/phantomjs/downloads/"}.}
 }
 \value{
 \code{NULL} (the executable is written to a system directory).

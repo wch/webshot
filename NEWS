@@ -3,6 +3,10 @@ webshot 0.3.0.9000
 
 * The leading tilde in the path of PhantomJS is expanded now (#19).
 
+* Changed URL for PhantomJS binaries so that `install_phantomjs()` doesn't hit
+  rate limits, and added workaround for downloading problems with R 3.3.0 and
+  3.3.1.
+
 webshot 0.3
 --------------------------------------------------------------------------------
 
