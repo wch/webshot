@@ -54,6 +54,13 @@ webshot("https://www.r-project.org/", "r-expand.png",
         expand = c(40, 20, 40, 20))
 ```
 
+You can also change the **user agent** string, which is often used by sites to determine how to render. E.g. a mobile user string:
+
+```R
+webshot("https://www.google.com", "mobile-useragent.png",
+        userAgent="Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X)
+        AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1")
+```
 
 ### Screenshots of Shiny applications
 
