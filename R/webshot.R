@@ -3,6 +3,7 @@
 #' @param url A URL to visit.
 #' @param file Name of output file. Should end with \code{.png}, \code{.pdf}, or
 #'   \code{.jpeg}.
+#' @param userAgent The user-agent string to send.
 #' @param vwidth Viewport width. This is the width of the browser "window".
 #' @param vheight Viewport height This is the height of the browser "window".
 #' @param cliprect Clipping rectangle. If \code{cliprect} and \code{selector}
@@ -40,6 +41,11 @@
 #' # Clip to the viewport
 #' webshot("http://rstudio.github.io/leaflet", "leaflet-viewport.png",
 #'         cliprect = "viewport")
+#'
+#' # Change user agent, e.g. to mobile, which may render differently
+#' webshot("http://rstudio.github.io/leaflet", "leaflet-useragent.png",
+#'          userAgent="Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X)
+#'           AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1")
 #'
 #' # Manual clipping rectangle
 #' webshot("http://rstudio.github.io/leaflet", "leaflet-clip.png",
@@ -90,6 +96,7 @@
 webshot <- function(
   url = NULL,
   file = "webshot.png",
+  userAgent ="Casper",
   vwidth = 992,
   vheight = 744,
   cliprect = NULL,
@@ -134,6 +141,7 @@ webshot <- function(
     shQuote(system.file("webshot.js", package = "webshot")),
     url,
     file,
+    paste0("--userAgent=", shQuote(userAgent)),
     paste0("--vwidth=", vwidth),
     paste0("--vheight=", vheight),
     if (!is.null(cliprect)) paste0("--cliprect=", paste(cliprect, collapse=",")),
