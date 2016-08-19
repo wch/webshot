@@ -155,7 +155,6 @@ webshot <- function(
   structure(file, class = "webshot")
 }
 
-#' @export
 knit_print.webshot <- function(x, ...) {
   res <- readBin(x, "raw", file.size(x))
   ext <- gsub(".*[.]", "", basename(x))
