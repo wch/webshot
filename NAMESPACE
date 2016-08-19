@@ -2,6 +2,7 @@
 
 S3method(appshot,character)
 S3method(appshot,shiny.appobj)
+S3method(print,webshot)
 export("%>%")
 export(appshot)
 export(install_phantomjs)

@@ -54,7 +54,7 @@ resize <- function(filename, geometry) {
   if (res != 0)
     stop ("Resizing with `gm convert`, `magick convert` or `convert` failed.")
 
-  invisible(filename)
+  structure(filename, class = "webshot")
 }
 
 
@@ -89,5 +89,5 @@ shrink <- function(filename) {
   if (res != 0)
     stop ("Shrinking with `optipng` failed.")
 
-  invisible(filename)
+  structure(filename, class = "webshot")
 }

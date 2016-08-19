@@ -152,5 +152,16 @@ webshot <- function(
     stop("webshot.js returned failure value: ", res)
   }
 
-  invisible(file)
+  structure(file, class = "webshot")
+}
+
+knit_print.webshot <- function(x, ...) {
+  res <- readBin(x, "raw", file.size(x))
+  ext <- gsub(".*[.]", "", basename(x))
+  structure(list(image = res, extension = ext), class = "html_screenshot")
+}
+
+#' @export
+print.webshot <- function(x, ...) {
+   invisible(x)
 }
