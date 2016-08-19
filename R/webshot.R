@@ -155,7 +155,6 @@ webshot <- function(
   structure(file, class = "webshot")
 }
 
-#' @importFrom knitr knit_print
 #' @export
 knit_print.webshot <- function(x, ...) {
   res <- readBin(x, "raw", file.size(x))

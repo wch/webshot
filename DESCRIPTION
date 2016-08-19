@@ -10,10 +10,10 @@ Description: Takes screenshots of web pages, including Shiny applications.
 Depends:
     R (>= 3.0)
 Imports:
-    magrittr,
-    knitr
+    magrittr
 Suggests:
     httpuv,
+    knitr,
     rmarkdown,
     shiny
 VignetteBuilder: knitr
