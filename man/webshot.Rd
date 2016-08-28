@@ -4,15 +4,17 @@
 \alias{webshot}
 \title{Take a screenshot of a URL}
 \usage{
-webshot(url = NULL, file = "webshot.png", vwidth = 992, vheight = 744,
-  cliprect = NULL, selector = NULL, expand = NULL, delay = 0.2,
-  eval = NULL)
+webshot(url = NULL, file = "webshot.png", userAgent = "Casper",
+  vwidth = 992, vheight = 744, cliprect = NULL, selector = NULL,
+  expand = NULL, delay = 0.2, eval = NULL)
 }
 \arguments{
 \item{url}{A URL to visit.}
 
 \item{file}{Name of output file. Should end with \code{.png}, \code{.pdf}, or
 \code{.jpeg}.}
+
+\item{userAgent}{The user-agent string to send.}
 
 \item{vwidth}{Viewport width. This is the width of the browser "window".}
 
@@ -60,6 +62,11 @@ webshot("http://rstudio.github.io/leaflet", delay = 0.5)
 # Clip to the viewport
 webshot("http://rstudio.github.io/leaflet", "leaflet-viewport.png",
         cliprect = "viewport")
+
+# Change user agent, e.g. to mobile, which may render differently
+webshot("http://rstudio.github.io/leaflet", "leaflet-useragent.png",
+         userAgent="Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X)
+          AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1")
 
 # Manual clipping rectangle
 webshot("http://rstudio.github.io/leaflet", "leaflet-clip.png",

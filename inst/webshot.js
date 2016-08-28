@@ -13,7 +13,8 @@ var casper = require('casper').create();
 var opt_defaults = {
   delay: 0.2,
   vwidth: 992,
-  vheight: 744
+  vheight: 744,
+  userAgent: 'Casper'
 };
 
 // =====================================================================
@@ -62,6 +63,7 @@ if (opts.selector) {
 // Screenshot
 // =====================================================================
 casper.start(url).viewport(opts.vwidth, opts.vheight);
+if (opts.userAgent) casper.userAgent(opts.userAgent);
 
 if (opts.delay > 0)
   casper.wait(opts.delay * 1000);
