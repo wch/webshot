@@ -2,7 +2,7 @@
  * Casper is a navigation utility for PhantomJS.
  *
  * Documentation: http://casperjs.org/
- * Repository:    http://github.com/n1k0/casperjs
+ * Repository:    http://github.com/casperjs/casperjs
  *
  * Copyright (c) 2011-2012 Nicolas Perriault
  *
@@ -80,8 +80,12 @@ exports.create = function create() {
  */
 function XUnitExporter() {
     "use strict";
+
+    this.setupDocument();
+
+    // Initialize state
     this.results = undefined;
-    this._xml = utils.node('testsuites');
+    this.rendered = false;
 }
 exports.XUnitExporter = XUnitExporter;
 
@@ -92,6 +96,9 @@ exports.XUnitExporter = XUnitExporter;
  */
 XUnitExporter.prototype.getXML = function getXML() {
     "use strict";
+
+    var self = this;
+
     if (!(this.results instanceof TestSuiteResult)) {
         throw new CasperError('Results not set, cannot get XML.');
     }
@@ -105,7 +112,7 @@ XUnitExporter.prototype.getXML = function getXML() {
             timestamp: (new Date()).toISOString(),
             'package': generateClassName(result.file)
         });
-        // succesful test cases
+        // successful test cases
         result.passes.forEach(function(success) {
             var testCase = utils.node('testcase', {
                 name: success.message || success.standard,
@@ -124,12 +131,12 @@ XUnitExporter.prototype.getXML = function getXML() {
             var failureNode = utils.node('failure', {
                 type: failure.type || "failure"
             });
-            failureNode.appendChild(document.createTextNode(failure.message || "no message left"));
+            failureNode.appendChild(self._xmlDocument.createCDATASection(failure.message || "no message left"));
             if (failure.values && failure.values.error instanceof Error) {
                 var errorNode = utils.node('error', {
                     type: utils.betterTypeOf(failure.values.error)
                 });
-                errorNode.appendChild(document.createTextNode(failure.values.error.stack));
+                errorNode.appendChild(self._xmlDocument.createCDATASection(failure.values.error.stack));
                 testCase.appendChild(errorNode);
             }
             testCase.appendChild(failureNode);
@@ -140,17 +147,21 @@ XUnitExporter.prototype.getXML = function getXML() {
             var errorNode = utils.node('error', {
                 type: error.name
             });
-            errorNode.appendChild(document.createTextNode(error.stack ? error.stack : error.message));
+            errorNode.appendChild(self._xmlDocument.createCDATASection(error.stack ? error.stack : error.message));
             suiteNode.appendChild(errorNode);
         });
         // warnings
         var warningNode = utils.node('system-out');
-        warningNode.appendChild(document.createTextNode(result.warnings.join('\n')));
+        warningNode.appendChild(self._xmlDocument.createCDATASection(result.warnings.join('\n')));
         suiteNode.appendChild(warningNode);
         this._xml.appendChild(suiteNode);
     }.bind(this));
+
     this._xml.setAttribute('time', utils.ms2seconds(this.results.calculateDuration()));
-    return this._xml;
+
+    this.rendered = true;
+
+    return this._xmlDocument;
 };
 
 /**
@@ -158,10 +169,15 @@ XUnitExporter.prototype.getXML = function getXML() {
  *
  * @return string
  */
-XUnitExporter.prototype.getSerializedXML = function getSerializedXML(xml) {
+XUnitExporter.prototype.getSerializedXML = function getSerializedXML() {
     "use strict";
-    var serializer = new XMLSerializer();
-    return '<?xml version="1.0" encoding="UTF-8"?>' + serializer.serializeToString(this.getXML());
+    var serializer = new XMLSerializer(),
+        document;
+
+    if ( !this.rendered ) {
+        document = this.getXML();
+    }
+    return '<?xml version="1.0" encoding="UTF-8"?>' + serializer.serializeToString(document);
 };
 
 /**
@@ -175,5 +191,22 @@ XUnitExporter.prototype.setResults = function setResults(results) {
         throw new CasperError('Invalid results type.');
     }
     this.results = results;
+
+    // New results let's re-initialize
+    this.setupDocument();
+    this.rendered = false;
+
     return results;
+};
+
+/**
+ * Initializes the XML to an empty document
+ *
+ * @return void
+ */
+XUnitExporter.prototype.setupDocument = function() {
+    // Note that we do NOT use a documentType here, because validating
+    // parsers try to fetch the (non-existing) DTD and fail #1528
+    this._xmlDocument = document.implementation.createDocument("", "");
+    this._xml = this._xmlDocument.appendChild(this._xmlDocument.createElement("testsuites"));
 };

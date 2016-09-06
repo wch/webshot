@@ -2,7 +2,7 @@
  * Casper is a navigation utility for PhantomJS.
  *
  * Documentation: http://casperjs.org/
- * Repository:    http://github.com/n1k0/casperjs
+ * Repository:    http://github.com/casperjs/casperjs
  *
  * Copyright (c) 2011-2012 Nicolas Perriault
  *
@@ -556,9 +556,9 @@ Tester.prototype.assertField = function assertField(input, expected, message, op
         }
     }
 
-    var actual = this.casper.evaluate(function(inputName, options) {
-        return __utils__.getFieldValue(inputName, options);
-    }, input, options);
+    var actual = this.casper.evaluate(function(inputName) {
+        return __utils__.getFieldValue(__utils__.makeSelector(inputName,'name'));
+    }, input);
 
     return baseFieldAssert.call(this, input, expected, actual, message);
 };
@@ -573,9 +573,9 @@ Tester.prototype.assertField = function assertField(input, expected, message, op
  */
 Tester.prototype.assertFieldCSS = function assertFieldCSS(cssSelector, expected, message) {
     "use strict";
-    var actual = this.casper.evaluate(function(inputName, cssSelector) {
-        return __utils__.getFieldValue(inputName, {inputSelector: cssSelector});
-    }, null, cssSelector);
+    var actual = this.casper.evaluate(function(inputName) {
+        return __utils__.getFieldValue(__utils__.makeSelector(inputName,'css'));
+    }, cssSelector);
 
     return baseFieldAssert.call(this, null, expected, actual, message);
 };
@@ -590,9 +590,9 @@ Tester.prototype.assertFieldCSS = function assertFieldCSS(cssSelector, expected,
  */
 Tester.prototype.assertFieldXPath = function assertFieldXPath(xPathSelector, expected, message) {
     "use strict";
-    var actual = this.casper.evaluate(function(inputName, xPathSelector) {
-        return __utils__.getFieldValue(inputName, {inputXPath: xPathSelector});
-    }, null, xPathSelector);
+    var actual = this.casper.evaluate(function(inputName) {
+        return __utils__.getFieldValue(__utils__.makeSelector(inputName,'xpath'));
+    }, xPathSelector);
 
     return baseFieldAssert.call(this, null, expected, actual, message);
 };
@@ -1031,6 +1031,25 @@ Tester.prototype.assertVisible = function assertVisible(selector, message) {
     return this.assert(this.casper.visible(selector), message, {
         type: "assertVisible",
         standard: "Selector is visible",
+        values: {
+            selector: selector
+        }
+    });
+};
+
+/**
+ * Asserts that all elements matching selector expression are currently visible.
+ * Fails if even one element is not visible.
+ *
+ * @param  String  expected  selector expression
+ * @param  String  message   Test description
+ * @return Object            An assertion result object
+ */
+Tester.prototype.assertAllVisible = function assertAllVisible(selector, message) {
+    "use strict";
+    return this.assert(this.casper.allVisible(selector), message, {
+        type: "assertAllVisible",
+        standard: "All elements matching selector are visible",
         values: {
             selector: selector
         }
@@ -1548,7 +1567,7 @@ Tester.prototype.renderResults = function renderResults(exit, status, save) {
         exitStatus = 1;
         statusText = this.options.warnText;
         style = 'WARN_BAR';
-        result = f("%s Looks like you didn't run any test.", statusText);
+        result = f("%s Looks like you didn't run any tests.", statusText);
     } else {
         if (this.suiteResults.isFailed()) {
             exitStatus = 1;
