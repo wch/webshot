@@ -41,9 +41,11 @@ longer delay is needed for all assets to display properly.}
 \item{zoom}{A number specifying the zoom factor. A zoom factor of 2 will
 result in twice as many pixels vertically and horizontally. Note that using
 2 is not exactly the same as taking a screenshot on a HiDPI (Retina)
-device. This is because some web pages load different, higher-resolution
-images when they know they will be displayed on a HiDPI device, but using
-zoom will not report that a HiDPI device is being used.}
+device: it is like increasing the zoom to 200% in a desktop browser and
+doubling the height and width of the browser window. This differs from
+using a HiDPI device because some web pages load different,
+higher-resolution images when they know they will be displayed on a HiDPI
+device (but using zoom will not report that there is a HiDPI device).}
 
 \item{eval}{An optional string with JavaScript code which will be evaluated
 after opening the page and waiting for \code{delay}, but before calculating

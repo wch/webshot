@@ -55,7 +55,7 @@ webshot("https://www.r-project.org/", "r-expand.png",
         expand = c(40, 20, 40, 20))
 ```
 
-You can take higher-resolution screenshots with the `zoom` option. This isn't exactly the same as taking a screenshot with a HiDPI ("Retina") device. This is because some web pages load different, higher-resolution images when they know that they're being rendered on a HiDPI device, but using `zoom` will not report that a HiDPI device is being used.
+You can take higher-resolution screenshots with the `zoom` option. This isn't exactly the same as taking a screenshot with a HiDPI ("Retina") device: it is like increasing the zoom to 200% in a desktop browser and doubling the height and width of the browser window. This differs from using a HiDPI device because some web pages load different, higher-resolution images when they know they will be displayed on a HiDPI device (but using zoom will not report that there is a HiDPI device).
 
 ``` r
 webshot("https://www.r-project.org/", "r-sidebar-zoom.png",
@@ -74,7 +74,7 @@ appshot(appdir, "01_hello.png")
 
 ### Manipulating images
 
-If you have GraphicsMagick (recommended) or ImageMagick installed, you can pass the result to `resize()` to resize the image after taking the screenshot. This can take any valid ImageMagick geometry specifictaion, like `"75%"`, or `"400x"` (for an image 400 pixels wide). However, you may get different (and better) results by using the `zoom` option: the fonts and graphical elements will render more sharply. However, compared to simply resizing, zooming out may result in slightly different positioning of text and layout elements.
+If you have GraphicsMagick (recommended) or ImageMagick installed, you can pass the result to `resize()` to resize the image after taking the screenshot. This can take any valid ImageMagick geometry specifictaion, like `"75%"`, or `"400x"` (for an image 400 pixels wide). However, you may get different (and often better) results by using the `zoom` option: the fonts and graphical elements will render more sharply. However, compared to simply resizing, zooming out may result in slightly different positioning of text and layout elements.
 
 You can also call `shrink()`, which runs [OptiPNG](http://optipng.sourceforge.net/) to shrink the PNG file losslessly.
 
