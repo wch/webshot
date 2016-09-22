@@ -8,7 +8,7 @@ library(webshot)
 webshot
 =======
 
-[![Travis-CI Build Status](https://travis-ci.org/wch/webshot.svg?branch=master)](https://travis-ci.org/wch/webshot)
+[![Travis-CI Build Status](https://travis-ci.org/wch/webshot.svg?branch=master)](https://travis-ci.org/wch/webshot) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/wch/webshot?branch=master&svg=true)](https://ci.appveyor.com/project/wch/webshot)
 
 **Webshot** makes it easy to take screenshots of web pages from R. It can also run Shiny applications locally and take screenshots of the app.
 
