@@ -54,6 +54,13 @@ webshot("https://www.r-project.org/", "r-expand.png",
         expand = c(40, 20, 40, 20))
 ```
 
+You can take higher-resolution screenshots with the `zoom` option. This isn't exactly the same as taking a screenshot with a HiDPI ("Retina") device. This is because some web pages load different, higher-resolution images when they know that they're being rendered on a HiDPI device, but using `zoom` will not report that a HiDPI device is being used.
+
+```R
+webshot("https://www.r-project.org/", "r-sidebar-zoom.png",
+        selector = ".sidebar", zoom = 2)
+```
+
 
 ### Screenshots of Shiny applications
 
