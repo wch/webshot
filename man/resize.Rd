@@ -21,11 +21,11 @@ appearance -- it is lossless compression. This requires GraphicsMagick
 \examples{
 if (interactive()) {
   # Can be chained with webshot() or appshot()
-  webshot("http://www.google.com/", "google-small-1.png") \%>\%
+  webshot("https://www.r-project.org/", "r-small-1.png") \%>\%
     resize("75\%")
 
   # Generate image that is 400 pixels wide
-  webshot("http://www.google.com/", "google-small-2.png") \%>\%
+  webshot("https://www.r-project.org/", "r-small-2.png") \%>\%
     resize("400x")
 }
 }

@@ -21,7 +21,7 @@ will be as if the shrinking didn't happen at all.
 }
 \examples{
 if (interactive()) {
-  webshot("http://www.google.com/", "google-shrink.png") \%>\%
+  webshot("https://www.r-project.org/", "r-shrink.png") \%>\%
     shrink()
 }
 }

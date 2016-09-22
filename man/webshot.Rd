@@ -106,7 +106,7 @@ webshot("http://www.reddit.com/", "reddit-input.png",
 )
 
 # Result can be piped to other commands like resize() and shrink()
-webshot("http://www.google.com/", "google-small.png") \%>\%
+webshot("https://www.r-project.org/", "r-small.png") \%>\%
  resize("75\%") \%>\%
  shrink()
 
