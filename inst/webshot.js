@@ -13,8 +13,10 @@ var casper = require('casper').create();
 var opt_defaults = {
   delay: 0.2,
   vwidth: 992,
-  vheight: 744
+  vheight: 744,
+  zoom: 1
 };
+
 
 // =====================================================================
 // Command line arguments
@@ -35,7 +37,8 @@ opts = utils.merge(opt_defaults, opts);
 // These should be numbers
 if (opts.vwidth)  opts.vwidth  = +opts.vwidth;
 if (opts.vheight) opts.vheight = +opts.vheight;
-if (opts.delay)   opts.delay = +opts.delay;
+if (opts.delay)   opts.delay   = +opts.delay;
+if (opts.zoom)    opts.zoom    = +opts.zoom;
 
 // This should be four numbers separated by ","
 if (opts.cliprect) {
@@ -61,7 +64,8 @@ if (opts.selector) {
 // =====================================================================
 // Screenshot
 // =====================================================================
-casper.start(url).viewport(opts.vwidth, opts.vheight);
+casper.start(url).zoom(opts.zoom)
+  .viewport(opts.zoom * opts.vwidth, opts.zoom * opts.vheight);
 
 if (opts.delay > 0)
   casper.wait(opts.delay * 1000);
@@ -109,10 +113,10 @@ function findClipRect(opts, casper) {
 
   if (opts.cliprect) {
     rect = {
-      top:    opts.cliprect[0],
-      left:   opts.cliprect[1],
-      width:  opts.cliprect[2],
-      height: opts.cliprect[3]
+      top:    opts.cliprect[0] * opts.zoom,
+      left:   opts.cliprect[1] * opts.zoom,
+      width:  opts.cliprect[2] * opts.zoom,
+      height: opts.cliprect[3] * opts.zoom
     };
 
   } else if (opts.selector) {
@@ -150,10 +154,10 @@ function findClipRect(opts, casper) {
     }
 
     rect = rel2abs(rect);
-    rect.top    -= expand[0];
-    rect.right  += expand[1];
-    rect.bottom += expand[2];
-    rect.left   -= expand[3];
+    rect.top    -= expand[0] * opts.zoom;
+    rect.right  += expand[1] * opts.zoom;
+    rect.bottom += expand[2] * opts.zoom;
+    rect.left   -= expand[3] * opts.zoom;
     rect = abs2rel(rect);
   }
 

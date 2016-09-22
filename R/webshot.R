@@ -21,6 +21,12 @@
 #'   clipping rectangle by. If one number, the rectangle will be expanded by
 #'   that many pixels on all sides. If four numbers, they specify the top,
 #'   right, bottom, and left, in that order.
+#' @param zoom A number specifying the zoom factor. A zoom factor of 2 will
+#'   result in twice as many pixels vertically and horizontally. Note that using
+#'   2 is not exactly the same as taking a screenshot on a HiDPI (Retina)
+#'   device. This is because some web pages load different, higher-resolution
+#'   images when they know they will be displayed on a HiDPI device, but using
+#'   zoom will not report that a HiDPI device is being used.
 #' @param eval An optional string with JavaScript code which will be evaluated
 #'   after opening the page and waiting for \code{delay}, but before calculating
 #'   the clipping region and taking the screenshot. See the Casper API
@@ -96,6 +102,7 @@ webshot <- function(
   selector = NULL,
   expand = NULL,
   delay = 0.2,
+  zoom = 1,
   eval = NULL
 ) {
 
@@ -140,6 +147,7 @@ webshot <- function(
     if (!is.null(selector)) paste0("--selector=", paste(shQuote(selector), collapse=",")),
     if (!is.null(delay)) paste0("--delay=", delay),
     if (!is.null(expand)) paste0("--expand=", paste(expand, collapse=",")),
+    if (!is.null(zoom)) paste0("--zoom=", zoom),
     if (!is.null(eval)) paste0("--eval=", shQuote(eval))
   ))
 

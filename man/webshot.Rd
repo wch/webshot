@@ -6,7 +6,7 @@
 \usage{
 webshot(url = NULL, file = "webshot.png", vwidth = 992, vheight = 744,
   cliprect = NULL, selector = NULL, expand = NULL, delay = 0.2,
-  eval = NULL)
+  zoom = 1, eval = NULL)
 }
 \arguments{
 \item{url}{A URL to visit.}
@@ -37,6 +37,13 @@ right, bottom, and left, in that order.}
 
 \item{delay}{Time to wait before taking screenshot, in seconds. Sometimes a
 longer delay is needed for all assets to display properly.}
+
+\item{zoom}{A number specifying the zoom factor. A zoom factor of 2 will
+result in twice as many pixels vertically and horizontally. Note that using
+2 is not exactly the same as taking a screenshot on a HiDPI (Retina)
+device. This is because some web pages load different, higher-resolution
+images when they know they will be displayed on a HiDPI device, but using
+zoom will not report that a HiDPI device is being used.}
 
 \item{eval}{An optional string with JavaScript code which will be evaluated
 after opening the page and waiting for \code{delay}, but before calculating
