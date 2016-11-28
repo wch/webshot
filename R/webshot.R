@@ -129,12 +129,12 @@ webshot <- function(
   # "filename001.png", "filename002.png", ... (or whatever extension it is)
   if (length(url) > 1) {
     if (length(file) == 1) {
-      file <- vapply(1:length(url), FUN.VALUE = "", function(i) {
+      file <- vapply(1:length(url), FUN.VALUE = character(1), function(i) {
           replacement <- sprintf("%03d.\\1", i)
           gsub("\\.(.{3,4})$", replacement, file)
         })
     } else if (length(file) != length(url)) {
-      stop("parameters 'url' and 'file' should have same length")
+      stop("'url' and 'file' should have same length")
     }
   }
 
@@ -160,8 +160,11 @@ webshot <- function(
   }
 
   if (!is.null(expand)) {
-    if (!(length(expand) %in% c(1, 4))) {
-      stop("expand must either have 1 or 4 values");
+    # check that expand is a vector of length 1 or 4 or a list of such vectors
+    if (!is.list(expand)) expand <- list(expand)
+    lengths <- vapply(expand, length, numeric(1))
+    if (any(!lengths %in% c(1, 4))) {
+      stop("'expand' must be a vector with one or four numbers, or a list of such vectors.")
     }
   }
 
@@ -172,7 +175,7 @@ webshot <- function(
   # character vector with the desired format.
   argToVec <- function(arg) {
     if (!is.list(arg)) return(paste(arg, collapse = ","))
-    vapply(arg, FUN.VALUE = "", function(x) {
+    vapply(arg, FUN.VALUE = character(1), function(x) {
       if (is.null(x) || is.na(x)) NA_character_
       else paste(x, collapse = ",")
     })
