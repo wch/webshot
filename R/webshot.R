@@ -1,8 +1,8 @@
 #' Take a screenshot of a URL
 #'
 #' @param url A vector of URLs to visit.
-#' @param file A Vector of names of output files. Should end with \code{.png},
-#' \code{.pdf}, or \code{.jpeg}.
+#' @param file A vector of names of output files. Should end with \code{.png},
+#'   \code{.pdf}, or \code{.jpeg}.
 #' @param vwidth Viewport width. This is the width of the browser "window".
 #' @param vheight Viewport height This is the height of the browser "window".
 #' @param cliprect Clipping rectangle. If \code{cliprect} and \code{selector}
@@ -14,10 +14,10 @@
 #' @param selector One or more CSS selectors specifying a DOM element to set the
 #'   clipping rectangle to. The screenshot will contain these DOM elements. For
 #'   a given selector, if it has more than one match, only the first one will be
-#'   used. This option is not compatible with \code{cliprect}. When
-#'   taking screenshots of multiple URLs, this parameter can also be a list with
-#'   same length as \code{url} with each element of the list containing a vector
-#'   of CSS selectors to use for the corresponding URL.
+#'   used. This option is not compatible with \code{cliprect}. When taking
+#'   screenshots of multiple URLs, this parameter can also be a list with same
+#'   length as \code{url} with each element of the list containing a vector of
+#'   CSS selectors to use for the corresponding URL.
 #' @param delay Time to wait before taking screenshot, in seconds. Sometimes a
 #'   longer delay is needed for all assets to display properly.
 #' @param expand A numeric vector specifying how many pixels to expand the
@@ -124,12 +124,15 @@ webshot <- function(
     stop("Need url.")
   }
 
+  # If user provides multiple URLs but only one file name, then the below code
+  # generates as many file names as URLs following the pattern
+  # "filename001.png", "filename002.png", ... (or whatever extension it is)
   if (length(url) > 1) {
     if (length(file) == 1) {
-      file <- sapply(1:length(url), function(i) {
-        replacement <- sprintf("%03d.\\1", i)
-        gsub("\\.(.{3,4})$", replacement, file)
-      })
+      file <- vapply(1:length(url), FUN.VALUE = "", function(i) {
+          replacement <- sprintf("%03d.\\1", i)
+          gsub("\\.(.{3,4})$", replacement, file)
+        })
     } else if (length(file) != length(url)) {
       stop("parameters 'url' and 'file' should have same length")
     }
@@ -169,15 +172,15 @@ webshot <- function(
   # character vector with the desired format.
   argToVec <- function(arg) {
     if (!is.list(arg)) return(paste(arg, collapse = ","))
-    sapply(arg, function(x) {
-      if (is.null(x) || is.na(x)) return(NA_character_)
+    vapply(arg, FUN.VALUE = "", function(x) {
+      if (is.null(x) || is.na(x)) NA_character_
       else paste(x, collapse = ",")
     })
   }
 
   if (!is.null(selector)) data$selector <- argToVec(selector)
-  if (!is.null(delay)) data$delay <- delay
   if (!is.null(expand)) data$expand <- argToVec(expand)
+  if (!is.null(delay)) data$delay <- delay
   if (!is.null(zoom)) data$zoom <- zoom
   if (!is.null(eval)) data$eval <- eval
 
