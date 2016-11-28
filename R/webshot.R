@@ -9,8 +9,11 @@
 #'   are both unspecified, the clipping rectangle will contain the entire page.
 #'   This can be the string \code{"viewport"}, in which case the clipping
 #'   rectangle matches the viewport size, or it can be a four-element numeric
-#'   vector specifying the top, left, width, and height. This option is not
-#'   compatible with \code{selector}.
+#'   vector specifying the top, left, width, and height. When taking screenshots
+#'   of multiple URLs, this parameter can also be a list with same length as
+#'   \code{url} with each element of the list being "viewport" or a
+#'   four-elements numeric vector. This option is not compatible with
+#'   \code{selector}
 #' @param selector One or more CSS selectors specifying a DOM element to set the
 #'   clipping rectangle to. The screenshot will contain these DOM elements. For
 #'   a given selector, if it has more than one match, only the first one will be
@@ -146,18 +149,23 @@ webshot <- function(
     stop("Can't specify both cliprect and selector.")
 
   } else if (is.null(selector) && !is.null(cliprect)) {
-    if (is.character(cliprect)) {
-      if (cliprect == "viewport") {
-        cliprect <- c(0, 0, vwidth, vheight)
+    if (!is.list(cliprect)) cliprect <- list(cliprect)
+    vapply(cliprect, FUN.VALUE=logical(1), function(x) {
+      if (is.character(x)) {
+        if (x == "viewport") {
+          x <- c(0, 0, vwidth, vheight)
+        } else {
+          stop("Invalid value for cliprect: ", x)
+        }
       } else {
-        stop("Invalid value for cliprect: ", cliprect)
+        if (!is.numeric(x) || length(x) != 4) {
+          stop("'cliprect' must be a 4-element numeric vector or a list of such vectors")
+        }
       }
-    } else {
-      if (!is.numeric(cliprect) || length(cliprect) != 4) {
-        stop("cliprect must be a 4-element numeric vector")
-      }
-    }
+    })
   }
+
+  if (!is.null(selector) && !is.list(selector)) selector <- list(selector)
 
   if (!is.null(expand)) {
     # check that expand is a vector of length 1 or 4 or a list of such vectors
@@ -168,28 +176,29 @@ webshot <- function(
     }
   }
 
-  data <- data.frame(url = url, file = file, vwidth = vwidth, vheight = vheight)
+  # Create the table that contains all options for each screenshot
+  opts <- data.frame(url = url, file = file, vwidth = vwidth, vheight = vheight)
 
-  # Params selector and expand can be either a vector that need to be concatenated
-  # or a list of such vectors. This function can be used to convert them into a
-  # character vector with the desired format.
+  # Params selector, cliprect and expand can be either a vector that need to be
+  # concatenated or a list of such vectors. This function can be used to convert
+  # them into a character vector with the desired format.
   argToVec <- function(arg) {
-    if (!is.list(arg)) return(paste(arg, collapse = ","))
     vapply(arg, FUN.VALUE = character(1), function(x) {
       if (is.null(x) || is.na(x)) NA_character_
       else paste(x, collapse = ",")
     })
   }
 
-  if (!is.null(selector)) data$selector <- argToVec(selector)
-  if (!is.null(expand)) data$expand <- argToVec(expand)
-  if (!is.null(delay)) data$delay <- delay
-  if (!is.null(zoom)) data$zoom <- zoom
-  if (!is.null(eval)) data$eval <- eval
+  if (!is.null(cliprect)) opts$cliprect <- cliprect
+  if (!is.null(selector)) opts$selector <- argToVec(selector)
+  if (!is.null(expand)) opts$expand <- argToVec(expand)
+  if (!is.null(delay)) opts$delay <- delay
+  if (!is.null(zoom)) opts$zoom <- zoom
+  if (!is.null(eval)) opts$eval <- eval
 
   args <- dropNulls(list(
     shQuote(system.file("webshot.js", package = "webshot")),
-    shQuote(jsonlite::toJSON(data))
+    shQuote(jsonlite::toJSON(opts))
   ))
 
   res <- phantom_run(args)
