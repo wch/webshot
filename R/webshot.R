@@ -112,6 +112,17 @@ webshot <- function(
     stop("Need url.")
   }
 
+  if (length(url) > 1) {
+    if (length(file) == 1) {
+      file <- sapply(1:length(url), function(i) {
+        replacement <- sprintf("%03d.png", i)
+        gsub("\\.png$", replacement, file)
+      })
+    } else if (length(file) != length(url)) {
+      stop("parameters 'url' and 'file' should have same length")
+    }
+  }
+
   if (is_windows()) {
     url <- fix_windows_url(url)
   }
@@ -139,10 +150,11 @@ webshot <- function(
     }
   }
 
+  data <- data.frame(url = url, file = file)
+
   args <- dropNulls(list(
     shQuote(system.file("webshot.js", package = "webshot")),
-    url,
-    file,
+    shQuote(jsonlite::toJSON(data)),
     paste0("--vwidth=", vwidth),
     paste0("--vheight=", vheight),
     if (!is.null(cliprect)) paste0("--cliprect=", paste(cliprect, collapse=",")),

@@ -23,15 +23,15 @@ var opt_defaults = {
 // =====================================================================
 var args = system.args;
 
-if (args.length < 3) {
+if (args.length < 2) {
   console.log('Usage:\n' +
-    '  phantomjs webshot.js <url> <name>.png [options]');
+    '  phantomjs webshot.js <data> [options]');
   phantom.exit(1);
 }
 
-var url = args[1];
-var filename = args[2];
-var opts = utils.parseArgs(args.slice(3));
+var data = JSON.parse(args[1]);
+
+var opts = utils.parseArgs(args.slice(2));
 opts = utils.merge(opt_defaults, opts);
 
 // These should be numbers
@@ -64,19 +64,18 @@ if (opts.selector) {
 // =====================================================================
 // Screenshot
 // =====================================================================
-casper.start(url).zoom(opts.zoom)
+
+casper.start().zoom(opts.zoom)
   .viewport(opts.zoom * opts.vwidth, opts.zoom * opts.vheight);
 
-if (opts.delay > 0)
-  casper.wait(opts.delay * 1000);
-
-if (opts.eval) {
-  eval(opts.eval);
-}
-
-casper.then(function() {
-  var cr = findClipRect(opts, this);
-  this.capture(filename, cr);
+casper.eachThen(data, function(response) {
+  var url = response.data.url;
+  var file = response.data.file;
+  this.thenOpen(url, function(r) {
+    this.wait(opts.delay * 1000);
+    var cr = findClipRect(opts, this);
+    this.capture(file, cr);
+  });
 });
 
 casper.run();

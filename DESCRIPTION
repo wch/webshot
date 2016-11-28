@@ -4,13 +4,15 @@ Version: 0.3.2.9000
 Authors@R: c(
     person("Winston", "Chang", email = "winston@rstudio.com", role = c("aut", "cre")),
     person("Yihui", "Xie", role = "ctb"),
+    person("Francois", "Guillem", role = "ctb"),
     person("Nicolas", "Perriault", role = "ctb", comment = "The CasperJS library")
     )
 Description: Takes screenshots of web pages, including Shiny applications.
 Depends:
     R (>= 3.0)
 Imports:
-    magrittr
+    magrittr,
+    jsonlite
 Suggests:
     httpuv,
     knitr,
