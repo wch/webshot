@@ -1,8 +1,8 @@
 #' Take a screenshot of a URL
 #'
-#' @param url A URL to visit.
-#' @param file Name of output file. Should end with \code{.png}, \code{.pdf}, or
-#'   \code{.jpeg}.
+#' @param url A vector of URLs to visit.
+#' @param file A Vector of names of output files. Should end with \code{.png},
+#' \code{.pdf}, or \code{.jpeg}.
 #' @param vwidth Viewport width. This is the width of the browser "window".
 #' @param vheight Viewport height This is the height of the browser "window".
 #' @param cliprect Clipping rectangle. If \code{cliprect} and \code{selector}
@@ -14,13 +14,19 @@
 #' @param selector One or more CSS selectors specifying a DOM element to set the
 #'   clipping rectangle to. The screenshot will contain these DOM elements. For
 #'   a given selector, if it has more than one match, only the first one will be
-#'   used. This option is not compatible with \code{cliprect}.
+#'   used. This option is not compatible with \code{cliprect}. When
+#'   taking screenshots of multiple URLs, this parameter can also be a list with
+#'   same length as \code{url} with each element of the list containing a vector
+#'   of CSS selectors to use for the corresponding URL.
 #' @param delay Time to wait before taking screenshot, in seconds. Sometimes a
 #'   longer delay is needed for all assets to display properly.
 #' @param expand A numeric vector specifying how many pixels to expand the
 #'   clipping rectangle by. If one number, the rectangle will be expanded by
 #'   that many pixels on all sides. If four numbers, they specify the top,
-#'   right, bottom, and left, in that order.
+#'   right, bottom, and left, in that order. When taking screenshots of multiple
+#'   URLs, this parameter can also be a list with same length as \code{url} with
+#'   each element of the list containing a single number or four numbers  to use
+#'   for the corresponding URL.
 #' @param zoom A number specifying the zoom factor. A zoom factor of 2 will
 #'   result in twice as many pixels vertically and horizontally. Note that using
 #'   2 is not exactly the same as taking a screenshot on a HiDPI (Retina)
@@ -44,6 +50,12 @@
 #'
 #' # Might need a longer delay for all assets to display
 #' webshot("http://rstudio.github.io/leaflet", delay = 0.5)
+#'
+#' # One can also take screenshots of several URLs with only one command.
+#' # This is more efficient than calling multiple times 'webshot'.
+#' webshot(c("https://github.com/rstudio/shiny",
+#'           "http://rstudio.github.io/leaflet"),
+#'         delay = 0.5)
 #'
 #' # Clip to the viewport
 #' webshot("http://rstudio.github.io/leaflet", "leaflet-viewport.png",
@@ -115,8 +127,8 @@ webshot <- function(
   if (length(url) > 1) {
     if (length(file) == 1) {
       file <- sapply(1:length(url), function(i) {
-        replacement <- sprintf("%03d.png", i)
-        gsub("\\.png$", replacement, file)
+        replacement <- sprintf("%03d.\\1", i)
+        gsub("\\.(.{3,4})$", replacement, file)
       })
     } else if (length(file) != length(url)) {
       stop("parameters 'url' and 'file' should have same length")
@@ -150,19 +162,28 @@ webshot <- function(
     }
   }
 
-  data <- data.frame(url = url, file = file)
+  data <- data.frame(url = url, file = file, vwidth = vwidth, vheight = vheight)
+
+  # Params selector and expand can be either a vector that need to be concatenated
+  # or a list of such vectors. This function can be used to convert them into a
+  # character vector with the desired format.
+  argToVec <- function(arg) {
+    if (!is.list(arg)) return(paste(arg, collapse = ","))
+    sapply(arg, function(x) {
+      if (is.null(x) || is.na(x)) return(NA_character_)
+      else paste(x, collapse = ",")
+    })
+  }
+
+  if (!is.null(selector)) data$selector <- argToVec(selector)
+  if (!is.null(delay)) data$delay <- delay
+  if (!is.null(expand)) data$expand <- argToVec(expand)
+  if (!is.null(zoom)) data$zoom <- zoom
+  if (!is.null(eval)) data$eval <- eval
 
   args <- dropNulls(list(
     shQuote(system.file("webshot.js", package = "webshot")),
-    shQuote(jsonlite::toJSON(data)),
-    paste0("--vwidth=", vwidth),
-    paste0("--vheight=", vheight),
-    if (!is.null(cliprect)) paste0("--cliprect=", paste(cliprect, collapse=",")),
-    if (!is.null(selector)) paste0("--selector=", paste(shQuote(selector), collapse=",")),
-    if (!is.null(delay)) paste0("--delay=", delay),
-    if (!is.null(expand)) paste0("--expand=", paste(expand, collapse=",")),
-    if (!is.null(zoom)) paste0("--zoom=", zoom),
-    if (!is.null(eval)) paste0("--eval=", shQuote(eval))
+    shQuote(jsonlite::toJSON(data))
   ))
 
   res <- phantom_run(args)

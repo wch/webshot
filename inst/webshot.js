@@ -25,54 +25,52 @@ var args = system.args;
 
 if (args.length < 2) {
   console.log('Usage:\n' +
-    '  phantomjs webshot.js <data> [options]');
+    '  phantomjs webshot.js <data>');
   phantom.exit(1);
 }
 
 var data = JSON.parse(args[1]);
 
-var opts = utils.parseArgs(args.slice(2));
-opts = utils.merge(opt_defaults, opts);
-
-// These should be numbers
-if (opts.vwidth)  opts.vwidth  = +opts.vwidth;
-if (opts.vheight) opts.vheight = +opts.vheight;
-if (opts.delay)   opts.delay   = +opts.delay;
-if (opts.zoom)    opts.zoom    = +opts.zoom;
-
-// This should be four numbers separated by ","
-if (opts.cliprect) {
-  opts.cliprect = opts.cliprect.split(",");
-  opts.cliprect = opts.cliprect.map(function(x) { return +x; });
-}
-
-// Can be 1 or 4 numbers separated by ","
-if (opts.expand) {
-  opts.expand = opts.expand.split(",");
-  opts.expand = opts.expand.map(function(x) { return +x; });
-  if (opts.expand.length !== 1 && opts.expand.length !== 4) {
-    console.log("'expand' must have either 1 or 4 values.");
-    phantom.exit(1);
-  }
-}
-
-// Can have multiple selectors
-if (opts.selector) {
-  opts.selector = opts.selector.split(",");
-}
-
 // =====================================================================
 // Screenshot
 // =====================================================================
 
-casper.start().zoom(opts.zoom)
-  .viewport(opts.zoom * opts.vwidth, opts.zoom * opts.vheight);
+casper.start();
 
 casper.eachThen(data, function(response) {
   var url = response.data.url;
   var file = response.data.file;
+  var opts = response.data;
+
+  // Prepare options
+  opts = utils.merge(opt_defaults, opts);
+
+  // This should be four numbers separated by ","
+  if (opts.cliprect) {
+    opts.cliprect = opts.cliprect.split(",");
+    opts.cliprect = opts.cliprect.map(function(x) { return +x; });
+  }
+
+  // Can be 1 or 4 numbers separated by ","
+  if (opts.expand) {
+    opts.expand = opts.expand.split(",");
+    opts.expand = opts.expand.map(function(x) { return +x; });
+    if (opts.expand.length !== 1 && opts.expand.length !== 4) {
+      console.log("'expand' must have either 1 or 4 values.");
+      phantom.exit(1);
+    }
+  }
+
+  // Can have multiple selectors
+  if (opts.selector) {
+    opts.selector = opts.selector.split(",");
+  }
+
+  // Go to url and perform the desired screenshot
   this.thenOpen(url, function(r) {
-    this.wait(opts.delay * 1000);
+    this.zoom(opts.zoom)
+      .viewport(opts.zoom * opts.vwidth, opts.zoom * opts.vheight)
+      .wait(opts.delay * 1000);
     var cr = findClipRect(opts, this);
     this.capture(file, cr);
   });
