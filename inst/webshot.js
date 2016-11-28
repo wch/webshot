@@ -1,7 +1,11 @@
-
 // This must be executed with phantomjs
 // Take a screenshot of a URL and saves it to a .png file
-// phantomjs webshot.js <url> <filename> [options]
+// phantomjs webshot.js <optsList>
+//
+// 'optsList' is a JSON array containing configurations for each screenshot that has
+// to be taken. Each configuration object needs to contain at least properties
+// "url" and "file". For instance:
+// [{"url":"http://rstudio.github.io/leaflet/","file":"webshot.png"}]
 
 var utils = require('./utils');
 var system = require('system');
@@ -29,7 +33,7 @@ if (args.length < 2) {
   phantom.exit(1);
 }
 
-var data = JSON.parse(args[1]);
+var optsList = JSON.parse(args[1]);
 
 // =====================================================================
 // Screenshot
@@ -37,9 +41,7 @@ var data = JSON.parse(args[1]);
 
 casper.start();
 
-casper.eachThen(data, function(response) {
-  var url = response.data.url;
-  var file = response.data.file;
+casper.eachThen(optsList, function(response) {
   var opts = response.data;
 
   // Prepare options
@@ -67,12 +69,12 @@ casper.eachThen(data, function(response) {
   }
 
   // Go to url and perform the desired screenshot
-  this.thenOpen(url, function(r) {
+  this.thenOpen(opts.url, function(r) {
     this.zoom(opts.zoom)
       .viewport(opts.zoom * opts.vwidth, opts.zoom * opts.vheight)
       .wait(opts.delay * 1000);
     var cr = findClipRect(opts, this);
-    this.capture(file, cr);
+    this.capture(opts.file, cr);
   });
 });
 
