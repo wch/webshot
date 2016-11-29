@@ -21,11 +21,12 @@
 #' }
 #' @export
 resize <- function(filename, geometry) {
-  mapply(.resize, filename = filename, geometry = geometry)
+  mapply(resize_one, filename = filename, geometry = geometry,
+         SIMPLIFY = FALSE, USE.NAMES = FALSE)
   structure(filename, class = "webshot")
 }
 
-.resize <- function(filename, geometry) {
+resize_one <- function(filename, geometry) {
   # Handle missing phantomjs
   if (is.null(filename)) return(NULL)
 
@@ -81,11 +82,11 @@ resize <- function(filename, geometry) {
 #' }
 #' @export
 shrink <- function(filename) {
-  mapply(.shrink, filename = filename)
+  mapply(shrink_one, filename = filename, SIMPLIFY = FALSE, USE.NAMES = FALSE)
   structure(filename, class = "webshot")
 }
 
-.shrink <- function(filename) {
+shrink_one <- function(filename) {
   # Handle missing phantomjs
   if (is.null(filename)) return(NULL)
 

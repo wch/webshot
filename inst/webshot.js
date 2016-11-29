@@ -29,7 +29,8 @@ var args = system.args;
 
 if (args.length < 2) {
   console.log(
-    'usage: phantomjs webshot.js <optsList>\n' +
+    'Usage:\n' +
+    '  phantomjs webshot.js <optsList>\n' +
     '\n' +
     'optsList is a JSON array containing configuration for each screenshot.\n' +
     'For instance:\n' +
@@ -45,7 +46,7 @@ var optsList = JSON.parse(args[1]);
 
 casper.start();
 casper.options.onLoadError = function(c, url) {
-  console.log("Can not load ", url);
+  console.log("Could not load ", url);
   phantom.exit(1);
 };
 
@@ -53,7 +54,7 @@ casper.eachThen(optsList, function(response) {
   var opts = response.data;
 
   // Prepare options
-  opts = utils.merge(opts, opt_defaults);
+  opts = utils.fillMissing(opts, opt_defaults);
 
   // This should be four numbers separated by ","
   if (opts.cliprect) {
@@ -77,12 +78,12 @@ casper.eachThen(optsList, function(response) {
   }
 
   // Go to url and perform the desired screenshot
-  casper.zoom(opts.zoom)
+  this.zoom(opts.zoom)
     .viewport(opts.zoom * opts.vwidth, opts.zoom * opts.vheight)
-    .thenOpen(opts.url, function(r) {
-      casper.wait(opts.delay * 1000, function() {
-        var cr = findClipRect(opts, casper);
-        casper.capture(opts.file, cr);
+    .thenOpen(opts.url, function() {
+      this.wait(opts.delay * 1000, function() {
+        var cr = findClipRect(opts, this);
+        this.capture(opts.file, cr);
       });
     });
 });

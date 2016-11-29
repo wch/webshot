@@ -2,8 +2,6 @@
 #'
 #' @inheritParams webshot
 #' @param app A Shiny app object, or a string naming an app directory.
-#' @param file Name of output file. Should end with \code{.png}, \code{.pdf}, or
-#' \code{.jpeg}.
 #' @param port Port that Shiny will listen on.
 #' @param envvars A named character vector or named list of environment
 #'   variables and values to set for the Shiny app's R process. These will be

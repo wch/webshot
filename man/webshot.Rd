@@ -43,7 +43,7 @@ clipping rectangle by. If one number, the rectangle will be expanded by
 that many pixels on all sides. If four numbers, they specify the top,
 right, bottom, and left, in that order. When taking screenshots of multiple
 URLs, this parameter can also be a list with same length as \code{url} with
-each element of the list containing a single number or four numbers  to use
+each element of the list containing a single number or four numbers to use
 for the corresponding URL.}
 
 \item{delay}{Time to wait before taking screenshot, in seconds. Sometimes a
@@ -78,7 +78,7 @@ webshot("https://github.com/rstudio/shiny")
 webshot("http://rstudio.github.io/leaflet", delay = 0.5)
 
 # One can also take screenshots of several URLs with only one command.
-# This is more efficient than calling multiple times 'webshot'.
+# This is more efficient than calling 'webshot' multiple times.
 webshot(c("https://github.com/rstudio/shiny",
           "http://rstudio.github.io/leaflet"),
         delay = 0.5)

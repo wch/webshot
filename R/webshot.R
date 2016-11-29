@@ -57,7 +57,7 @@
 #' webshot("http://rstudio.github.io/leaflet", delay = 0.5)
 #'
 #' # One can also take screenshots of several URLs with only one command.
-#' # This is more efficient than calling multiple times 'webshot'.
+#' # This is more efficient than calling 'webshot' multiple times.
 #' webshot(c("https://github.com/rstudio/shiny",
 #'           "http://rstudio.github.io/leaflet"),
 #'         delay = 0.5)
@@ -135,14 +135,26 @@ webshot <- function(
   if(!is.null(expand) && !is.list(expand)) expand <- list(expand)
 
   # Check length of arguments
-  lengthOfArgs <- vapply(environment(), length, numeric(1))
-  maxLength <- max(lengthOfArgs)
-  if (any(! lengthOfArgs %in% c(0, 1, maxLength))) {
+  arg_list <- list(
+    url = url,
+    file = file,
+    vwidth = vwidth,
+    vheight = vheight,
+    cliprect = cliprect,
+    selector = selector,
+    expand = expand,
+    delay = delay,
+    zoom = zoom,
+    eval = eval
+  )
+  arg_length <- vapply(arg_list, length, numeric(1))
+  max_arg_length <- max(arg_length)
+  if (any(! arg_length %in% c(0, 1, max_arg_length))) {
     stop("All arguments should have same length or be single elements or NULL")
   }
 
   # If url is of length one replicate it to match the maximal length of arguments
-  if (length(url) < maxLength) url <- rep(url, maxLength)
+  if (length(url) < max_arg_length) url <- rep(url, max_arg_length)
 
   # If user provides only one file name but wants several screenshots, then the
   # below code generates as many file names as URLs following the pattern
