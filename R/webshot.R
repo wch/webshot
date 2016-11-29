@@ -30,7 +30,7 @@
 #'   that many pixels on all sides. If four numbers, they specify the top,
 #'   right, bottom, and left, in that order. When taking screenshots of multiple
 #'   URLs, this parameter can also be a list with same length as \code{url} with
-#'   each element of the list containing a single number or four numbers  to use
+#'   each element of the list containing a single number or four numbers to use
 #'   for the corresponding URL.
 #' @param zoom A number specifying the zoom factor. A zoom factor of 2 will
 #'   result in twice as many pixels vertically and horizontally. Note that using
