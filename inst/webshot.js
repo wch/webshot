@@ -72,9 +72,10 @@ casper.eachThen(optsList, function(response) {
   casper.zoom(opts.zoom)
     .viewport(opts.zoom * opts.vwidth, opts.zoom * opts.vheight)
     .thenOpen(opts.url, function(r) {
-      casper.wait(opts.delay * 1000);
-      var cr = findClipRect(opts, this);
-      casper.capture(opts.file, cr);
+      casper.wait(opts.delay * 1000, function() {
+        var cr = findClipRect(opts, casper);
+        casper.capture(opts.file, cr);
+      });
     });
 });
 
