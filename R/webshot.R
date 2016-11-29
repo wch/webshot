@@ -2,7 +2,9 @@
 #'
 #' @param url A vector of URLs to visit.
 #' @param file A vector of names of output files. Should end with \code{.png},
-#'   \code{.pdf}, or \code{.jpeg}.
+#'   \code{.pdf}, or \code{.jpeg}. If several screenshots have to be taken and
+#'   only one filename is provided, then the function appends the index number
+#'   of the screenshot to the file name.
 #' @param vwidth Viewport width. This is the width of the browser "window".
 #' @param vheight Viewport height This is the height of the browser "window".
 #' @param cliprect Clipping rectangle. If \code{cliprect} and \code{selector}
@@ -185,7 +187,7 @@ webshot <- function(
   }
 
   # Create the table that contains all options for each screenshot
-  opts <- data.frame(url = url, file = file, vwidth = vwidth, vheight = vheight)
+  optsList <- data.frame(url = url, file = file, vwidth = vwidth, vheight = vheight)
 
   # Params selector, cliprect and expand can be either a vector that need to be
   # concatenated or a list of such vectors. This function can be used to convert
@@ -197,17 +199,17 @@ webshot <- function(
     })
   }
 
-  if (!is.null(cliprect)) opts$cliprect <- argToVec(cliprect)
-  if (!is.null(selector)) opts$selector <- argToVec(selector)
-  if (!is.null(expand)) opts$expand <- argToVec(expand)
-  if (!is.null(delay)) opts$delay <- delay
-  if (!is.null(zoom)) opts$zoom <- zoom
-  if (!is.null(eval)) opts$eval <- eval
+  if (!is.null(cliprect)) optsList$cliprect <- argToVec(cliprect)
+  if (!is.null(selector)) optsList$selector <- argToVec(selector)
+  if (!is.null(expand)) optsList$expand <- argToVec(expand)
+  if (!is.null(delay)) optsList$delay <- delay
+  if (!is.null(zoom)) optsList$zoom <- zoom
+  if (!is.null(eval)) optsList$eval <- eval
 
-  args <- dropNulls(list(
+  args <- list(
     shQuote(system.file("webshot.js", package = "webshot")),
-    shQuote(jsonlite::toJSON(opts))
-  ))
+    shQuote(jsonlite::toJSON(optsList))
+  )
 
   res <- phantom_run(args)
 
