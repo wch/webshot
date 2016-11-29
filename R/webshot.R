@@ -127,18 +127,29 @@ webshot <- function(
     stop("Need url.")
   }
 
-  # If user provides multiple URLs but only one file name, then the below code
-  # generates as many file names as URLs following the pattern
+  # Convert params cliprect, selector and expand to list if necessary
+  if(!is.null(cliprect) && !is.list(cliprect)) cliprect <- list(cliprect)
+  if(!is.null(selector) && !is.list(selector)) selector <- list(selector)
+  if(!is.null(expand) && !is.list(expand)) expand <- list(expand)
+
+  # Check length of arguments
+  lengthOfArgs <- vapply(environment(), length, numeric(1))
+  maxLength <- max(lengthOfArgs)
+  if (any(! lengthOfArgs %in% c(0, 1, maxLength))) {
+    stop("All arguments should have same length or be single elements or NULL")
+  }
+
+  # If url is of length one replicate it to match the maximal length of arguments
+  if (length(url) < maxLength) url <- rep(url, maxLength)
+
+  # If user provides only one file name but wants several screenshots, then the
+  # below code generates as many file names as URLs following the pattern
   # "filename001.png", "filename002.png", ... (or whatever extension it is)
-  if (length(url) > 1) {
-    if (length(file) == 1) {
-      file <- vapply(1:length(url), FUN.VALUE = character(1), function(i) {
-          replacement <- sprintf("%03d.\\1", i)
-          gsub("\\.(.{3,4})$", replacement, file)
-        })
-    } else if (length(file) != length(url)) {
-      stop("'url' and 'file' should have same length")
-    }
+  if (length(url) > 1 && length(file) == 1) {
+    file <- vapply(1:length(url), FUN.VALUE = character(1), function(i) {
+      replacement <- sprintf("%03d.\\1", i)
+      gsub("\\.(.{3,4})$", replacement, file)
+    })
   }
 
   if (is_windows()) {
@@ -149,7 +160,6 @@ webshot <- function(
     stop("Can't specify both cliprect and selector.")
 
   } else if (is.null(selector) && !is.null(cliprect)) {
-    if (!is.list(cliprect)) cliprect <- list(cliprect)
     cliprect <- lapply(cliprect, function(x) {
       if (is.character(x)) {
         if (x == "viewport") {
@@ -166,11 +176,8 @@ webshot <- function(
     })
   }
 
-  if (!is.null(selector) && !is.list(selector)) selector <- list(selector)
-
+  # check that expand is a vector of length 1 or 4 or a list of such vectors
   if (!is.null(expand)) {
-    # check that expand is a vector of length 1 or 4 or a list of such vectors
-    if (!is.list(expand)) expand <- list(expand)
     lengths <- vapply(expand, length, numeric(1))
     if (any(!lengths %in% c(1, 4))) {
       stop("'expand' must be a vector with one or four numbers, or a list of such vectors.")
