@@ -15,7 +15,7 @@
 #'   of multiple URLs, this parameter can also be a list with same length as
 #'   \code{url} with each element of the list being "viewport" or a
 #'   four-elements numeric vector. This option is not compatible with
-#'   \code{selector}
+#'   \code{selector}.
 #' @param selector One or more CSS selectors specifying a DOM element to set the
 #'   clipping rectangle to. The screenshot will contain these DOM elements. For
 #'   a given selector, if it has more than one match, only the first one will be

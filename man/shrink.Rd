@@ -7,7 +7,8 @@
 shrink(filename)
 }
 \arguments{
-\item{filename}{Name of image to shrink. Must be a PNG file.}
+\item{filename}{Character vector containing the path of images to resize.
+Must be PNG files.}
 }
 \description{
 This does not change size of the image in pixels, nor does it affect
