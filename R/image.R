@@ -21,6 +21,11 @@
 #' }
 #' @export
 resize <- function(filename, geometry) {
+  mapply(.resize, filename = filename, geometry = geometry)
+  structure(filename, class = "webshot")
+}
+
+.resize <- function(filename, geometry) {
   # Handle missing phantomjs
   if (is.null(filename)) return(NULL)
 
@@ -54,9 +59,8 @@ resize <- function(filename, geometry) {
   if (res != 0)
     stop ("Resizing with `gm convert`, `magick convert` or `convert` failed.")
 
-  structure(filename, class = "webshot")
+  filename
 }
-
 
 #' Shrink file size of a PNG
 #'
@@ -77,6 +81,11 @@ resize <- function(filename, geometry) {
 #' }
 #' @export
 shrink <- function(filename) {
+  mapply(.shrink, filename = filename)
+  structure(filename, class = "webshot")
+}
+
+.shrink <- function(filename) {
   # Handle missing phantomjs
   if (is.null(filename)) return(NULL)
 
@@ -89,5 +98,5 @@ shrink <- function(filename) {
   if (res != 0)
     stop ("Shrinking with `optipng` failed.")
 
-  structure(filename, class = "webshot")
+  filename
 }
