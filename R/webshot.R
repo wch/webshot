@@ -150,7 +150,7 @@ webshot <- function(
 
   } else if (is.null(selector) && !is.null(cliprect)) {
     if (!is.list(cliprect)) cliprect <- list(cliprect)
-    vapply(cliprect, FUN.VALUE=logical(1), function(x) {
+    cliprect <- lapply(cliprect, function(x) {
       if (is.character(x)) {
         if (x == "viewport") {
           x <- c(0, 0, vwidth, vheight)
@@ -162,6 +162,7 @@ webshot <- function(
           stop("'cliprect' must be a 4-element numeric vector or a list of such vectors")
         }
       }
+      x
     })
   }
 
@@ -189,7 +190,7 @@ webshot <- function(
     })
   }
 
-  if (!is.null(cliprect)) opts$cliprect <- cliprect
+  if (!is.null(cliprect)) opts$cliprect <- argToVec(cliprect)
   if (!is.null(selector)) opts$selector <- argToVec(selector)
   if (!is.null(expand)) opts$expand <- argToVec(expand)
   if (!is.null(delay)) opts$delay <- delay
