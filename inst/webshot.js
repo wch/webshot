@@ -40,6 +40,10 @@ var optsList = JSON.parse(args[1]);
 // =====================================================================
 
 casper.start();
+casper.options.onLoadError = function(c, url) {
+  console.log("Can not load ", url);
+  phantom.exit(1);
+};
 
 casper.eachThen(optsList, function(response) {
   var opts = response.data;
