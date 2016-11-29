@@ -28,8 +28,12 @@ var opt_defaults = {
 var args = system.args;
 
 if (args.length < 2) {
-  console.log('Usage:\n' +
-    '  phantomjs webshot.js <data>');
+  console.log(
+    'usage: phantomjs webshot.js <optsList>\n' +
+    '\n' +
+    'optsList is a JSON array containing configuration for each screenshot.\n' +
+    'For instance:\n' +
+    '\'[{"url":"url1.html","file":"file1.png"},{"url":"url2.html","file":"fil2.png","zoom":2}]\'');
   phantom.exit(1);
 }
 
