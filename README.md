@@ -62,6 +62,27 @@ webshot("https://www.r-project.org/", "r-sidebar-zoom.png",
         selector = ".sidebar", zoom = 2)
 ```
 
+### Vectorization
+
+All parameters of function `webshot`. That means that multiple screenshots can be taken with a single command. When taking a lot of screenshots, vectorization can divide by 5 the execution time.
+
+``` r
+# Take a screenshot of different sites
+webshot(c("https://www.r-project.org/", "https://github.com/wch/webshot"),
+        file = c("r.png", "webshot.png"))
+
+# Save screenshots of the same site in different formats
+webshot("https://www.r-project.org/", file = c("r.png", "r.pdf"))
+
+# Take screenshots of different sections of the same site. 
+# Note that unlike arguments "url" and "file", a list is required to specify 
+# multiple selectors. This is also the case for arguments "cliprect" and 
+# "expand"
+webshot("http://rstudio.github.io/leaflet/",
+        file = c("leaflet_features.png", "leaflet_install.png"),
+        selector = list("#features", "#installation"))
+```
+
 ### Screenshots of Shiny applications
 
 The `appshot()` function will run a Shiny app locally in a separate R process, and take a screenshot of it. After taking the screenshot, it will kill the R process that is running the Shiny app.
