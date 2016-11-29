@@ -69,13 +69,13 @@ casper.eachThen(optsList, function(response) {
   }
 
   // Go to url and perform the desired screenshot
-  this.thenOpen(opts.url, function(r) {
-    this.zoom(opts.zoom)
-      .viewport(opts.zoom * opts.vwidth, opts.zoom * opts.vheight)
-      .wait(opts.delay * 1000);
-    var cr = findClipRect(opts, this);
-    this.capture(opts.file, cr);
-  });
+  casper.zoom(opts.zoom)
+    .viewport(opts.zoom * opts.vwidth, opts.zoom * opts.vheight)
+    .thenOpen(opts.url, function(r) {
+      casper.wait(opts.delay * 1000);
+      var cr = findClipRect(opts, this);
+      casper.capture(opts.file, cr);
+    });
 });
 
 casper.run();
