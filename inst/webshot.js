@@ -45,7 +45,7 @@ casper.eachThen(optsList, function(response) {
   var opts = response.data;
 
   // Prepare options
-  opts = utils.merge(opt_defaults, opts);
+  opts = utils.merge(opts, opt_defaults);
 
   // This should be four numbers separated by ","
   if (opts.cliprect) {
