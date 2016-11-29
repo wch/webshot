@@ -248,11 +248,8 @@ fix_windows_url <- function(url) {
 
   # If it's a "c:/path/file.html" path, or contains any backslashs, like
   # "c:\path", "\\path\\file.html", or "/path\\file.html", we need to fix it up.
-  if (grepl("^[a-zA-Z]:/", url) || grepl("\\", url, fixed = TRUE)) {
-    paste0("file:///", normalizePath(url, winslash = "/"))
-  } else {
-    url
-  }
+  needFix <- grepl("^[a-zA-Z]:/", url) | grepl("\\", url, fixed = TRUE)
+  ifelse(needFix, paste0("file:///", normalizePath(url, winslash = "/")), url)
 }
 
 
