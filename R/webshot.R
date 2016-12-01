@@ -236,9 +236,11 @@ webshot <- function(
 }
 
 knit_print.webshot <- function(x, ...) {
-  res <- readBin(x, "raw", file.size(x))
-  ext <- gsub(".*[.]", "", basename(x))
-  structure(list(image = res, extension = ext), class = "html_screenshot")
+  lapply(x, function(filename) {
+    res <- readBin(filename, "raw", file.size(filename))
+    ext <- gsub(".*[.]", "", basename(filename))
+    structure(list(image = res, extension = ext), class = "html_screenshot")
+  })
 }
 
 #' @export
