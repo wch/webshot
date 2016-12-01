@@ -246,10 +246,18 @@ download_old_win <- function(url, ...) {
 fix_windows_url <- function(url) {
   if (!is_windows()) return(url)
 
-  # If it's a "c:/path/file.html" path, or contains any backslashs, like
-  # "c:\path", "\\path\\file.html", or "/path\\file.html", we need to fix it up.
-  needFix <- grepl("^[a-zA-Z]:/", url) | grepl("\\", url, fixed = TRUE)
-  ifelse(needFix, paste0("file:///", normalizePath(url, winslash = "/")), url)
+  fix_one <- function(x) {
+    # If it's a "c:/path/file.html" path, or contains any backslashs, like
+    # "c:\path", "\\path\\file.html", or "/path\\file.html", we need to fix it
+    # up.
+    if (grepl("^[a-zA-Z]:/", x) || grepl("\\", x, fixed = TRUE)) {
+      paste0("file:///", normalizePath(x, winslash = "/"))
+    } else {
+      x
+    }
+  }
+
+  vapply(url, fix_one, character(1), USE.NAMES = FALSE)
 }
 
 
