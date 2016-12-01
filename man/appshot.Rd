@@ -10,8 +10,10 @@ appshot(app, file = "webshot.png", ..., port = getOption("shiny.port"),
 \arguments{
 \item{app}{A Shiny app object, or a string naming an app directory.}
 
-\item{file}{Name of output file. Should end with \code{.png}, \code{.pdf}, or
-\code{.jpeg}.}
+\item{file}{A vector of names of output files. Should end with \code{.png},
+\code{.pdf}, or \code{.jpeg}. If several screenshots have to be taken and
+only one filename is provided, then the function appends the index number
+of the screenshot to the file name.}
 
 \item{...}{Other arguments to pass on to \code{\link{webshot}}.}
 

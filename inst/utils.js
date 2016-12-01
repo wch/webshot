@@ -18,10 +18,10 @@ exports.parseArgs = function(args) {
   return opts;
 };
 
-// Merge properties from object b into object a
-exports.merge = function(a, b) {
+// Copy properties from object b that are not defined in object a into object a.
+exports.fillMissing = function(a, b) {
   for (var i in b) {
-    if (b.hasOwnProperty(i))
+    if (b.hasOwnProperty(i) && !a.hasOwnProperty(i))
       a[i] = b[i];
   }
   return a;

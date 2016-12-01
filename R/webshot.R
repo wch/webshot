@@ -1,26 +1,37 @@
 #' Take a screenshot of a URL
 #'
-#' @param url A URL to visit.
-#' @param file Name of output file. Should end with \code{.png}, \code{.pdf}, or
-#'   \code{.jpeg}.
+#' @param url A vector of URLs to visit.
+#' @param file A vector of names of output files. Should end with \code{.png},
+#'   \code{.pdf}, or \code{.jpeg}. If several screenshots have to be taken and
+#'   only one filename is provided, then the function appends the index number
+#'   of the screenshot to the file name.
 #' @param vwidth Viewport width. This is the width of the browser "window".
 #' @param vheight Viewport height This is the height of the browser "window".
 #' @param cliprect Clipping rectangle. If \code{cliprect} and \code{selector}
 #'   are both unspecified, the clipping rectangle will contain the entire page.
 #'   This can be the string \code{"viewport"}, in which case the clipping
 #'   rectangle matches the viewport size, or it can be a four-element numeric
-#'   vector specifying the top, left, width, and height. This option is not
-#'   compatible with \code{selector}.
+#'   vector specifying the top, left, width, and height. When taking screenshots
+#'   of multiple URLs, this parameter can also be a list with same length as
+#'   \code{url} with each element of the list being "viewport" or a
+#'   four-elements numeric vector. This option is not compatible with
+#'   \code{selector}.
 #' @param selector One or more CSS selectors specifying a DOM element to set the
 #'   clipping rectangle to. The screenshot will contain these DOM elements. For
 #'   a given selector, if it has more than one match, only the first one will be
-#'   used. This option is not compatible with \code{cliprect}.
+#'   used. This option is not compatible with \code{cliprect}. When taking
+#'   screenshots of multiple URLs, this parameter can also be a list with same
+#'   length as \code{url} with each element of the list containing a vector of
+#'   CSS selectors to use for the corresponding URL.
 #' @param delay Time to wait before taking screenshot, in seconds. Sometimes a
 #'   longer delay is needed for all assets to display properly.
 #' @param expand A numeric vector specifying how many pixels to expand the
 #'   clipping rectangle by. If one number, the rectangle will be expanded by
 #'   that many pixels on all sides. If four numbers, they specify the top,
-#'   right, bottom, and left, in that order.
+#'   right, bottom, and left, in that order. When taking screenshots of multiple
+#'   URLs, this parameter can also be a list with same length as \code{url} with
+#'   each element of the list containing a single number or four numbers to use
+#'   for the corresponding URL.
 #' @param zoom A number specifying the zoom factor. A zoom factor of 2 will
 #'   result in twice as many pixels vertically and horizontally. Note that using
 #'   2 is not exactly the same as taking a screenshot on a HiDPI (Retina)
@@ -44,6 +55,12 @@
 #'
 #' # Might need a longer delay for all assets to display
 #' webshot("http://rstudio.github.io/leaflet", delay = 0.5)
+#'
+#' # One can also take screenshots of several URLs with only one command.
+#' # This is more efficient than calling 'webshot' multiple times.
+#' webshot(c("https://github.com/rstudio/shiny",
+#'           "http://rstudio.github.io/leaflet"),
+#'         delay = 0.5)
 #'
 #' # Clip to the viewport
 #' webshot("http://rstudio.github.io/leaflet", "leaflet-viewport.png",
@@ -112,6 +129,43 @@ webshot <- function(
     stop("Need url.")
   }
 
+  # Convert params cliprect, selector and expand to list if necessary
+  if(!is.null(cliprect) && !is.list(cliprect)) cliprect <- list(cliprect)
+  if(!is.null(selector) && !is.list(selector)) selector <- list(selector)
+  if(!is.null(expand) && !is.list(expand)) expand <- list(expand)
+
+  # Check length of arguments
+  arg_list <- list(
+    url = url,
+    file = file,
+    vwidth = vwidth,
+    vheight = vheight,
+    cliprect = cliprect,
+    selector = selector,
+    expand = expand,
+    delay = delay,
+    zoom = zoom,
+    eval = eval
+  )
+  arg_length <- vapply(arg_list, length, numeric(1))
+  max_arg_length <- max(arg_length)
+  if (any(! arg_length %in% c(0, 1, max_arg_length))) {
+    stop("All arguments should have same length or be single elements or NULL")
+  }
+
+  # If url is of length one replicate it to match the maximal length of arguments
+  if (length(url) < max_arg_length) url <- rep(url, max_arg_length)
+
+  # If user provides only one file name but wants several screenshots, then the
+  # below code generates as many file names as URLs following the pattern
+  # "filename001.png", "filename002.png", ... (or whatever extension it is)
+  if (length(url) > 1 && length(file) == 1) {
+    file <- vapply(1:length(url), FUN.VALUE = character(1), function(i) {
+      replacement <- sprintf("%03d.\\1", i)
+      gsub("\\.(.{3,4})$", replacement, file)
+    })
+  }
+
   if (is_windows()) {
     url <- fix_windows_url(url)
   }
@@ -120,38 +174,54 @@ webshot <- function(
     stop("Can't specify both cliprect and selector.")
 
   } else if (is.null(selector) && !is.null(cliprect)) {
-    if (is.character(cliprect)) {
-      if (cliprect == "viewport") {
-        cliprect <- c(0, 0, vwidth, vheight)
+    cliprect <- lapply(cliprect, function(x) {
+      if (is.character(x)) {
+        if (x == "viewport") {
+          x <- c(0, 0, vwidth, vheight)
+        } else {
+          stop("Invalid value for cliprect: ", x)
+        }
       } else {
-        stop("Invalid value for cliprect: ", cliprect)
+        if (!is.numeric(x) || length(x) != 4) {
+          stop("'cliprect' must be a 4-element numeric vector or a list of such vectors")
+        }
       }
-    } else {
-      if (!is.numeric(cliprect) || length(cliprect) != 4) {
-        stop("cliprect must be a 4-element numeric vector")
-      }
-    }
+      x
+    })
   }
 
+  # check that expand is a vector of length 1 or 4 or a list of such vectors
   if (!is.null(expand)) {
-    if (!(length(expand) %in% c(1, 4))) {
-      stop("expand must either have 1 or 4 values");
+    lengths <- vapply(expand, length, numeric(1))
+    if (any(!lengths %in% c(1, 4))) {
+      stop("'expand' must be a vector with one or four numbers, or a list of such vectors.")
     }
   }
 
-  args <- dropNulls(list(
+  # Create the table that contains all options for each screenshot
+  optsList <- data.frame(url = url, file = file, vwidth = vwidth, vheight = vheight)
+
+  # Params selector, cliprect and expand can be either a vector that need to be
+  # concatenated or a list of such vectors. This function can be used to convert
+  # them into a character vector with the desired format.
+  argToVec <- function(arg) {
+    vapply(arg, FUN.VALUE = character(1), function(x) {
+      if (is.null(x) || is.na(x)) NA_character_
+      else paste(x, collapse = ",")
+    })
+  }
+
+  if (!is.null(cliprect)) optsList$cliprect <- argToVec(cliprect)
+  if (!is.null(selector)) optsList$selector <- argToVec(selector)
+  if (!is.null(expand)) optsList$expand <- argToVec(expand)
+  if (!is.null(delay)) optsList$delay <- delay
+  if (!is.null(zoom)) optsList$zoom <- zoom
+  if (!is.null(eval)) optsList$eval <- eval
+
+  args <- list(
     shQuote(system.file("webshot.js", package = "webshot")),
-    url,
-    file,
-    paste0("--vwidth=", vwidth),
-    paste0("--vheight=", vheight),
-    if (!is.null(cliprect)) paste0("--cliprect=", paste(cliprect, collapse=",")),
-    if (!is.null(selector)) paste0("--selector=", paste(shQuote(selector), collapse=",")),
-    if (!is.null(delay)) paste0("--delay=", delay),
-    if (!is.null(expand)) paste0("--expand=", paste(expand, collapse=",")),
-    if (!is.null(zoom)) paste0("--zoom=", zoom),
-    if (!is.null(eval)) paste0("--eval=", shQuote(eval))
-  ))
+    shQuote(jsonlite::toJSON(optsList))
+  )
 
   res <- phantom_run(args)
 

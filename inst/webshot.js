@@ -1,7 +1,11 @@
-
 // This must be executed with phantomjs
 // Take a screenshot of a URL and saves it to a .png file
-// phantomjs webshot.js <url> <filename> [options]
+// phantomjs webshot.js <optsList>
+//
+// 'optsList' is a JSON array containing configurations for each screenshot that has
+// to be taken. Each configuration object needs to contain at least properties
+// "url" and "file". For instance:
+// [{"url":"http://rstudio.github.io/leaflet/","file":"webshot.png"}]
 
 var utils = require('./utils');
 var system = require('system');
@@ -23,60 +27,65 @@ var opt_defaults = {
 // =====================================================================
 var args = system.args;
 
-if (args.length < 3) {
-  console.log('Usage:\n' +
-    '  phantomjs webshot.js <url> <name>.png [options]');
+if (args.length < 2) {
+  console.log(
+    'Usage:\n' +
+    '  phantomjs webshot.js <optsList>\n' +
+    '\n' +
+    'optsList is a JSON array containing configuration for each screenshot.\n' +
+    'For instance:\n' +
+    '\'[{"url":"url1.html","file":"file1.png"},{"url":"url2.html","file":"fil2.png","zoom":2}]\'');
   phantom.exit(1);
 }
 
-var url = args[1];
-var filename = args[2];
-var opts = utils.parseArgs(args.slice(3));
-opts = utils.merge(opt_defaults, opts);
-
-// These should be numbers
-if (opts.vwidth)  opts.vwidth  = +opts.vwidth;
-if (opts.vheight) opts.vheight = +opts.vheight;
-if (opts.delay)   opts.delay   = +opts.delay;
-if (opts.zoom)    opts.zoom    = +opts.zoom;
-
-// This should be four numbers separated by ","
-if (opts.cliprect) {
-  opts.cliprect = opts.cliprect.split(",");
-  opts.cliprect = opts.cliprect.map(function(x) { return +x; });
-}
-
-// Can be 1 or 4 numbers separated by ","
-if (opts.expand) {
-  opts.expand = opts.expand.split(",");
-  opts.expand = opts.expand.map(function(x) { return +x; });
-  if (opts.expand.length !== 1 && opts.expand.length !== 4) {
-    console.log("'expand' must have either 1 or 4 values.");
-    phantom.exit(1);
-  }
-}
-
-// Can have multiple selectors
-if (opts.selector) {
-  opts.selector = opts.selector.split(",");
-}
+var optsList = JSON.parse(args[1]);
 
 // =====================================================================
 // Screenshot
 // =====================================================================
-casper.start(url).zoom(opts.zoom)
-  .viewport(opts.zoom * opts.vwidth, opts.zoom * opts.vheight);
 
-if (opts.delay > 0)
-  casper.wait(opts.delay * 1000);
+casper.start();
+casper.options.onLoadError = function(c, url) {
+  console.log("Could not load ", url);
+  phantom.exit(1);
+};
 
-if (opts.eval) {
-  eval(opts.eval);
-}
+casper.eachThen(optsList, function(response) {
+  var opts = response.data;
 
-casper.then(function() {
-  var cr = findClipRect(opts, this);
-  this.capture(filename, cr);
+  // Prepare options
+  opts = utils.fillMissing(opts, opt_defaults);
+
+  // This should be four numbers separated by ","
+  if (opts.cliprect) {
+    opts.cliprect = opts.cliprect.split(",");
+    opts.cliprect = opts.cliprect.map(function(x) { return +x; });
+  }
+
+  // Can be 1 or 4 numbers separated by ","
+  if (opts.expand) {
+    opts.expand = opts.expand.split(",");
+    opts.expand = opts.expand.map(function(x) { return +x; });
+    if (opts.expand.length !== 1 && opts.expand.length !== 4) {
+      console.log("'expand' must have either 1 or 4 values.");
+      phantom.exit(1);
+    }
+  }
+
+  // Can have multiple selectors
+  if (opts.selector) {
+    opts.selector = opts.selector.split(",");
+  }
+
+  // Go to url and perform the desired screenshot
+  this.zoom(opts.zoom)
+    .viewport(opts.zoom * opts.vwidth, opts.zoom * opts.vheight)
+    .thenOpen(opts.url, function() {
+      this.wait(opts.delay * 1000, function() {
+        var cr = findClipRect(opts, this);
+        this.capture(opts.file, cr);
+      });
+    });
 });
 
 casper.run();
