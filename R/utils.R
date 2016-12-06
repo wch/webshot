@@ -165,7 +165,7 @@ available_port <- function(port) {
 # 403 for HEAD requests. See
 # https://stat.ethz.ch/pipermail/r-devel/2016-June/072852.html
 download <- function(url, destfile, mode = "w") {
-  if (getRversion() == "3.3.0" || getRversion() == "3.3.1") {
+  if (getRversion() >= "3.3.0") {
     download_no_libcurl(url, destfile, mode = mode)
 
   } else if (is_windows() && getRversion() < "3.2") {
