@@ -9,6 +9,8 @@ webshot 0.3.2.9001
 
 * `webshot()` now returns objects with class `webshot`. There is also a new `knit_print` method for `webshot` objects. ([#27](https://github.com/wch/webshot/pull/27))
 
+* Fixed problem installing PhantomJS on R 3.3.2 and above. ([#35](https://github.com/wch/webshot/pull/35))
+
 webshot 0.3.2
 =============
 
