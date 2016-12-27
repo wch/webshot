@@ -1,4 +1,4 @@
-webshot 0.3.2.9001
+webshot 0.4.0
 ==================
 
 * `webshot`, `resize`, and `shrink` all now accept a vector of URLs or filenames. (([#32](https://github.com/wch/webshot/pull/32)), [#33](https://github.com/wch/webshot/pull/33))
