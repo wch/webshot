@@ -127,22 +127,22 @@ webshot("https://www.r-project.org/", "r-small.png") %>%
 # Take the screenshots that are shown below
 
 webshot("https://www.r-project.org/", cliprect = c(0, 0, 992, 500),
-        "img/r-small-resized.png") %>%
+        "tools/r-small-resized.png") %>%
   resize("50%") %>%
   shrink() %>%
   invisible()
 
 # Using zoom instead of resize()
 webshot("https://www.r-project.org/", cliprect = c(0, 0, 992, 500),
-        "img/r-small-zoomed.png", zoom = 0.5) %>%
+        "tools/r-small-zoomed.png", zoom = 0.5) %>%
   shrink() %>%
   invisible()
 ```
 
 To illustrate the difference between `resize()` and `zoom`, here is an image with `resize("50%")`:
 
-![](img/r-small-resized.png)
+![](tools/r-small-resized.png)
 
 And here is one with `zoom = 0.5`. If you look closely, you'll see that the text and graphics are sharper. You'll also see that the bullet points and text are positioned slightly differently:
 
-![](img/r-small-zoomed.png)
+![](tools/r-small-zoomed.png)
