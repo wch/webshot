@@ -4,3 +4,4 @@
 ^img$
 ^README\.Rmd$
 ^appveyor\.yml$
+^sourcetools$
