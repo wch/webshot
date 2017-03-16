@@ -31,4 +31,3 @@ if (interactive()) {
     resize("400x")
 }
 }
-

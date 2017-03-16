@@ -26,4 +26,3 @@ if (interactive()) {
     shrink()
 }
 }
-

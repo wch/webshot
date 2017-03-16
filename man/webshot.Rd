@@ -135,4 +135,3 @@ vignette("intro", package = "webshot")
 \seealso{
 \code{\link{appshot}} for taking screenshots of Shiny applications.
 }
-

@@ -37,4 +37,3 @@ writable, the directory \file{PhantomJS} under the installation directory of
 the \pkg{webshot} package will be tried. If this directory still fails, you
 will have to install PhantomJS by yourself.
 }
-
