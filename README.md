@@ -9,7 +9,7 @@ webshot
 Installation
 ------------
 
-It requires an installation of the external program [PhantomJS](http://phantomjs.org/). Please make sure you have PhantomJS version 2 or higher installed. Previous versions may have trouble rendering some fonts. You may either download PhantomJS from its website, or use the function `webshot::install_phantomjs()` to install it automatically.
+It requires an installation of the external program [PhantomJS](http://phantomjs.org/). You may either download PhantomJS from its website, or use the function `webshot::install_phantomjs()` to install it automatically.
 
 Once PhantomJS is installed you can install webshot with:
 
@@ -116,8 +116,8 @@ webshot("https://www.r-project.org/", "r-small.png") %>%
 
 To illustrate the difference between `resize()` and `zoom`, here is an image with `resize("50%")`:
 
-![](img/r-small-resized.png)
+![](tools/r-small-resized.png)
 
 And here is one with `zoom = 0.5`. If you look closely, you'll see that the text and graphics are sharper. You'll also see that the bullet points and text are positioned slightly differently:
 
-![](img/r-small-zoomed.png)
+![](tools/r-small-zoomed.png)
