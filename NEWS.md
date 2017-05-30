@@ -1,9 +1,10 @@
-webshot 0.4.0.9000
-==================
+webshot 0.4.1
+=============
 
+* Updated vignette so it doesn't error when PhantomJS is not present.
 
 webshot 0.4.0
-==================
+=============
 
 * `webshot`, `resize`, and `shrink` all now accept a vector of URLs or filenames. (([#32](https://github.com/wch/webshot/pull/32)), [#33](https://github.com/wch/webshot/pull/33))
 
