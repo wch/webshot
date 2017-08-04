@@ -80,16 +80,14 @@ casper.eachThen(optsList, function(response) {
   // Go to url and perform the desired screenshot
   this.zoom(opts.zoom)
     .viewport(opts.zoom * opts.vwidth, opts.zoom * opts.vheight)
-    .thenOpen(opts.url)
-    .wait(opts.delay * 1000)
-    .then(function() {
+    .thenOpen(opts.url, function() {
       if (opts.eval) {
         eval(opts.eval);
       }
-    })
-    .then(function() {
-      var cr = findClipRect(opts, this);
-      this.capture(opts.file, cr);
+      this.wait(opts.delay * 1000, function() {
+        var cr = findClipRect(opts, this);
+        this.capture(opts.file, cr);
+      });
     });
 });
 
