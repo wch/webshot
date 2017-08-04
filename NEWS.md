@@ -1,3 +1,8 @@
+webshot 0.4.1.9000
+=============
+
+* Fixed [#43](https://github.com/wch/webshot/issues/43): The `eval` argument for `webshot()` did not work.
+
 webshot 0.4.1
 =============
 
