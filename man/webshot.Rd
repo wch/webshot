@@ -127,10 +127,9 @@ webshot("https://www.r-project.org/", "r-small.png") \%>\%
  resize("75\%") \%>\%
  shrink()
 
+# See more examples in the package vignette
 }
 
-# See more examples in the package vignette
-vignette("intro", package = "webshot")
 }
 \seealso{
 \code{\link{appshot}} for taking screenshots of Shiny applications.

@@ -106,10 +106,10 @@
 #'  resize("75%") %>%
 #'  shrink()
 #'
+#' # See more examples in the package vignette
+# vignette("intro", package = "webshot")
 #' }
 #'
-#' # See more examples in the package vignette
-#' vignette("intro", package = "webshot")
 #' @seealso \code{\link{appshot}} for taking screenshots of Shiny applications.
 #' @export
 webshot <- function(

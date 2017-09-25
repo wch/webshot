@@ -2,7 +2,7 @@
 title: "An Introduction to the webshot Package"
 author: "Winston Chang"
 date: "`r Sys.Date()`"
-output: knitr:::html_vignette
+output: html_document
 vignette: >
   %\VignetteIndexEntry{An Introduction to the webshot Package}
   %\VignetteEncoding{UTF-8}
@@ -110,7 +110,7 @@ webshot("http://www.reddit.com/", "reddit-input.png",
 
 You can also take screenshots of Shiny apps using the `appshot()` function, e.g.
 
-```{r fig.align='center'}
+```{r fig.align='center', eval=FALSE}
 appdir <- system.file("examples", "01_hello", package="shiny")
 appshot(appdir, delay = 3)
 ```
