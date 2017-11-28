@@ -38,40 +38,19 @@ appshot.character <- function(app, file = "webshot.png", ...,
   cmd <- "cat(Sys.getpid(), file='%s'); shiny::runApp('%s', port=%d, display.mode='normal')"
   cmd <- shQuote(sprintf(cmd, pidfile, app, port))
 
-  # Save existing env vars and set new ones
-  old_unset_vars <- NULL
-  old_set_vars <- NULL
-  if (length(envvars) != 0) {
-    old_vars <- Sys.getenv(names(envvars), unset = NA, names = TRUE)
-    # Char vector of variables that weren't set
-    old_unset_vars <- names(old_vars)[is.na(old_vars)]
-    # Named list of variables that were set
-    old_set_vars <- as.list(old_vars[!is.na(old_vars)])
+  withr::local_envvar(envvars)
 
-    do.call(Sys.setenv, as.list(envvars))
-  }
-
-  # Run app in background
-  system2("R", args = c("--slave", "-e", cmd), wait = FALSE)
+  # Run app in background with envvars
+  withr::with_envvar(
+    envvars,
+    system2("R", args = c("--slave", "-e", cmd), wait = FALSE)
+  )
 
   on.exit({
-    # Restore old env vars
-    if (length(old_set_vars) != 0 )
-      do.call(Sys.setenv, old_set_vars)
-    if (length(old_unset_vars) != 0)
-      Sys.unsetenv(old_unset_vars)
-
     # Kill app on exit
     pid <- readLines(pidfile, warn = FALSE)
     file.remove(pidfile)
-    res <- if (is_windows()) {
-      system2("taskkill", c("/pid", pid, "/f"))
-    } else {
-      system2("kill", pid)
-    }
-    if (res != 0) {
-      stop(sprintf("`kill %s` didn't return success code. Value: %d", pid, res))
-    }
+    kill_pid(pid)
   })
 
   # Wait for app to start

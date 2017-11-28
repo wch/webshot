@@ -12,7 +12,8 @@ Depends:
     R (>= 3.0)
 Imports:
     magrittr,
-    jsonlite
+    jsonlite,
+    withr
 Suggests:
     httpuv,
     knitr,
@@ -24,5 +25,5 @@ SystemRequirements: PhantomJS (http://phantomjs.org) for taking screenshots,
     ImageMagick (http://www.imagemagick.org) or GraphicsMagick
     (http://www.graphicsmagick.org) and OptiPNG (http://optipng.sourceforge.net)
     for manipulating images.
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000
 URL: https://github.com/wch/webshot/
