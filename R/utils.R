@@ -143,16 +143,28 @@ is_linux   <- function() Sys.info()[['sysname']] == 'Linux'
 is_solaris <- function() Sys.info()[['sysname']] == 'SunOS'
 
 # Find an available TCP port (to launch Shiny apps)
-available_port <- function(port) {
+available_port <- function(port = NULL, min = 3000, max = 9000) {
   if (!is.null(port)) return(port)
-  for (p in sample(3000:8000, 20)) {
-    tmp <- try(httpuv::startServer('127.0.0.1', p, list()), silent = TRUE)
-    if (!inherits(tmp, 'try-error')) {
-      httpuv::stopServer(tmp)
+
+  # Unsafe port list from shiny::runApp()
+  valid_ports <- setdiff(min:max, c(3659, 4045, 6000, 6665:6669, 6697))
+
+  # Try up to 20 ports
+  for (p in sample(valid_ports, 20)) {
+    handle <- NULL
+
+    # Check if p is open
+    tryCatch(
+      handle <- httpuv::startServer("127.0.0.1", p, list()),
+      error = function(e) { }
+    )
+    if (!is.null(handle)) {
+      httpuv::stopServer(handle)
       port <- p
       break
     }
   }
+
   if (is.null(port)) stop("Cannot find an available port")
   port
 }
