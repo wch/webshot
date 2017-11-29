@@ -1,3 +1,8 @@
+webshot 0.4.2.9000
+=============
+
+* Added support for R Markdown documents. (([#48](https://github.com/wch/webshot/pull/48))
+
 webshot 0.4.2
 =============
 
