@@ -150,23 +150,21 @@ available_port <- function(port = NULL, min = 3000, max = 9000) {
   valid_ports <- setdiff(min:max, c(3659, 4045, 6000, 6665:6669, 6697))
 
   # Try up to 20 ports
-  for (p in sample(valid_ports, 20)) {
+  for (port in sample(valid_ports, 20)) {
     handle <- NULL
 
-    # Check if p is open
+    # Check if port is open
     tryCatch(
-      handle <- httpuv::startServer("127.0.0.1", p, list()),
+      handle <- httpuv::startServer("127.0.0.1", port, list()),
       error = function(e) { }
     )
     if (!is.null(handle)) {
       httpuv::stopServer(handle)
-      port <- p
-      break
+      return(port)
     }
   }
 
-  if (is.null(port)) stop("Cannot find an available port")
-  port
+  stop("Cannot find an available port")
 }
 
 # Wrapper for utils::download.file which works around a problem with R 3.3.0 and
