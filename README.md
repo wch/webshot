@@ -4,17 +4,19 @@ webshot
 
 [![Travis-CI Build Status](https://travis-ci.org/wch/webshot.svg?branch=master)](https://travis-ci.org/wch/webshot) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/wch/webshot?branch=master&svg=true)](https://ci.appveyor.com/project/wch/webshot)
 
-**Webshot** makes it easy to take screenshots of web pages from R. It can also run Shiny applications locally and take screenshots of the app.
+**Webshot** makes it easy to take screenshots of web pages from R. It can also:
+
+-   Run Shiny applications locally and take screenshots of the application.
+-   Render R Markdown documents and take screenshots of the document. Webshot can handle both static Rmd documents and interactive ones (those with `runtime: shiny`).
 
 Installation
 ------------
 
-It requires an installation of the external program [PhantomJS](http://phantomjs.org/). You may either download PhantomJS from its website, or use the function `webshot::install_phantomjs()` to install it automatically.
-
-Once PhantomJS is installed you can install webshot with:
+Webshot can be installed from CRAN. Webshot also requires the external program [PhantomJS](http://phantomjs.org/). You may either download PhantomJS from its website, or use the function `webshot::install_phantomjs()` to install it automatically.
 
 ``` r
-devtools::install_github("wch/webshot")
+install.packages("webshot")
+webshot::install_phantomjs()
 ```
 
 Usage
@@ -91,6 +93,16 @@ The `appshot()` function will run a Shiny app locally in a separate R process, a
 # Get the directory of one of the Shiny examples
 appdir <- system.file("examples", "01_hello", package="shiny")
 appshot(appdir, "01_hello.png")
+```
+
+### Screenshots of R Markdown documents
+
+The `rmdshot()` function takes screenshots of R Markdown documents. For static R Markdown documents, it renders them to HTML in a temporary directory (using `rmarkdown::render()`)and then takes a screenshot.
+
+For dynamic R Markdown documents, it runs them using `rmarkdown::run()` in a separate R process and then takes a screenshot. After taking the screenshot, it will kill the R process that is running the document.
+
+``` r
+rmdshot("document.rmd", "document.png")
 ```
 
 ### Manipulating images
