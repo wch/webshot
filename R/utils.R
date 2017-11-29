@@ -314,15 +314,3 @@ find_magic = function() {
   }
   return(convert)
 }
-
-
-kill_pid <- function(pid) {
-  res <- if (is_windows()) {
-    system2("taskkill", c("/pid", pid, "/f"))
-  } else {
-    system2("kill", pid)
-  }
-  if (res != 0) {
-    stop(sprintf("`kill %s` didn't return success code. Value: %d", pid, res))
-  }
-}

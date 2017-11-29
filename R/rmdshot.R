@@ -44,29 +44,23 @@ rmdshot <- function(doc, file = "webshot.png", ..., delay = NULL, rmd_args = lis
 
 rmdshot_shiny <- function(doc, file, ..., rmd_args, port, envvars) {
 
-  pidfile <- normalizePath(tempfile("pid"), winslash = '/', mustWork = FALSE)
-  on.exit(unlink(pidfile))
   port <- available_port(port)
   arg_string <- list_to_arg_string(rmd_args)
   if (nzchar(arg_string)) {
     arg_string <- paste0(", ", arg_string)
   }
-  cmd <- shQuote(sprintf(
-    "cat(Sys.getpid(), file='%s'); rmarkdown::run('%s', shiny_args=list(port=%d)%s)",
-    pidfile, doc, port, arg_string
-  ))
-
-  # Run app in background with envvars
-  withr::with_envvar(
-    envvars,
-    system2("R", args = c("--slave", "-e", cmd), wait = FALSE)
+  cmd <- sprintf(
+    "rmarkdown::run('%s', shiny_args=list(port=%d)%s)",
+    doc, port, arg_string
   )
 
+  # Run app in background with envvars
+  withr::with_envvar(envvars, {
+    p <- processx::process$new("R", args = c("--slave", "-e", cmd))
+  })
+
   on.exit({
-    # Kill app on exit
-    pid <- readLines(pidfile, warn = FALSE)
-    file.remove(pidfile)
-    kill_pid(pid)
+    p$kill()
   })
 
   # Wait for app to start

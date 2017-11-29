@@ -32,25 +32,16 @@ appshot.shiny.appobj <- function(app, file = "webshot.png", ...,
 #' @export
 appshot.character <- function(app, file = "webshot.png", ...,
                               port = getOption("shiny.port"), envvars = NULL) {
-  pidfile <- normalizePath(tempfile("pid"), winslash = '/', mustWork = FALSE)
-  on.exit(unlink(pidfile))
   port <- available_port(port)
-  cmd <- "cat(Sys.getpid(), file='%s'); shiny::runApp('%s', port=%d, display.mode='normal')"
-  cmd <- shQuote(sprintf(cmd, pidfile, app, port))
-
-  withr::local_envvar(envvars)
+  cmd <- sprintf("shiny::runApp('%s', port=%d, display.mode='normal')", app, port)
 
   # Run app in background with envvars
-  withr::with_envvar(
-    envvars,
-    system2("R", args = c("--slave", "-e", cmd), wait = FALSE)
-  )
+  withr::with_envvar(envvars, {
+    p <- processx::process$new("R", args = c("--slave", "-e", cmd))
+  })
 
   on.exit({
-    # Kill app on exit
-    pid <- readLines(pidfile, warn = FALSE)
-    file.remove(pidfile)
-    kill_pid(pid)
+    p$kill()
   })
 
   # Wait for app to start

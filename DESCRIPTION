@@ -14,7 +14,8 @@ Depends:
 Imports:
     magrittr,
     jsonlite,
-    withr
+    withr,
+    processx
 Suggests:
     httpuv,
     knitr,
