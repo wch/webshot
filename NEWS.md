@@ -3,6 +3,8 @@ webshot 0.5.0.9000
 
 * Added `debug` parameter. When it is set to `TRUE`, `webshot()` will print out debugging messages from PhantomJS and CasperJS.
 
+* Fixed [#51](https://github.com/wch/webshot/issues/51): Webshot had trouble with some sites that use HTTPS.
+
 webshot 0.5.0
 =============
 

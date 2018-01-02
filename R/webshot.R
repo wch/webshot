@@ -224,6 +224,9 @@ webshot <- function(
   optsList$debug <- debug
 
   args <- list(
+    # Workaround for SSL problem: https://github.com/wch/webshot/issues/51
+    # https://stackoverflow.com/questions/22461345/casperjs-status-fail-on-a-webpage
+    "--ignore-ssl-errors=true",
     shQuote(system.file("webshot.js", package = "webshot")),
     shQuote(jsonlite::toJSON(optsList))
   )
