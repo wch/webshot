@@ -46,7 +46,7 @@
 #'   (\url{http://docs.casperjs.org/en/latest/modules/casper.html}) for more
 #'   information about what commands can be used to control the web page. NOTE:
 #'   This is experimental and likely to change!
-#' @param debug Print out debugging messages from CasperJS. This can help to
+#' @param debug Print out debugging messages from PhantomJS and CasperJS. This can help to
 #'   diagnose problems.
 #'
 #' @examples

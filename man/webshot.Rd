@@ -65,7 +65,7 @@ the clipping region and taking the screenshot. See the Casper API
 information about what commands can be used to control the web page. NOTE:
 This is experimental and likely to change!}
 
-\item{debug}{Print out debugging messages from CasperJS. This can help to
+\item{debug}{Print out debugging messages from PhantomJS and CasperJS. This can help to
 diagnose problems.}
 }
 \description{
