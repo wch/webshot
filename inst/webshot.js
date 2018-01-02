@@ -12,7 +12,6 @@ var system = require('system');
 
 phantom.casperPath = phantom.libraryPath + '/casperjs';
 phantom.injectJs(phantom.casperPath + '/bin/bootstrap.js');
-var casper = require('casper').create();
 
 var opt_defaults = {
   delay: 0.2,
@@ -39,6 +38,19 @@ if (args.length < 2) {
 }
 
 var optsList = JSON.parse(args[1]);
+
+// Options passed to CasperJS
+var casperOpts = {};
+// `debug` is a special option. The value from the first element in the
+// optsList array is applied globally.
+if (optsList[0].debug) {
+  casperOpts.verbose = true;
+  casperOpts.logLevel = 'debug';
+}
+delete optsList.debug;
+
+var casper = require('casper').create(casperOpts);
+
 
 // =====================================================================
 // Screenshot

@@ -1,3 +1,8 @@
+webshot 0.5.0.9000
+=============
+
+* Added `debug` parameter. When it is set to `TRUE`, `webshot()` will print out debugging messages from CasperJS.
+
 webshot 0.5.0
 =============
 

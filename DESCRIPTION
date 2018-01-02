@@ -1,6 +1,6 @@
 Package: webshot
 Title: Take Screenshots of Web Pages
-Version: 0.5.0
+Version: 0.5.0.9000
 Authors@R: c(
     person("Winston", "Chang", email = "winston@rstudio.com", role = c("aut", "cre")),
     person("Yihui", "Xie", role = "ctb"),

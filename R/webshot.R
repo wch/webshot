@@ -46,6 +46,8 @@
 #'   (\url{http://docs.casperjs.org/en/latest/modules/casper.html}) for more
 #'   information about what commands can be used to control the web page. NOTE:
 #'   This is experimental and likely to change!
+#' @param debug Print out debugging messages from CasperJS. This can help to
+#'   diagnose problems.
 #'
 #' @examples
 #' if (interactive()) {
@@ -122,7 +124,8 @@ webshot <- function(
   expand = NULL,
   delay = 0.2,
   zoom = 1,
-  eval = NULL
+  eval = NULL,
+  debug = FALSE
 ) {
 
   if (is.null(url)) {
@@ -145,7 +148,8 @@ webshot <- function(
     expand = expand,
     delay = delay,
     zoom = zoom,
-    eval = eval
+    eval = eval,
+    debug = debug
   )
   arg_length <- vapply(arg_list, length, numeric(1))
   max_arg_length <- max(arg_length)
@@ -217,6 +221,7 @@ webshot <- function(
   if (!is.null(delay)) optsList$delay <- delay
   if (!is.null(zoom)) optsList$zoom <- zoom
   if (!is.null(eval)) optsList$eval <- eval
+  optsList$debug <- debug
 
   args <- list(
     shQuote(system.file("webshot.js", package = "webshot")),

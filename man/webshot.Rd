@@ -6,7 +6,7 @@
 \usage{
 webshot(url = NULL, file = "webshot.png", vwidth = 992, vheight = 744,
   cliprect = NULL, selector = NULL, expand = NULL, delay = 0.2,
-  zoom = 1, eval = NULL)
+  zoom = 1, eval = NULL, debug = FALSE)
 }
 \arguments{
 \item{url}{A vector of URLs to visit.}
@@ -64,6 +64,9 @@ the clipping region and taking the screenshot. See the Casper API
 (\url{http://docs.casperjs.org/en/latest/modules/casper.html}) for more
 information about what commands can be used to control the web page. NOTE:
 This is experimental and likely to change!}
+
+\item{debug}{Print out debugging messages from CasperJS. This can help to
+diagnose problems.}
 }
 \description{
 Take a screenshot of a URL
