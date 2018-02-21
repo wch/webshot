@@ -23,6 +23,14 @@ of the screenshot to the file name.}
 variables and values to set for the Shiny app's R process. These will be
 unset after the process exits. This can be used to pass configuration
 information to a Shiny app.}
+
+\item{env}{Environment to export all R objects for the Shiny app object.}
+
+\item{packages}{Character vector of R packages required for the Shiny app execution.  Defaults to use the currently attached packages.}
+
+\item{save_file}{File used to temporarily save the Shiny app object.}
+
+\item{env_file}{File used to temporarily save the Shiny app object server context to execute the app.}
 }
 \description{
 Take a screenshot of a Shiny app
@@ -30,7 +38,13 @@ Take a screenshot of a Shiny app
 \examples{
 if (interactive()) {
   appdir <- system.file("examples", "01_hello", package="shiny")
+
+  # With a Shiny directory
   appshot(appdir, "01_hello.png")
+
+  # With a Shiny App object
+  shinyapp <- shiny::shinyAppDir(appdir)
+  appshot(shinyapp, "01_hello_app.png")
 }
 
 }
