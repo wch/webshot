@@ -5,6 +5,7 @@ Authors@R: c(
     person("Winston", "Chang", email = "winston@rstudio.com", role = c("aut", "cre")),
     person("Yihui", "Xie", role = "ctb"),
     person("Francois", "Guillem", role = "ctb"),
+    person("Barret", "Schloerke", role = "ctb"),
     person("Nicolas", "Perriault", role = "ctb", comment = "The CasperJS library")
     )
 Description: Takes screenshots of web pages, including Shiny applications and R

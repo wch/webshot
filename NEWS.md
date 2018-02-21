@@ -5,6 +5,8 @@ webshot 0.5.0.9000
 
 * Fixed [#51](https://github.com/wch/webshot/issues/51): Webshot had trouble with some sites that use HTTPS.
 
+* Added `appshot.shiny.appobj` functionality (schloerke, [#55](https://github.com/wch/webshot/pull/55))
+
 webshot 0.5.0
 =============
 
