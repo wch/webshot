@@ -14,6 +14,7 @@
 #'
 #' @param ... Other arguments to pass on to \code{\link{webshot}}.
 #'
+#' @rdname appshot
 #' @examples
 #' if (interactive()) {
 #'   appdir <- system.file("examples", "01_hello", package="shiny")
@@ -32,6 +33,7 @@ appshot <- function(app, file = "webshot.png", ...,
   UseMethod("appshot")
 }
 
+#' @rdname appshot
 #' @export
 appshot.shiny.appobj <- function(
   app,
@@ -83,6 +85,7 @@ appshot.shiny.appobj <- function(
   appshot_webshot(file, port, cmd, envvars, ...)
 }
 
+#' @rdname appshot
 #' @export
 appshot.character <- function(app, file = "webshot.png", ...,
                               port = getOption("shiny.port"), envvars = NULL) {

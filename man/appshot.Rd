@@ -2,10 +2,20 @@
 % Please edit documentation in R/appshot.R
 \name{appshot}
 \alias{appshot}
+\alias{appshot.shiny.appobj}
+\alias{appshot.character}
 \title{Take a screenshot of a Shiny app}
 \usage{
 appshot(app, file = "webshot.png", ..., port = getOption("shiny.port"),
   envvars = NULL)
+
+\method{appshot}{shiny.appobj}(app, file = "webshot.png", ...,
+  port = getOption("shiny.port"), envvars = NULL, env = NULL,
+  packages = NULL, save_file = tempfile(fileext = ".RData"),
+  env_file = tempfile(fileext = ".RData"))
+
+\method{appshot}{character}(app, file = "webshot.png", ...,
+  port = getOption("shiny.port"), envvars = NULL)
 }
 \arguments{
 \item{app}{A Shiny app object, or a string naming an app directory.}
