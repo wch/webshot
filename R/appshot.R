@@ -7,10 +7,6 @@
 #'   variables and values to set for the Shiny app's R process. These will be
 #'   unset after the process exits. This can be used to pass configuration
 #'   information to a Shiny app.
-#' @param env Environment to export all R objects for the Shiny app object.
-#' @param packages Character vector of R packages required for the Shiny app execution.  Defaults to use the currently attached packages.
-#' @param save_file File used to temporarily save the Shiny app object.
-#' @param env_file File used to temporarily save the Shiny app object server context to execute the app.
 #'
 #' @param ... Other arguments to pass on to \code{\link{webshot}}.
 #'
@@ -33,57 +29,6 @@ appshot <- function(app, file = "webshot.png", ...,
   UseMethod("appshot")
 }
 
-#' @rdname appshot
-#' @export
-appshot.shiny.appobj <- function(
-  app,
-  file = "webshot.png", ...,
-  port = getOption("shiny.port"),
-  envvars = NULL,
-  env = NULL,
-  packages = NULL,
-  save_file = tempfile(fileext = ".RData"),
-  env_file = tempfile(fileext = ".RData")
-) {
-  # if the app has a specified port, use it
-  if (is.null(port)) {
-    port <- app$options$port
-  }
-  port <- available_port(port)
-
-  if (is.null(env)) {
-    env <- environment(app$serverFuncSource())
-  }
-  if (is.null(packages)) {
-    packages <- {
-      pkgs <- loadedNamespaces()
-      attached <- paste0("package:", pkgs) %in% search()
-      pkgs[attached]
-    }
-  }
-
-  ## save the app to a file to be reloaded
-  # save to (hopefully) non matching names
-  .appshot.app <- app
-  # get the currently loaded packages
-  .appshot.packages <- packages
-  # save all the items in the server env
-  save(list = ls(envir = env), envir = env, file = env_file, eval.promises = FALSE)
-  # save the app and loaded package names
-  save(.appshot.app, .appshot.packages, file = save_file, eval.promises = FALSE)
-
-  # load env
-  # load .appshot.*
-  # library package
-  # run app
-  cmd <- sprintf(
-    "load('%s'); load('%s'); lapply(.appshot.packages, base::library, character.only = TRUE); shiny::runApp(.appshot.app, port=%d, display.mode='normal')",
-    env_file, save_file, port
-  )
-
-  # take the screen shot
-  appshot_webshot(file, port, cmd, envvars, ...)
-}
 
 #' @rdname appshot
 #' @export
@@ -92,11 +37,6 @@ appshot.character <- function(app, file = "webshot.png", ...,
   port <- available_port(port)
   cmd <- sprintf("shiny::runApp('%s', port=%d, display.mode='normal')", app, port)
 
-  appshot_webshot(file, port, cmd, envvars, ...)
-}
-
-
-appshot_webshot <- function(file, port, cmd, envvars, ...) {
   # Run app in background with envvars
   withr::with_envvar(envvars, {
     p <- processx::process$new("R", args = c("--slave", "-e", cmd))
@@ -114,4 +54,47 @@ appshot_webshot <- function(file, port, cmd, envvars, ...) {
   fileout <- webshot(sprintf("http://127.0.0.1:%d/", port), file = file, ...)
 
   invisible(fileout)
+}
+
+
+#' @rdname appshot
+#' @export
+appshot.shiny.appobj <- function(app, file = "webshot.png", ...,
+                              port = getOption("shiny.port"), envvars = NULL) {
+
+
+  port <- available_port(port)
+
+  args <- list(
+    url = sprintf("http://127.0.0.1:%d/", port),
+    file = file,
+    ...
+  )
+  r_session <- callr::r_bg(
+    function(...) {
+      # Wait for app to start
+      Sys.sleep(0.5)
+      webshot::webshot(...)
+    },
+    args
+  )
+
+  # Add a shiny app observer which checks every 200ms to see if the background r session is alive
+  shiny::observe({
+    # check the r session rather than the file to avoid race cases or random issues
+    if (r_session$is_alive()) {
+      # try again later
+      shiny::invalidateLater(200)
+    } else {
+      # r_session has stopped, close the app
+      shiny::stopApp()
+    }
+    return()
+  })
+
+  # run the app
+  shiny::runApp(app, port = port, display.mode = "normal")
+
+  # return webshot::webshot file value
+  r_session$get_result() # safe to call as the r_session must have ended
 }

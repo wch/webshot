@@ -16,7 +16,8 @@ Imports:
     magrittr,
     jsonlite,
     withr,
-    processx
+    processx,
+    callr
 Suggests:
     httpuv,
     knitr,

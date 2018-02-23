@@ -2,19 +2,17 @@
 % Please edit documentation in R/appshot.R
 \name{appshot}
 \alias{appshot}
-\alias{appshot.shiny.appobj}
 \alias{appshot.character}
+\alias{appshot.shiny.appobj}
 \title{Take a screenshot of a Shiny app}
 \usage{
 appshot(app, file = "webshot.png", ..., port = getOption("shiny.port"),
   envvars = NULL)
 
-\method{appshot}{shiny.appobj}(app, file = "webshot.png", ...,
-  port = getOption("shiny.port"), envvars = NULL, env = NULL,
-  packages = NULL, save_file = tempfile(fileext = ".RData"),
-  env_file = tempfile(fileext = ".RData"))
-
 \method{appshot}{character}(app, file = "webshot.png", ...,
+  port = getOption("shiny.port"), envvars = NULL)
+
+\method{appshot}{shiny.appobj}(app, file = "webshot.png", ...,
   port = getOption("shiny.port"), envvars = NULL)
 }
 \arguments{
@@ -33,14 +31,6 @@ of the screenshot to the file name.}
 variables and values to set for the Shiny app's R process. These will be
 unset after the process exits. This can be used to pass configuration
 information to a Shiny app.}
-
-\item{env}{Environment to export all R objects for the Shiny app object.}
-
-\item{packages}{Character vector of R packages required for the Shiny app execution.  Defaults to use the currently attached packages.}
-
-\item{save_file}{File used to temporarily save the Shiny app object.}
-
-\item{env_file}{File used to temporarily save the Shiny app object server context to execute the app.}
 }
 \description{
 Take a screenshot of a Shiny app
