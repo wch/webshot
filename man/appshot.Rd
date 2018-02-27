@@ -7,13 +7,14 @@
 \title{Take a screenshot of a Shiny app}
 \usage{
 appshot(app, file = "webshot.png", ..., port = getOption("shiny.port"),
-  envvars = NULL)
+  envvars = callr::rcmd_safe_env())
 
 \method{appshot}{character}(app, file = "webshot.png", ...,
-  port = getOption("shiny.port"), envvars = NULL)
+  port = getOption("shiny.port"), envvars = callr::rcmd_safe_env())
 
 \method{appshot}{shiny.appobj}(app, file = "webshot.png", ...,
-  port = getOption("shiny.port"), envvars = NULL)
+  port = getOption("shiny.port"), envvars = callr::rcmd_safe_env(),
+  webshot_timeout = 60)
 }
 \arguments{
 \item{app}{A Shiny app object, or a string naming an app directory.}
@@ -31,9 +32,11 @@ of the screenshot to the file name.}
 variables and values to set for the Shiny app's R process. These will be
 unset after the process exits. This can be used to pass configuration
 information to a Shiny app.}
+
+\item{webshot_timeout}{The maximum number of seconds the phantom application is allowed to run before killing the process. (Only used for Shiny application objects)}
 }
 \description{
-Take a screenshot of a Shiny app
+The \code{appshot} performs a \code{\link{webshot}} using two different methods depending upon the object provided.  If a 'character' is provided (pointing to an app.R file or app directory) an isolated background R process is launched to run the Shiny application.  The current R process then captures the \code{\link{webshot}}.  When a Shiny application object is supplied to \code{appshot}, the Shiny application is run in the current R process and an isolated background R process is launched to capture a \code{\link{webshot}}.  Keeping the Shiny appliation in a different process is ideal, shiny application objects are launched in the current R process to avoid scoping errors.
 }
 \examples{
 if (interactive()) {

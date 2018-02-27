@@ -7,7 +7,21 @@ phantom_run <- function(args, wait = TRUE) {
   # Make sure args is a char vector
   args <- as.character(args)
 
-  system2(phantom_bin, args = args, wait = wait)
+  p <- callr::process$new(
+    phantom_bin,
+    args = args,
+    stdout = "|", stderr = "|",
+    supervise = TRUE
+  )
+
+  if (isTRUE(wait)) {
+    while(p$is_alive()) {
+      p$wait(200) # wait until min(c(time_ms, process ends))
+      cat(p$read_error_lines()) # print the errors
+      cat(p$read_output_lines()) # print the outputs
+    }
+  }
+  p$get_exit_status()
 }
 
 

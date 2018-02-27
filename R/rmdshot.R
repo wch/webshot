@@ -15,12 +15,13 @@
 #'
 #' @examples
 #' if (interactive()) {
-#'   rmdshot("doc.rmd", "doc.png")
+#'   input_file <- system.file("examples/knitr-minimal.Rmd", package = "knitr")
+#'   rmdshot(input_file, "minimal_rmd.png")
 #' }
 #'
 #' @export
 rmdshot <- function(doc, file = "webshot.png", ..., delay = NULL, rmd_args = list(),
-                    port = getOption("shiny.port"), envvars = NULL) {
+                    port = getOption("shiny.port"), envvars = callr::rcmd_safe_env()) {
 
   runtime <- rmarkdown::yaml_front_matter(doc)$runtime
 
@@ -45,19 +46,18 @@ rmdshot <- function(doc, file = "webshot.png", ..., delay = NULL, rmd_args = lis
 rmdshot_shiny <- function(doc, file, ..., rmd_args, port, envvars) {
 
   port <- available_port(port)
-  arg_string <- list_to_arg_string(rmd_args)
-  if (nzchar(arg_string)) {
-    arg_string <- paste0(", ", arg_string)
-  }
-  cmd <- sprintf(
-    "rmarkdown::run('%s', shiny_args=list(port=%d)%s)",
-    doc, port, arg_string
-  )
 
   # Run app in background with envvars
-  withr::with_envvar(envvars, {
-    p <- processx::process$new("R", args = c("--slave", "-e", cmd))
-  })
+  p <- callr::process$new(
+    function(...) {
+      rmarkdown::run(...)
+    },
+    args = append(
+      list(file = doc, shiny_args = list(port = port)),
+      rmd_args
+    ),
+    env = envvars
+  )
 
   on.exit({
     p$kill()
@@ -69,31 +69,6 @@ rmdshot_shiny <- function(doc, file, ..., rmd_args, port, envvars) {
   fileout <- webshot(sprintf("http://127.0.0.1:%d/", port), file = file, ...)
 
   invisible(fileout)
-}
-
-
-# Convert a list of args like list(a=1, b="xyz") to a string like 'a=1, b="xyz"'
-list_to_arg_string <- function(x) {
-
-  item_to_arg_string <- function(name, val) {
-    if (is.numeric(val))
-      as.character(val)
-    else if (is.character(val))
-      paste0('"', val, '"')
-    else
-      stop("Only know how to handle numbers and strings arguments to rmarkdown::render. ",
-        "Don't know how to handle argument `", val, "`.")
-  }
-
-  strings <- vapply(seq_along(x), function(n) item_to_arg_string(names(x)[n], x[[n]]), "")
-
-  # Convert to a vector like c("a=1", "b=2")
-  strings <- mapply(names(x), strings,
-    FUN = function(name, val) paste(name, val, sep ="="),
-    USE.NAMES = FALSE
-  )
-
-  paste(strings, collapse = ", ")
 }
 
 
