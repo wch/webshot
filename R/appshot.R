@@ -79,12 +79,26 @@ appshot.shiny.appobj <- function(app, file = "webshot.png", ...,
     args
   )
 
+  webshot_timeout <- 30
+  if(!is.null(args$delay)) {
+    webshot_timeout <- webshot_timeout + 10
+  }
+  webshot_timeout_ms <- webshot_timeout * 1000
+  count <- 0
+
   # Add a shiny app observer which checks every 200ms to see if the background r session is alive
   shiny::observe({
     # check the r session rather than the file to avoid race cases or random issues
     if (r_session$is_alive()) {
-      # try again later
-      shiny::invalidateLater(200)
+      if (count < webshot_timeout_ms) {
+        # try again later
+        shiny::invalidateLater(200)
+        count <<- count + 200
+      } else {
+        # timeout has occured. close the app and R session
+        r_session$kill()
+        shiny::stopApp()
+      }
     } else {
       # r_session has stopped, close the app
       shiny::stopApp()
