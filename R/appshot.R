@@ -1,6 +1,15 @@
 #' Take a screenshot of a Shiny app
 #'
-#' The \code{appshot} performs a \code{\link{webshot}} using two different methods depending upon the object provided.  If a 'character' is provided (pointing to an app.R file or app directory) an isolated background R process is launched to run the Shiny application.  The current R process then captures the \code{\link{webshot}}.  When a Shiny application object is supplied to \code{appshot}, the Shiny application is run in the current R process and an isolated background R process is launched to capture a \code{\link{webshot}}.  Keeping the Shiny appliation in a different process is ideal, shiny application objects are launched in the current R process to avoid scoping errors.
+#' \code{appshot} performs a \code{\link{webshot}} using two different
+#' methods depending upon the object provided.  If a 'character' is provided
+#' (pointing to an app.R file or app directory) an isolated background R
+#' process is launched to run the Shiny application.  The current R process
+#' then captures the \code{\link{webshot}}.  When a Shiny application object
+#' is supplied to \code{appshot}, the Shiny application is run in the current
+#' R process and an isolated background R process is launched to capture a
+#' \code{\link{webshot}}.  Keeping the Shiny application in a different process
+#' is ideal, shiny application objects are launched in the current R process to
+#' avoid scoping errors.
 #'
 #' @inheritParams webshot
 #' @param app A Shiny app object, or a string naming an app directory.

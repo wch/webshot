@@ -36,7 +36,16 @@ information to a Shiny app.}
 \item{webshot_timeout}{The maximum number of seconds the phantom application is allowed to run before killing the process. (Only used for Shiny application objects)}
 }
 \description{
-The \code{appshot} performs a \code{\link{webshot}} using two different methods depending upon the object provided.  If a 'character' is provided (pointing to an app.R file or app directory) an isolated background R process is launched to run the Shiny application.  The current R process then captures the \code{\link{webshot}}.  When a Shiny application object is supplied to \code{appshot}, the Shiny application is run in the current R process and an isolated background R process is launched to capture a \code{\link{webshot}}.  Keeping the Shiny appliation in a different process is ideal, shiny application objects are launched in the current R process to avoid scoping errors.
+\code{appshot} performs a \code{\link{webshot}} using two different
+methods depending upon the object provided.  If a 'character' is provided
+(pointing to an app.R file or app directory) an isolated background R
+process is launched to run the Shiny application.  The current R process
+then captures the \code{\link{webshot}}.  When a Shiny application object
+is supplied to \code{appshot}, the Shiny application is run in the current
+R process and an isolated background R process is launched to capture a
+\code{\link{webshot}}.  Keeping the Shiny application in a different process
+is ideal, shiny application objects are launched in the current R process to
+avoid scoping errors.
 }
 \examples{
 if (interactive()) {
