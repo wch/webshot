@@ -5,7 +5,7 @@
 \title{Take a snapshot of an R Markdown document}
 \usage{
 rmdshot(doc, file = "webshot.png", ..., delay = NULL, rmd_args = list(),
-  port = getOption("shiny.port"), envvars = callr::rcmd_safe_env())
+  port = getOption("shiny.port"), envvars = NULL)
 }
 \arguments{
 \item{doc}{The path to a Rmd document.}
@@ -39,8 +39,15 @@ This function can handle both static Rmd documents and Rmd documents with
 }
 \examples{
 if (interactive()) {
+  # rmdshot("rmarkdown_file.Rmd", "snapshot.png")
+
+  # R Markdown file
   input_file <- system.file("examples/knitr-minimal.Rmd", package = "knitr")
   rmdshot(input_file, "minimal_rmd.png")
+
+  # Shiny R Markdown file
+  input_file <- system.file("examples/shiny.Rmd", package = "webshot")
+  rmdshot(input_file, "shiny_rmd.png", delay = 5)
 }
 
 }
