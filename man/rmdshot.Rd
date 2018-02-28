@@ -39,7 +39,15 @@ This function can handle both static Rmd documents and Rmd documents with
 }
 \examples{
 if (interactive()) {
-  rmdshot("doc.rmd", "doc.png")
+  # rmdshot("rmarkdown_file.Rmd", "snapshot.png")
+
+  # R Markdown file
+  input_file <- system.file("examples/knitr-minimal.Rmd", package = "knitr")
+  rmdshot(input_file, "minimal_rmd.png")
+
+  # Shiny R Markdown file
+  input_file <- system.file("examples/shiny.Rmd", package = "webshot")
+  rmdshot(input_file, "shiny_rmd.png", delay = 5)
 }
 
 }

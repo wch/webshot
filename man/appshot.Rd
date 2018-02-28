@@ -2,10 +2,18 @@
 % Please edit documentation in R/appshot.R
 \name{appshot}
 \alias{appshot}
+\alias{appshot.character}
+\alias{appshot.shiny.appobj}
 \title{Take a screenshot of a Shiny app}
 \usage{
 appshot(app, file = "webshot.png", ..., port = getOption("shiny.port"),
   envvars = NULL)
+
+\method{appshot}{character}(app, file = "webshot.png", ...,
+  port = getOption("shiny.port"), envvars = NULL)
+
+\method{appshot}{shiny.appobj}(app, file = "webshot.png", ...,
+  port = getOption("shiny.port"), envvars = NULL, webshot_timeout = 60)
 }
 \arguments{
 \item{app}{A Shiny app object, or a string naming an app directory.}
@@ -23,14 +31,33 @@ of the screenshot to the file name.}
 variables and values to set for the Shiny app's R process. These will be
 unset after the process exits. This can be used to pass configuration
 information to a Shiny app.}
+
+\item{webshot_timeout}{The maximum number of seconds the phantom application
+is allowed to run before killing the process. If a delay argument is supplied (in
+\code{...}), the delay value is added to the timeout value.}
 }
 \description{
-Take a screenshot of a Shiny app
+\code{appshot} performs a \code{\link{webshot}} using two different
+methods depending upon the object provided.  If a 'character' is provided
+(pointing to an app.R file or app directory) an isolated background R
+process is launched to run the Shiny application.  The current R process
+then captures the \code{\link{webshot}}.  When a Shiny application object
+is supplied to \code{appshot}, the Shiny application is run in the current
+R process and an isolated background R process is launched to capture a
+\code{\link{webshot}}.  Keeping the Shiny application in a different process
+is ideal, shiny application objects are launched in the current R process to
+avoid scoping errors.
 }
 \examples{
 if (interactive()) {
   appdir <- system.file("examples", "01_hello", package="shiny")
+
+  # With a Shiny directory
   appshot(appdir, "01_hello.png")
+
+  # With a Shiny App object
+  shinyapp <- shiny::shinyAppDir(appdir)
+  appshot(shinyapp, "01_hello_app.png")
 }
 
 }
