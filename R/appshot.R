@@ -18,7 +18,9 @@
 #'   variables and values to set for the Shiny app's R process. These will be
 #'   unset after the process exits. This can be used to pass configuration
 #'   information to a Shiny app.
-#' @param webshot_timeout The maximum number of seconds the phantom application is allowed to run before killing the process. (Only used for Shiny application objects)
+#' @param webshot_timeout The maximum number of seconds the phantom application
+#' is allowed to run before killing the process. If a delay argument is supplied (in
+#' \code{...}), the delay value is added to the timeout value.
 #'
 #' @param ... Other arguments to pass on to \code{\link{webshot}}.
 #'
