@@ -35,9 +35,7 @@ rmdshot <- function(doc, file = "webshot.png", ..., delay = NULL, rmd_args = lis
     if (is.null(delay)) delay <- 0.2
 
     outfile <- tempfile("webshot", fileext = ".html")
-    render <- rmarkdown::render
-    do.call("render", c(list(doc, output_file = outfile), rmd_args),
-            envir = parent.frame())
+    do.call(rmarkdown::render, c(list(doc, output_file = outfile), rmd_args))
     webshot(outfile, file = file, ...)
   }
 }
