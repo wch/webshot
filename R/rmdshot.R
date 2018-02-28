@@ -21,7 +21,7 @@
 #'
 #' @export
 rmdshot <- function(doc, file = "webshot.png", ..., delay = NULL, rmd_args = list(),
-                    port = getOption("shiny.port"), envvars = callr::rcmd_safe_env()) {
+                    port = getOption("shiny.port"), envvars = NULL) {
 
   runtime <- rmarkdown::yaml_front_matter(doc)$runtime
 
@@ -48,7 +48,7 @@ rmdshot_shiny <- function(doc, file, ..., rmd_args, port, envvars) {
   port <- available_port(port)
 
   # Run app in background with envvars
-  p <- callr::process$new(
+  p <- r_background_process(
     function(...) {
       rmarkdown::run(...)
     },
@@ -56,9 +56,8 @@ rmdshot_shiny <- function(doc, file, ..., rmd_args, port, envvars) {
       list(file = doc, shiny_args = list(port = port)),
       rmd_args
     ),
-    env = envvars
+    envvars = envvars
   )
-
   on.exit({
     p$kill()
   })

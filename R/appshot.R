@@ -39,7 +39,7 @@
 #'
 #' @export
 appshot <- function(app, file = "webshot.png", ...,
-                    port = getOption("shiny.port"), envvars = callr::rcmd_safe_env()) {
+                    port = getOption("shiny.port"), envvars = NULL) {
   UseMethod("appshot")
 }
 
@@ -50,13 +50,13 @@ appshot.character <- function(
   app,
   file = "webshot.png", ...,
   port = getOption("shiny.port"),
-  envvars = callr::rcmd_safe_env()
+  envvars = NULL
 ) {
 
   port <- available_port(port)
 
   # Run app in background with envvars
-  p <- callr::r_bg(
+  p <- r_background_process(
     function(...) {
       shiny::runApp(...)
     },
@@ -65,10 +65,8 @@ appshot.character <- function(
       port = port,
       display.mode = "normal"
     ),
-    env = envvars
+    envvars = envvars
   )
-
-  # Make sure app is killed on exit
   on.exit({
     p$kill()
   })
@@ -89,7 +87,7 @@ appshot.shiny.appobj <- function(
   app,
   file = "webshot.png", ...,
   port = getOption("shiny.port"),
-  envvars = callr::rcmd_safe_env(),
+  envvars = NULL,
   webshot_timeout = 60
 ) {
 
@@ -101,14 +99,18 @@ appshot.shiny.appobj <- function(
     file = file,
     ...
   )
-  r_session <- callr::r_bg(
+  p <- r_background_process(
     function(...) {
       # Wait for app to start
       Sys.sleep(0.5)
       webshot::webshot(...)
     },
-    args
+    args,
+    envvars = envvars
   )
+  on.exit({
+    p$kill()
+  })
 
   # add a delay to the webshot_timeout if it exists
   if(!is.null(args$delay)) {
@@ -119,18 +121,18 @@ appshot.shiny.appobj <- function(
   # Add a shiny app observer which checks every 200ms to see if the background r session is alive
   shiny::observe({
     # check the r session rather than the file to avoid race cases or random issues
-    if (r_session$is_alive()) {
+    if (p$is_alive()) {
       if ((as.numeric(Sys.time()) - start_time) <= webshot_timeout) {
         # try again later
         shiny::invalidateLater(200)
       } else {
         # timeout has occured. close the app and R session
         message("webshot timed out")
-        r_session$kill()
+        p$kill()
         shiny::stopApp()
       }
     } else {
-      # r_session has stopped, close the app
+      # r_bg session has stopped, close the app
       shiny::stopApp()
     }
     return()
@@ -140,5 +142,5 @@ appshot.shiny.appobj <- function(
   shiny::runApp(app, port = port, display.mode = "normal")
 
   # return webshot::webshot file value
-  invisible(r_session$get_result()) # safe to call as the r_session must have ended
+  invisible(p$get_result()) # safe to call as the r_bg must have ended
 }

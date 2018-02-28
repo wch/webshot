@@ -15,6 +15,9 @@ phantom_run <- function(args, wait = TRUE) {
   )
 
   if (isTRUE(wait)) {
+    on.exit({
+      p$kill()
+    })
     while(p$is_alive()) {
       p$wait(200) # wait until min(c(time_ms, process ends))
       cat(p$read_error_lines()) # print the errors
