@@ -10,7 +10,7 @@ server_exists <- function(url) {
 }
 
 webshot_app_timeout <- function() {
-  getOption("webshot.app.timeout", 5)
+  getOption("webshot.app.timeout", 60)
 }
 
 wait_until_server_exists <- function(
