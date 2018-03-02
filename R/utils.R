@@ -18,10 +18,15 @@ phantom_run <- function(args, wait = TRUE) {
     on.exit({
       p$kill()
     })
+    cat_n <- function(txt) {
+      if (length(txt) > 0) {
+        cat(txt, sep = "\n")
+      }
+    }
     while(p$is_alive()) {
       p$wait(200) # wait until min(c(time_ms, process ends))
-      cat(p$read_error_lines()) # print the errors
-      cat(p$read_output_lines()) # print the outputs
+      cat_n(p$read_error_lines())
+      cat_n(p$read_output_lines())
     }
   }
   p$get_exit_status()
