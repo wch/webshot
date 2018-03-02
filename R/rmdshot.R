@@ -51,6 +51,7 @@ rmdshot <- function(doc, file = "webshot.png", ..., delay = NULL, rmd_args = lis
 rmdshot_shiny <- function(doc, file, ..., rmd_args, port, envvars) {
 
   port <- available_port(port)
+  url <- shiny_url(port)
 
   # Run app in background with envvars
   p <- r_background_process(
@@ -68,9 +69,9 @@ rmdshot_shiny <- function(doc, file, ..., rmd_args, port, envvars) {
   })
 
   # Wait for app to start
-  Sys.sleep(0.5)
+  wait_until_server_exists(url)
 
-  fileout <- webshot(sprintf("http://127.0.0.1:%d/", port), file = file, ...)
+  fileout <- webshot(url, file = file, ...)
 
   invisible(fileout)
 }
