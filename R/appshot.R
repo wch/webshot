@@ -66,7 +66,8 @@ appshot.character <- function(
     args = list(
       appDir = app,
       port = port,
-      display.mode = "normal"
+      display.mode = "normal",
+      launch.browser = FALSE
     ),
     envvars = envvars
   )
@@ -144,7 +145,7 @@ appshot.shiny.appobj <- function(
   })
 
   # run the app
-  shiny::runApp(app, port = port, display.mode = "normal")
+  shiny::runApp(app, port = port, display.mode = "normal", launch.browser = FALSE)
 
   # return webshot::webshot file value
   invisible(p$get_result()) # safe to call as the r_bg must have ended
