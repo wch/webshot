@@ -117,8 +117,6 @@ appshot.shiny.appobj <- function(
     p$kill()
   })
 
-  Sys.sleep(3)
-
   # add a delay to the webshot_timeout if it exists
   if(!is.null(args$delay)) {
     webshot_timeout <- webshot_timeout + args$delay
