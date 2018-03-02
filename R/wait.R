@@ -33,7 +33,6 @@ wait_until_server_exists <- function(
     }
     Sys.sleep(0.25)
   }
-  # allow app to finish starting up
-  Sys.sleep(0.5)
+
   TRUE
 }
