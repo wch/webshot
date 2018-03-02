@@ -24,14 +24,13 @@ wait_until_server_exists <- function(
   while(!server_exists(url)) {
     if (cur_time() - start > timeout) {
       stop(
-        'It took more than ', timeout, ' seconds to launch the server. ',
+        'It took more than ', timeout, ' seconds to launch the Shiny Application. ',
         'There may be something wrong. The process has been killed. ',
         'If the app needs more time to be launched, set ',
         'options(webshot.app.timeout) to a larger value.',
         call. = FALSE
       )
     }
-    cat("waiting...\n")
     Sys.sleep(0.25)
   }
   # allow app to finish starting up
