@@ -21,11 +21,7 @@ wait_until_server_exists <- function(
     as.numeric(Sys.time())
   }
   start <- cur_time()
-  repeat {
-    if (server_exists(url)) {
-      cat("Found!\n")
-      break
-    }
+  while(!server_exists(url)) {
     if (cur_time() - start > timeout) {
       stop(
         'It took more than ', timeout, ' seconds to launch the server. ',
