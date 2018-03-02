@@ -56,6 +56,7 @@ appshot.character <- function(
 ) {
 
   port <- available_port(port)
+  url <- shiny_url(port)
 
   # Run app in background with envvars
   p <- r_background_process(
@@ -65,7 +66,8 @@ appshot.character <- function(
     args = list(
       appDir = app,
       port = port,
-      display.mode = "normal"
+      display.mode = "normal",
+      launch.browser = FALSE
     ),
     envvars = envvars
   )
@@ -74,10 +76,10 @@ appshot.character <- function(
   })
 
   # Wait for app to start
-  Sys.sleep(0.5)
+  wait_until_server_exists(url)
 
   # Get screenshot
-  fileout <- webshot(sprintf("http://127.0.0.1:%d/", port), file = file, ...)
+  fileout <- webshot(url, file = file, ...)
 
   invisible(fileout)
 }
@@ -93,19 +95,21 @@ appshot.shiny.appobj <- function(
   webshot_timeout = 60
 ) {
 
-
   port <- available_port(port)
+  url <- shiny_url(port)
 
   args <- list(
-    url = sprintf("http://127.0.0.1:%d/", port),
+    url = url,
     file = file,
-    ...
+    ...,
+    timeout = webshot_app_timeout()
   )
   p <- r_background_process(
-    function(...) {
+    function(url, file, ..., timeout) {
       # Wait for app to start
-      Sys.sleep(0.5)
-      webshot::webshot(...)
+      wait <- getFromNamespace("wait_until_server_exists", "webshot")
+      wait(url, timeout = timeout)
+      webshot::webshot(url = url, file = file, ...)
     },
     args,
     envvars = envvars
@@ -141,7 +145,7 @@ appshot.shiny.appobj <- function(
   })
 
   # run the app
-  shiny::runApp(app, port = port, display.mode = "normal")
+  shiny::runApp(app, port = port, display.mode = "normal", launch.browser = FALSE)
 
   # return webshot::webshot file value
   invisible(p$get_result()) # safe to call as the r_bg must have ended
