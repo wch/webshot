@@ -48,6 +48,8 @@
 #'   This is experimental and likely to change!
 #' @param debug Print out debugging messages from PhantomJS and CasperJS. This can help to
 #'   diagnose problems.
+#' @param options An optional list containing Casper options. See the Casper API
+#'   (\url{http://docs.casperjs.org/en/latest/modules/casper.html#index-1}).
 #'
 #' @examples
 #' if (interactive()) {
@@ -108,6 +110,16 @@
 #'  resize("75%") %>%
 #'  shrink()
 #'
+#' # Requests can change the User-Agent header
+#' webshot(
+#'   "https://www.rstudio.com/products/rstudio/download/",
+#'   "rstudio.png",
+#'   options = list(
+#'     pageSettings = list(
+#'       userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X)"
+#'     )
+#'   ))
+#'
 #' # See more examples in the package vignette
 # vignette("intro", package = "webshot")
 #' }
@@ -125,7 +137,8 @@ webshot <- function(
   delay = 0.2,
   zoom = 1,
   eval = NULL,
-  debug = FALSE
+  debug = FALSE,
+  options = NULL
 ) {
 
   if (is.null(url)) {
@@ -149,7 +162,8 @@ webshot <- function(
     delay = delay,
     zoom = zoom,
     eval = eval,
-    debug = debug
+    debug = debug,
+    options = options
   )
   arg_length <- vapply(arg_list, length, numeric(1))
   max_arg_length <- max(arg_length)
@@ -221,6 +235,7 @@ webshot <- function(
   if (!is.null(delay)) optsList$delay <- delay
   if (!is.null(zoom)) optsList$zoom <- zoom
   if (!is.null(eval)) optsList$eval <- eval
+  if (!is.null(options)) optsList$options <- jsonlite::toJSON(options, auto_unbox = TRUE)
   optsList$debug <- debug
 
   args <- list(
