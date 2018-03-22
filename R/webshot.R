@@ -48,8 +48,8 @@
 #'   This is experimental and likely to change!
 #' @param debug Print out debugging messages from PhantomJS and CasperJS. This can help to
 #'   diagnose problems.
-#' @param options An optional list containing Casper options. See the Casper API
-#'   (\url{http://docs.casperjs.org/en/latest/modules/casper.html#index-1}).
+#' @param useragent The User-Agent header used to request the URL. Changing the
+#'   User-Agent can mitigate rendering issues for some websites.
 #'
 #' @examples
 #' if (interactive()) {
@@ -114,11 +114,8 @@
 #' webshot(
 #'   "https://www.rstudio.com/products/rstudio/download/",
 #'   "rstudio.png",
-#'   options = list(
-#'     pageSettings = list(
-#'       userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X)"
-#'     )
-#'   ))
+#'   useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X)"
+#' )
 #'
 #' # See more examples in the package vignette
 # vignette("intro", package = "webshot")
@@ -138,7 +135,7 @@ webshot <- function(
   zoom = 1,
   eval = NULL,
   debug = FALSE,
-  options = NULL
+  useragent = NULL
 ) {
 
   if (is.null(url)) {
@@ -235,7 +232,10 @@ webshot <- function(
   if (!is.null(delay)) optsList$delay <- delay
   if (!is.null(zoom)) optsList$zoom <- zoom
   if (!is.null(eval)) optsList$eval <- eval
-  if (!is.null(options)) optsList$options <- jsonlite::toJSON(options, auto_unbox = TRUE)
+  if (!is.null(useragent)) optsList$options <- jsonlite::toJSON(
+    list(pageSettings = list(userAgent = useragent)),
+    auto_unbox = TRUE
+  )
   optsList$debug <- debug
 
   args <- list(

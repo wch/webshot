@@ -6,7 +6,7 @@
 \usage{
 webshot(url = NULL, file = "webshot.png", vwidth = 992, vheight = 744,
   cliprect = NULL, selector = NULL, expand = NULL, delay = 0.2,
-  zoom = 1, eval = NULL, debug = FALSE, options = NULL)
+  zoom = 1, eval = NULL, debug = FALSE, useragent = NULL)
 }
 \arguments{
 \item{url}{A vector of URLs to visit.}
@@ -68,8 +68,8 @@ This is experimental and likely to change!}
 \item{debug}{Print out debugging messages from PhantomJS and CasperJS. This can help to
 diagnose problems.}
 
-\item{options}{An optional list containing Casper options. See the Casper API
-(\url{http://docs.casperjs.org/en/latest/modules/casper.html#index-1}).}
+\item{useragent}{The User-Agent header used to request the URL. Changing the
+User-Agent can mitigate rendering issues for some websites.}
 }
 \description{
 Take a screenshot of a URL
@@ -137,11 +137,8 @@ webshot("https://www.r-project.org/", "r-small.png") \%>\%
 webshot(
   "https://www.rstudio.com/products/rstudio/download/",
   "rstudio.png",
-  options = list(
-    pageSettings = list(
-      userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X)"
-    )
-  ))
+  useragent = "Mozilla/5.0 (Macintosh; Intel Mac OS X)"
+)
 
 # See more examples in the package vignette
 }
