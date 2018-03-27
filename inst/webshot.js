@@ -41,6 +41,10 @@ var optsList = JSON.parse(args[1]);
 
 // Options passed to CasperJS
 var casperOpts = {};
+if (optsList[0].options) {
+  casperOpts = JSON.parse(optsList[0].options);
+}
+
 // `debug` is a special option. The value from the first element in the
 // optsList array is applied globally.
 if (optsList[0].debug) {
