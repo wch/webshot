@@ -17,8 +17,7 @@ for each image.}
 }
 \description{
 This does not change size of the image in pixels, nor does it affect
-appearance -- it is lossless compression. This requires GraphicsMagick
-(recommended) or ImageMagick to be installed.
+appearance -- it is lossless compression.
 }
 \examples{
 if (interactive()) {

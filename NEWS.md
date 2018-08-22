@@ -7,6 +7,8 @@ webshot 0.5.0.9000
 
 * Added `appshot.shiny.appobj` functionality (schloerke, [#55](https://github.com/wch/webshot/pull/55))
 
+* Removed system dependencies on GraphicsMagick/ImageMagick by using the **magick** package in `resize()`.
+
 webshot 0.5.0
 =============
 
