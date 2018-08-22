@@ -115,7 +115,7 @@ appdir <- system.file("examples", "01_hello", package="shiny")
 appshot(appdir, delay = 3)
 ```
 
-There are two functions `resize()` and `shrink()` to manipulate images, which require GraphicsMagick (or ImageMagick) and OptiPNG, respectively. A simple example:
+There are two functions `resize()` and `shrink()` to manipulate images, that latter of which requires OptiPNG, respectively. A simple example:
 
 ```{r eval=FALSE}
 # Result can be piped to other commands like resize() and shrink()

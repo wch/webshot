@@ -1,8 +1,7 @@
 #' Resize an image
 #'
 #' This does not change size of the image in pixels, nor does it affect
-#' appearance -- it is lossless compression. This requires GraphicsMagick
-#' (recommended) or ImageMagick to be installed.
+#' appearance -- it is lossless compression.
 #'
 #' @param filename Character vector containing the path of images to resize.
 #' @param geometry Scaling specification. Can be a percent, as in \code{"50\%"},
@@ -21,6 +20,7 @@
 #'   webshot("https://www.r-project.org/", "r-small-2.png") %>%
 #'     resize("400x")
 #' }
+#' @import magick
 #' @export
 resize <- function(filename, geometry) {
   mapply(resize_one, filename = filename, geometry = geometry,
@@ -29,39 +29,9 @@ resize <- function(filename, geometry) {
 }
 
 resize_one <- function(filename, geometry) {
-  # Handle missing phantomjs
-  if (is.null(filename)) return(NULL)
-
-  # First look for graphicsmagick, then imagemagick
-  prog <- Sys.which("gm")
-
-  if (prog == "") {
-    # ImageMagick 7 has a "magick" binary
-    prog <- Sys.which("magick")
-  }
-
-  if (prog == "") {
-    if (is_windows()) {
-      prog <- find_magic()
-    } else {
-      prog <- Sys.which("convert")
-    }
-  }
-
-  if (prog == "")
-    stop("None of `gm`, `magick`, or `convert` were found in path. GraphicsMagick or ImageMagick must be installed and in path.")
-
-  args <- c(filename, "-resize", geometry, filename)
-
-  if (names(prog) %in% c("gm", "magick")) {
-    args <- c("convert", args)
-  }
-
-  res <- system2(prog, args)
-
-  if (res != 0)
-    stop ("Resizing with `gm convert`, `magick convert` or `convert` failed.")
-
+  img <- image_read(filename)
+  img_out <- image_resize(img, geometry)
+  image_write(img_out, filename)
   filename
 }
 

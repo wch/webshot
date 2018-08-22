@@ -6,6 +6,7 @@ Authors@R: c(
     person("Yihui", "Xie", role = "ctb"),
     person("Francois", "Guillem", role = "ctb"),
     person("Barret", "Schloerke", role = "ctb"),
+    person("Thomas", "Leeper", role = "ctb"),
     person("Nicolas", "Perriault", role = "ctb", comment = "The CasperJS library")
     )
 Description: Takes screenshots of web pages, including Shiny applications and R
@@ -15,6 +16,7 @@ Depends:
 Imports:
     magrittr,
     jsonlite,
+    magick,
     callr
 Suggests:
     httpuv,
@@ -23,9 +25,7 @@ Suggests:
     shiny
 VignetteBuilder: knitr
 License: GPL-2
-SystemRequirements: PhantomJS (http://phantomjs.org) for taking screenshots,
-    ImageMagick (http://www.imagemagick.org) or GraphicsMagick
-    (http://www.graphicsmagick.org) and OptiPNG (http://optipng.sourceforge.net)
-    for manipulating images.
+SystemRequirements: PhantomJS (http://phantomjs.org) for taking screenshots
+    and OptiPNG (http://optipng.sourceforge.net) for manipulating images.
 RoxygenNote: 6.0.1
 URL: https://github.com/wch/webshot/
