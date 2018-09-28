@@ -4,9 +4,10 @@
 \alias{webshot}
 \title{Take a screenshot of a URL}
 \usage{
-webshot(url = NULL, file = "webshot.png", vwidth = 992, vheight = 744,
-  cliprect = NULL, selector = NULL, expand = NULL, delay = 0.2,
-  zoom = 1, eval = NULL, debug = FALSE, useragent = NULL)
+webshot(url = NULL, file = "webshot.png", vwidth = 992,
+  vheight = 744, cliprect = NULL, selector = NULL, expand = NULL,
+  delay = 0.2, zoom = 1, eval = NULL, debug = FALSE,
+  useragent = NULL)
 }
 \arguments{
 \item{url}{A vector of URLs to visit.}

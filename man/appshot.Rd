@@ -13,7 +13,8 @@ appshot(app, file = "webshot.png", ..., port = getOption("shiny.port"),
   port = getOption("shiny.port"), envvars = NULL)
 
 \method{appshot}{shiny.appobj}(app, file = "webshot.png", ...,
-  port = getOption("shiny.port"), envvars = NULL, webshot_timeout = 60)
+  port = getOption("shiny.port"), envvars = NULL,
+  webshot_timeout = 60)
 }
 \arguments{
 \item{app}{A Shiny app object, or a string naming an app directory.}
