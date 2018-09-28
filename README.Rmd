@@ -15,6 +15,8 @@ webshot
 * Run Shiny applications locally and take screenshots of the application.
 * Render R Markdown documents and take screenshots of the document. Webshot can handle both static Rmd documents and interactive ones (those with `runtime: shiny`).
 
+See the [introduction article](https://wch.github.io/webshot/articles/intro.html) for examples in addition to the ones below.
+
 ## Installation
 
 Webshot can be installed from CRAN. Webshot also requires the external program [PhantomJS](http://phantomjs.org/). You may either download PhantomJS from its website, or use the function `webshot::install_phantomjs()` to install it automatically.
