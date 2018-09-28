@@ -1,4 +1,4 @@
-webshot 0.5.0.9000
+webshot 0.5.1
 =============
 
 * Added `debug` parameter. When it is set to `TRUE`, `webshot()` will print out debugging messages from PhantomJS and CasperJS.
