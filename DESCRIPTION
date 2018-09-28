@@ -21,7 +21,6 @@ Suggests:
     knitr,
     rmarkdown,
     shiny
-VignetteBuilder: knitr
 License: GPL-2
 SystemRequirements: PhantomJS (http://phantomjs.org) for taking screenshots,
     ImageMagick (http://www.imagemagick.org) or GraphicsMagick
