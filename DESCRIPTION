@@ -29,3 +29,4 @@ SystemRequirements: PhantomJS (http://phantomjs.org) for taking screenshots,
     for manipulating images.
 RoxygenNote: 6.0.1
 URL: https://github.com/wch/webshot/
+BugReports: https://github.com/wch/webshot/issues
