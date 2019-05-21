@@ -60,6 +60,19 @@ find_phantom <- function() {
   path.expand(path)
 }
 
+#' Determine if PhantomJS is Installed
+#'
+#' Verifies that a version of PhantomJS is installed and available for use
+#' on the user's computer.
+#'
+#' @return \code{TRUE} if the PhantomJS is installed. Otherwise, \code{FALSE}
+#' if PhantomJS is not installed.
+#'
+#' @export
+is_phantomjs_installed <- function() {
+  suppressMessages( !is.null(find_phantom()) )
+}
+
 #' Install PhantomJS
 #'
 #' Download the zip package, unzip it, and copy the executable to a system
