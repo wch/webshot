@@ -1,3 +1,10 @@
+webshot 0.5.1.1000
+=============
+
+* Added `force` parameter. When it is set to `TRUE`, `install_phantomjs()` will reinstall phantomjs. (@coatless, [#82](https://github.com/wch/webshot/pull/82))
+
+* Added `is_phantomjs_installed()` function to check if PhantomJS was installed on the users computer. (@coatless, [#82](https://github.com/wch/webshot/pull/82))
+
 webshot 0.5.1
 =============
 
