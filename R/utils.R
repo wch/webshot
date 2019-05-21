@@ -96,10 +96,18 @@ is_phantomjs_installed <- function() {
 #'   download. If the default download site is unavailable, you may specify an
 #'   alternative mirror, such as
 #'   \code{"https://bitbucket.org/ariya/phantomjs/downloads/"}.
+#' @param force Install \file{PhantomJS} even if it has already been installed.
+#'   This is useful if you would like to upgrade the \file{PhantomJS} version.
 #' @return \code{NULL} (the executable is written to a system directory).
 #' @export
 install_phantomjs <- function(version = '2.1.1',
-    baseURL = 'https://github.com/wch/webshot/releases/download/v0.3.1/') {
+    baseURL = 'https://github.com/wch/webshot/releases/download/v0.3.1/',
+    force = FALSE) {
+
+  if (is_phantomjs_installed() && !force) {
+    message('It seems `phantomjs` has been installed. Use `force = TRUE` parameter to reinstall or upgrade.')
+    return(invisible())
+  }
 
   if (!grepl("/$", baseURL))
     baseURL <- paste0(baseURL, "/")

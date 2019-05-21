@@ -5,7 +5,8 @@
 \title{Install PhantomJS}
 \usage{
 install_phantomjs(version = "2.1.1",
-  baseURL = "https://github.com/wch/webshot/releases/download/v0.3.1/")
+  baseURL = "https://github.com/wch/webshot/releases/download/v0.3.1/",
+  force = FALSE)
 }
 \arguments{
 \item{version}{The version number of PhantomJS.}
@@ -14,6 +15,9 @@ install_phantomjs(version = "2.1.1",
 download. If the default download site is unavailable, you may specify an
 alternative mirror, such as
 \code{"https://bitbucket.org/ariya/phantomjs/downloads/"}.}
+
+\item{force}{Install \file{PhantomJS} even if it has already been installed.
+This is useful if you would like to upgrade the \file{PhantomJS} version.}
 }
 \value{
 \code{NULL} (the executable is written to a system directory).
