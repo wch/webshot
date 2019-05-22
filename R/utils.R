@@ -123,8 +123,9 @@ is_phantomjs_version_latest = function(requested_version) {
 #'   download. If the default download site is unavailable, you may specify an
 #'   alternative mirror, such as
 #'   \code{"https://bitbucket.org/ariya/phantomjs/downloads/"}.
-#' @param force Install \file{PhantomJS} even if it has already been installed.
-#'   This is useful if you would like to upgrade the \file{PhantomJS} version.
+#' @param force Install \file{PhantomJS} even if the version installed is the
+#'   latest or if the requested version is older. This is useful to reinstall
+#'   or downgrade the version of \file{PhantomJS}.
 #' @return \code{NULL} (the executable is written to a system directory).
 #' @export
 install_phantomjs <- function(version = '2.1.1',
@@ -133,7 +134,7 @@ install_phantomjs <- function(version = '2.1.1',
 
   if (is_phantomjs_version_latest(version) && !force) {
       message('It seems that the installed version of `phantomjs` is the latest. ',
-              'To reinstall or upgrade the installed version, use `force = TRUE`.')
+              'To reinstall the version presently installed, use `force = TRUE`.')
       return(invisible())
   }
 
