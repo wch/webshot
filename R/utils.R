@@ -60,6 +60,16 @@ find_phantom <- function() {
   path.expand(path)
 }
 
+phantomjs_cmd_result = function(args, wait = TRUE) {
+  # Retrieve and store output from STDOUT
+  utils::capture.output(invisible(phantom_run(args = args, wait = wait)),
+                        type = "output")
+}
+
+phantomjs_version = function() {
+  phantomjs_cmd_result("--version")
+}
+
 #' Determine if PhantomJS is Installed
 #'
 #' Verifies that a version of PhantomJS is installed and available for use
@@ -72,6 +82,23 @@ find_phantom <- function() {
 is_phantomjs_installed <- function() {
   suppressMessages( !is.null(find_phantom()) )
 }
+
+is_phantomjs_version_latest = function(requested_version) {
+  # Ensure phantomjs is installed if not, request an update
+  if (!is_phantomjs_installed()) {
+    return(FALSE)
+  }
+
+  # Obtain the installed version
+  installed_phantomjs_version <- phantomjs_version()
+
+  # Check if the installed version is latest compared to requested version.
+  # 1 indicates the installed version is newer
+  # 0 indicates the version difference is the same
+  # -1 indicates the installed version is older than requested_version.
+  utils::compareVersion(installed_phantomjs_version, requested_version) >= 0
+}
+
 
 #' Install PhantomJS
 #'
@@ -104,9 +131,10 @@ install_phantomjs <- function(version = '2.1.1',
     baseURL = 'https://github.com/wch/webshot/releases/download/v0.3.1/',
     force = FALSE) {
 
-  if (is_phantomjs_installed() && !force) {
-    message('It seems `phantomjs` has been installed. Use `force = TRUE` parameter to reinstall or upgrade.')
-    return(invisible())
+  if (is_phantomjs_version_latest(version) && !force) {
+      message('It seems that the installed version of `phantomjs` is the latest. ',
+              'To reinstall or upgrade the installed version, use `force = TRUE`.')
+      return(invisible())
   }
 
   if (!grepl("/$", baseURL))
