@@ -1,9 +1,11 @@
-webshot 0.5.1.1000
+webshot 0.5.1.9000
 =============
+
+* Modified `install_phantomjs()` function to only install a new version of PhantomJS if the installed version is out of date or it isn't installed. (@coatless, [#82](https://github.com/wch/webshot/pull/82))
 
 * Added `force` parameter. When it is set to `TRUE`, `install_phantomjs()` will reinstall phantomjs. (@coatless, [#82](https://github.com/wch/webshot/pull/82))
 
-* Added `is_phantomjs_installed()` function to check if PhantomJS was installed on the users computer. (@coatless, [#82](https://github.com/wch/webshot/pull/82))
+* Added `is_phantomjs_installed()` function to check if PhantomJS was installed on the user's computer. (@coatless, [#82](https://github.com/wch/webshot/pull/82))
 
 webshot 0.5.1
 =============
