@@ -96,10 +96,7 @@ is_phantomjs_version_latest <- function(requested_version) {
   installed_phantomjs_version <- phantomjs_version()
 
   # Check if the installed version is latest compared to requested version.
-  # 1 indicates the installed version is newer
-  # 0 indicates the version difference is the same
-  # -1 indicates the installed version is older than requested_version.
-  utils::compareVersion(installed_phantomjs_version, requested_version) >= 0
+  as.package_version(installed_phantomjs_version) >= requested_version
 }
 
 
