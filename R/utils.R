@@ -1,5 +1,5 @@
-phantom_run <- function(args, wait = TRUE) {
-  phantom_bin <- find_phantom()
+phantom_run <- function(args, wait = TRUE, quiet = FALSE) {
+  phantom_bin <- find_phantom(quiet = quiet)
 
   # Handle missing phantomjs
   if (is.null(phantom_bin)) return(NULL)
@@ -63,14 +63,14 @@ find_phantom <- function(quiet = FALSE) {
   path.expand(path)
 }
 
-phantomjs_cmd_result <- function(args, wait = TRUE) {
+phantomjs_cmd_result <- function(args, wait = TRUE, quiet = FALSE) {
   # Retrieve and store output from STDOUT
-  utils::capture.output(invisible(phantom_run(args = args, wait = wait)),
+  utils::capture.output(invisible(phantom_run(args = args, wait = wait, quiet = quiet)),
                         type = "output")
 }
 
-  phantomjs_cmd_result("--version")
 phantomjs_version <- function() {
+  phantomjs_cmd_result("--version", quiet = TRUE)
 }
 
 #' Determine if PhantomJS is Installed
@@ -83,7 +83,7 @@ phantomjs_version <- function() {
 #'
 #' @export
 is_phantomjs_installed <- function() {
-  suppressMessages( !is.null(find_phantom()) )
+  !is.null(find_phantom(quiet = TRUE))
 }
 
 is_phantomjs_version_latest <- function(requested_version) {
