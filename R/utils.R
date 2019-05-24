@@ -142,8 +142,10 @@ install_phantomjs <- function(version = '2.1.1',
     force = FALSE) {
 
   if (is_phantomjs_version_latest(version) && !force) {
-      message('It seems that the installed version of `phantomjs` is the latest. ',
-              'To reinstall the version presently installed, use `force = TRUE`.')
+      message('It seems that the version of `phantomjs` installed is ',
+              'greater than or equal to the requested version.',
+              'To install the requested version or downgrade to another version, ',
+              'use `force = TRUE`.')
       return(invisible())
   }
 
