@@ -34,7 +34,7 @@ phantom_run <- function(args, wait = TRUE) {
 
 
 # Find PhantomJS from PATH, APPDATA, system.file('webshot'), ~/bin, etc
-find_phantom <- function() {
+find_phantom <- function(quiet = FALSE) {
   path <- Sys.which( "phantomjs" )
   if (path != "") return(path)
 
@@ -50,11 +50,14 @@ find_phantom <- function() {
     # and may not be capable of installing phantomjs (like on Solaris), and any
     # packages which use webshot in their R CMD check (in examples or vignettes)
     # will get an ERROR. We'll issue a message and return NULL; other
-    message(
-      "PhantomJS not found. You can install it with webshot::install_phantomjs(). ",
-      "If it is installed, please make sure the phantomjs executable ",
-      "can be found via the PATH variable."
-    )
+
+    if(!quiet) {
+      message(
+        "PhantomJS not found. You can install it with webshot::install_phantomjs(). ",
+        "If it is installed, please make sure the phantomjs executable ",
+        "can be found via the PATH variable."
+      )
+    }
     return(NULL)
   }
   path.expand(path)
