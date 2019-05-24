@@ -65,7 +65,7 @@ find_phantom <- function(quiet = FALSE) {
 
 phantomjs_cmd_result <- function(args, wait = TRUE, quiet = FALSE) {
   # Retrieve and store output from STDOUT
-  utils::capture.output(invisible(phantom_run(args = args, wait = wait, quiet = quiet)),
+  utils::capture.output(phantom_run(args = args, wait = wait, quiet = quiet),
                         type = "output")
 }
 
