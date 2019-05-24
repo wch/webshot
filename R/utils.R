@@ -1,5 +1,5 @@
-phantom_run <- function(args, wait = TRUE) {
-  phantom_bin <- find_phantom()
+phantom_run <- function(args, wait = TRUE, quiet = FALSE) {
+  phantom_bin <- find_phantom(quiet = quiet)
 
   # Handle missing phantomjs
   if (is.null(phantom_bin)) return(NULL)
@@ -34,7 +34,7 @@ phantom_run <- function(args, wait = TRUE) {
 
 
 # Find PhantomJS from PATH, APPDATA, system.file('webshot'), ~/bin, etc
-find_phantom <- function() {
+find_phantom <- function(quiet = FALSE) {
   path <- Sys.which( "phantomjs" )
   if (path != "") return(path)
 
@@ -50,21 +50,62 @@ find_phantom <- function() {
     # and may not be capable of installing phantomjs (like on Solaris), and any
     # packages which use webshot in their R CMD check (in examples or vignettes)
     # will get an ERROR. We'll issue a message and return NULL; other
-    message(
-      "PhantomJS not found. You can install it with webshot::install_phantomjs(). ",
-      "If it is installed, please make sure the phantomjs executable ",
-      "can be found via the PATH variable."
-    )
+
+    if(!quiet) {
+      message(
+        "PhantomJS not found. You can install it with webshot::install_phantomjs(). ",
+        "If it is installed, please make sure the phantomjs executable ",
+        "can be found via the PATH variable."
+      )
+    }
     return(NULL)
   }
   path.expand(path)
 }
+
+phantomjs_cmd_result <- function(args, wait = TRUE, quiet = FALSE) {
+  # Retrieve and store output from STDOUT
+  utils::capture.output(invisible(phantom_run(args = args, wait = wait, quiet = quiet)),
+                        type = "output")
+}
+
+phantomjs_version <- function() {
+  phantomjs_cmd_result("--version", quiet = TRUE)
+}
+
+#' Determine if PhantomJS is Installed
+#'
+#' Verifies that a version of PhantomJS is installed and available for use
+#' on the user's computer.
+#'
+#' @return \code{TRUE} if the PhantomJS is installed. Otherwise, \code{FALSE}
+#' if PhantomJS is not installed.
+#'
+#' @export
+is_phantomjs_installed <- function() {
+  !is.null(find_phantom(quiet = TRUE))
+}
+
+is_phantomjs_version_latest <- function(requested_version) {
+  # Ensure phantomjs is installed if not, request an update
+  if (!is_phantomjs_installed()) {
+    return(FALSE)
+  }
+
+  # Obtain the installed version
+  installed_phantomjs_version <- phantomjs_version()
+
+  # Check if the installed version is latest compared to requested version.
+  as.package_version(installed_phantomjs_version) >= requested_version
+}
+
 
 #' Install PhantomJS
 #'
 #' Download the zip package, unzip it, and copy the executable to a system
 #' directory in which \pkg{webshot} can look for the PhantomJS executable.
 #'
+#' @details
 #' This function was designed primarily to help Windows users since it is
 #' cumbersome to modify the \code{PATH} variable. Mac OS X users may install
 #' PhantomJS via Homebrew. If you download the package from the PhantomJS
@@ -78,15 +119,35 @@ find_phantom <- function() {
 #' writable, the directory \file{PhantomJS} under the installation directory of
 #' the \pkg{webshot} package will be tried. If this directory still fails, you
 #' will have to install PhantomJS by yourself.
+#'
+#' If PhantomJS is not already installed on the computer, this function will
+#' attempt to install it. However, if the version of PhantomJS installed is
+#' greater than or equal to the requested version, this function will not
+#' perform the installation procedure again unless the \code{force} parameter is
+#' set to \code{TRUE}. As a result, this function may also be used to reinstall or
+#' downgrade the version of PhantomJS found.
+#'
 #' @param version The version number of PhantomJS.
 #' @param baseURL The base URL for the location of PhantomJS binaries for
 #'   download. If the default download site is unavailable, you may specify an
 #'   alternative mirror, such as
 #'   \code{"https://bitbucket.org/ariya/phantomjs/downloads/"}.
+#' @param force Install PhantomJS even if the version installed is the
+#'   latest or if the requested version is older. This is useful to reinstall
+#'   or downgrade the version of PhantomJS.
 #' @return \code{NULL} (the executable is written to a system directory).
 #' @export
 install_phantomjs <- function(version = '2.1.1',
-    baseURL = 'https://github.com/wch/webshot/releases/download/v0.3.1/') {
+    baseURL = 'https://github.com/wch/webshot/releases/download/v0.3.1/',
+    force = FALSE) {
+
+  if (is_phantomjs_version_latest(version) && !force) {
+      message('It seems that the version of `phantomjs` installed is ',
+              'greater than or equal to the requested version.',
+              'To install the requested version or downgrade to another version, ',
+              'use `force = TRUE`.')
+      return(invisible())
+  }
 
   if (!grepl("/$", baseURL))
     baseURL <- paste0(baseURL, "/")
