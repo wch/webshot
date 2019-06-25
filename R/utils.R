@@ -206,6 +206,10 @@ phantom_paths <- function() {
   } else if (is_osx()) {
     path <- '~/Library/Application Support'
     path <- if (dir_exists(path)) file.path(path, 'PhantomJS')
+  } else if (is_linux()) {
+    path <- '~/bin'
+    path <- if (!dir_exists(path)) dir.create(path,recursive = TRUE)
+    path <- file.path(path, 'PhantomJS')
   } else {
     path <- '~/bin'
   }
