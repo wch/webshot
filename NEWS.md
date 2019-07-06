@@ -5,7 +5,10 @@ webshot 0.5.1.9000
 
 * Added `force` parameter. When it is set to `TRUE`, `install_phantomjs()` will reinstall phantomjs. (@coatless, [#82](https://github.com/wch/webshot/pull/82))
 
-* Added `is_phantomjs_installed()` function to check if PhantomJS was installed on the user's computer. (@coatless, [#82](https://github.com/wch/webshot/pull/82))
+* Fixed `is_phantomjs_installed()` function to check if PhantomJS was installed on the user's computer. (@coatless, [#82](https://github.com/wch/webshot/pull/82))
+
+* Fixed `phantom_paths()` function to detect the path to PhantomJS on Linux (@coatless, @wildintellect, [#84](https://github.com/wch/webshot/pull/84))
+
 
 webshot 0.5.1
 =============
