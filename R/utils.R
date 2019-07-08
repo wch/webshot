@@ -209,7 +209,7 @@ phantom_paths <- function() {
   } else {
     path <- '~/bin'
   }
-  path <- c(path, file.path(system.file(package = 'webshot'),'PhantomJS'))
+  path <- c(path, file.path(system.file(package = 'webshot'), 'PhantomJS'))
   path
 }
 
