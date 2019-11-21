@@ -1,4 +1,4 @@
-webshot 0.5.1.9001
+webshot 0.5.2
 =============
 
 * Modified `install_phantomjs()` function to only install a new version of PhantomJS if the installed version is out of date or it isn't installed. (@coatless, [#82](https://github.com/wch/webshot/pull/82))
