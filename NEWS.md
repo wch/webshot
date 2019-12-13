@@ -7,7 +7,7 @@ webshot 0.5.2
 
 * Added `is_phantomjs_installed()` function to check if PhantomJS was installed on the user's computer. (@coatless, [#82](https://github.com/wch/webshot/pull/82))
 
-* Fixed `phantom_paths()` function to detect the path to PhantomJS on Linux (@coatless, @wildintellect, [#84](https://github.com/wch/webshot/pull/84))
+* Fixed `phantom_paths()` function to detect the path to PhantomJS on Linux (@coatless, @wildintellect, [#85](https://github.com/wch/webshot/pull/85))
 
 
 webshot 0.5.1
