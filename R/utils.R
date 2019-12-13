@@ -141,7 +141,7 @@ install_phantomjs <- function(version = '2.1.1',
     baseURL = 'https://github.com/wch/webshot/releases/download/v0.3.1/',
     force = FALSE) {
 
-  if (is_phantomjs_version_latest(version) && !force) {
+  if (!force && is_phantomjs_version_latest(version)) {
       message('It seems that the version of `phantomjs` installed is ',
               'greater than or equal to the requested version.',
               'To install the requested version or downgrade to another version, ',

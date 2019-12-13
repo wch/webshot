@@ -1,3 +1,8 @@
+webshot 0.5.2.9000
+=============
+
+* Fixed logic in `install_phantomjs()` when `force=TRUE` is used. ([#89](https://github.com/wch/webshot/pull/89))
+
 webshot 0.5.2
 =============
 
