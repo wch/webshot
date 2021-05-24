@@ -117,31 +117,31 @@ is_phantomjs_version_latest <- function(requested_version) {
 #' directory in which \pkg{webshot} can look for the PhantomJS executable.
 #'
 #' @details This function was designed primarily to help Windows users since it
-#' is cumbersome to modify the \code{PATH} variable. Mac OS X users may install
-#' PhantomJS via Homebrew. If you download the package from the PhantomJS
-#' website instead, please make sure the executable can be found via the
-#' \code{PATH} variable.
+#'   is cumbersome to modify the \code{PATH} variable. Mac OS X users may
+#'   install PhantomJS via Homebrew. If you download the package from the
+#'   PhantomJS website instead, please make sure the executable can be found via
+#'   the \code{PATH} variable.
 #'
-#' On Windows, the directory specified by the environment variable
-#' \code{APPDATA} is used to store \file{phantomjs.exe}. On OS X, the directory
-#' \file{~/Library/Application Support} is used. On other platforms (such as
-#' Linux), the directory \file{~/bin} is used. If these directories are not
-#' writable, the directory \file{PhantomJS} under the installation directory of
-#' the \pkg{webshot} package will be tried. If this directory still fails, you
-#' will have to install PhantomJS by yourself.
+#'   On Windows, the directory specified by the environment variable
+#'   \code{APPDATA} is used to store \file{phantomjs.exe}. On OS X, the
+#'   directory \file{~/Library/Application Support} is used. On other platforms
+#'   (such as Linux), the directory \file{~/bin} is used. If these directories
+#'   are not writable, the directory \file{PhantomJS} under the installation
+#'   directory of the \pkg{webshot} package will be tried. If this directory
+#'   still fails, you will have to install PhantomJS by yourself.
 #'
-#' If PhantomJS is not already installed on the computer, this function will
-#' attempt to install it. However, if the version of PhantomJS installed is
-#' greater than or equal to the requested version, this function will not
-#' perform the installation procedure again unless the \code{force} parameter is
-#' set to \code{TRUE}. As a result, this function may also be used to reinstall
-#' or downgrade the version of PhantomJS found.
+#'   If PhantomJS is not already installed on the computer, this function will
+#'   attempt to install it. However, if the version of PhantomJS installed is
+#'   greater than or equal to the requested version, this function will not
+#'   perform the installation procedure again unless the \code{force} parameter
+#'   is set to \code{TRUE}. As a result, this function may also be used to
+#'   reinstall or downgrade the version of PhantomJS found.
 #'
 #' @param version The version number of PhantomJS. If the value is "auto", then
 #'   on Mac and Linux, it will download version 2.1.1, and on Windows, it will
-#'   download 2.5.0-beta2. This is because 2.1.1 on Windows has some font
-#'   rendering issues that are fixed by 2.5.0-beta2, but on other platforms,
-#'   2.5.0-beta2 does not install and run reliably.
+#'   download 2.5.0-beta. This is because 2.1.1 on Windows has some font
+#'   rendering issues that are fixed by 2.5.0-beta, but on other platforms,
+#'   2.5.0-beta does not install and run reliably.
 #' @param baseURL The base URL for the location of PhantomJS binaries for
 #'   download. If the default download site is unavailable, you may specify an
 #'   alternative mirror, such as
@@ -157,7 +157,7 @@ install_phantomjs <- function(version = 'auto',
 
   if (version == "auto") {
     if (is_windows()) {
-      version <- "2.5.0-beta2"
+      version <- "2.5.0-beta"
     } else {
       version <- "2.1.1"
     }
