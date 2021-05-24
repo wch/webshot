@@ -1,7 +1,7 @@
 webshot 0.5.2.9000
 =============
 
-* On Windows, `install_phantomjs()` now installs version 2.5.0-beta2 by default, due to some font rendering issues with version 2.1.1. (#102)
+* On Windows, `install_phantomjs()` now installs version 2.5.0-beta by default, due to some font rendering issues with version 2.1.1. (#102)
 
 * Fixed logic in `install_phantomjs()` when `force=TRUE` is used. ([#89](https://github.com/wch/webshot/pull/89))
 
