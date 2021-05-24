@@ -6,15 +6,30 @@
 \alias{appshot.shiny.appobj}
 \title{Take a screenshot of a Shiny app}
 \usage{
-appshot(app, file = "webshot.png", ..., port = getOption("shiny.port"),
-  envvars = NULL)
+appshot(
+  app,
+  file = "webshot.png",
+  ...,
+  port = getOption("shiny.port"),
+  envvars = NULL
+)
 
-\method{appshot}{character}(app, file = "webshot.png", ...,
-  port = getOption("shiny.port"), envvars = NULL)
+\method{appshot}{character}(
+  app,
+  file = "webshot.png",
+  ...,
+  port = getOption("shiny.port"),
+  envvars = NULL
+)
 
-\method{appshot}{shiny.appobj}(app, file = "webshot.png", ...,
-  port = getOption("shiny.port"), envvars = NULL,
-  webshot_timeout = 60)
+\method{appshot}{shiny.appobj}(
+  app,
+  file = "webshot.png",
+  ...,
+  port = getOption("shiny.port"),
+  envvars = NULL,
+  webshot_timeout = 60
+)
 }
 \arguments{
 \item{app}{A Shiny app object, or a string naming an app directory.}

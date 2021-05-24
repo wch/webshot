@@ -4,8 +4,15 @@
 \alias{rmdshot}
 \title{Take a snapshot of an R Markdown document}
 \usage{
-rmdshot(doc, file = "webshot.png", ..., delay = NULL,
-  rmd_args = list(), port = getOption("shiny.port"), envvars = NULL)
+rmdshot(
+  doc,
+  file = "webshot.png",
+  ...,
+  delay = NULL,
+  rmd_args = list(),
+  port = getOption("shiny.port"),
+  envvars = NULL
+)
 }
 \arguments{
 \item{doc}{The path to a Rmd document.}
