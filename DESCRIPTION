@@ -1,6 +1,6 @@
 Package: webshot
 Title: Take Screenshots of Web Pages
-Version: 0.5.2.9000
+Version: 0.5.2.9001
 Authors@R: c(
     person("Winston", "Chang", email = "winston@rstudio.com", role = c("aut", "cre")),
     person("Yihui", "Xie", role = "ctb"),
@@ -26,7 +26,7 @@ SystemRequirements: PhantomJS (http://phantomjs.org) for taking screenshots,
     ImageMagick (http://www.imagemagick.org) or GraphicsMagick
     (http://www.graphicsmagick.org) and OptiPNG (http://optipng.sourceforge.net)
     for manipulating images.
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 Encoding: UTF-8
 URL: https://github.com/wch/webshot/
 BugReports: https://github.com/wch/webshot/issues
