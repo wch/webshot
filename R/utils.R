@@ -137,11 +137,7 @@ is_phantomjs_version_latest <- function(requested_version) {
 #'   is set to \code{TRUE}. As a result, this function may also be used to
 #'   reinstall or downgrade the version of PhantomJS found.
 #'
-#' @param version The version number of PhantomJS. If the value is "auto", then
-#'   on Mac and Linux, it will download version 2.1.1, and on Windows, it will
-#'   download 2.5.0-beta. This is because 2.1.1 on Windows has some font
-#'   rendering issues that are fixed by 2.5.0-beta, but on other platforms,
-#'   2.5.0-beta does not install and run reliably.
+#' @param version The version number of PhantomJS.
 #' @param baseURL The base URL for the location of PhantomJS binaries for
 #'   download. If the default download site is unavailable, you may specify an
 #'   alternative mirror, such as
@@ -151,17 +147,9 @@ is_phantomjs_version_latest <- function(requested_version) {
 #'   the version of PhantomJS.
 #' @return \code{NULL} (the executable is written to a system directory).
 #' @export
-install_phantomjs <- function(version = 'auto',
+install_phantomjs <- function(version = '2.1.1',
     baseURL = 'https://github.com/wch/webshot/releases/download/v0.3.1/',
     force = FALSE) {
-
-  if (version == "auto") {
-    if (is_windows()) {
-      version <- "2.5.0-beta"
-    } else {
-      version <- "2.1.1"
-    }
-  }
 
   if (!force && is_phantomjs_version_latest(version)) {
       message('It seems that the version of `phantomjs` installed is ',

@@ -5,17 +5,13 @@
 \title{Install PhantomJS}
 \usage{
 install_phantomjs(
-  version = "auto",
+  version = "2.1.1",
   baseURL = "https://github.com/wch/webshot/releases/download/v0.3.1/",
   force = FALSE
 )
 }
 \arguments{
-\item{version}{The version number of PhantomJS. If the value is "auto", then
-on Mac and Linux, it will download version 2.1.1, and on Windows, it will
-download 2.5.0-beta. This is because 2.1.1 on Windows has some font
-rendering issues that are fixed by 2.5.0-beta, but on other platforms,
-2.5.0-beta does not install and run reliably.}
+\item{version}{The version number of PhantomJS.}
 
 \item{baseURL}{The base URL for the location of PhantomJS binaries for
 download. If the default download site is unavailable, you may specify an
