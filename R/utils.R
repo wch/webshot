@@ -7,6 +7,20 @@ phantom_run <- function(args, wait = TRUE, quiet = FALSE) {
   # Make sure args is a char vector
   args <- as.character(args)
 
+  # Changes to openssl.cnf following OpenSSL 1.1.1 break PhantomJS
+  # so for later versions use a back up of the config for 1.1.1
+  # https://github.com/openssl/openssl/blob/OpenSSL_1_1_1/include/openssl/opensslv.h#L42
+  open_ssl_1_1_1 <- 0x1010100fL
+  is_config_changed <- FALSE
+
+  if (get_ssl_version()$OPENSSL_VERSION_NUMBER > open_ssl_1_1_1) {
+    # Back up OPENSSL_CONF in case it already exists
+    ssl_conf_path <- Sys.getenv(x = "OPENSSL_CONF", unset = NA)
+    default_ssl_conf <- system.file("openssl.cnf", package = "webshot")
+    Sys.setenv("OPENSSL_CONF" = default_ssl_conf)
+    is_config_changed <- TRUE
+  }
+
   p <- callr::process$new(
     phantom_bin,
     args = args,
@@ -17,6 +31,14 @@ phantom_run <- function(args, wait = TRUE, quiet = FALSE) {
   if (isTRUE(wait)) {
     on.exit({
       p$kill()
+      if (is_config_changed) {
+        if (is.na(ssl_conf_path)) {
+          Sys.unsetenv("OPENSSL_CONF")
+        } else {
+          # Restore OPENSSL_CONF to its original value
+          Sys.setenv("OPENSSL_CONF" = ssl_conf_path)
+        }
+      }
     })
     cat_n <- function(txt) {
       if (length(txt) > 0) {
