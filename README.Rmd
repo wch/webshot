@@ -8,6 +8,9 @@ library(webshot)
 webshot
 =======
 
+<!-- badges: start -->
+[![R build status](https://github.com/rstudio/sortable/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rstudio/sortable/actions)
+<!-- badges: end -->
 
 
 **Webshot** makes it easy to take screenshots of web pages from R. It can also:
