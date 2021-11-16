@@ -8,7 +8,7 @@ library(webshot)
 webshot
 =======
 
-[![Travis-CI Build Status](https://travis-ci.org/wch/webshot.svg?branch=master)](https://travis-ci.org/wch/webshot) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/wch/webshot?branch=master&svg=true)](https://ci.appveyor.com/project/wch/webshot)
+
 
 **Webshot** makes it easy to take screenshots of web pages from R. It can also:
 
@@ -83,9 +83,9 @@ webshot(c("https://www.r-project.org/", "https://github.com/wch/webshot"),
 # Save screenshots of the same site in different formats
 webshot("https://www.r-project.org/", file = c("r.png", "r.pdf"))
 
-# Take screenshots of different sections of the same site. 
-# Note that unlike arguments "url" and "file", a list is required to specify 
-# multiple selectors. This is also the case for arguments "cliprect" and 
+# Take screenshots of different sections of the same site.
+# Note that unlike arguments "url" and "file", a list is required to specify
+# multiple selectors. This is also the case for arguments "cliprect" and
 # "expand"
 webshot("http://rstudio.github.io/leaflet/",
         file = c("leaflet_features.png", "leaflet_install.png"),
