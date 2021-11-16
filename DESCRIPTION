@@ -26,7 +26,7 @@ SystemRequirements: PhantomJS (http://phantomjs.org) for taking screenshots,
     ImageMagick (http://www.imagemagick.org) or GraphicsMagick
     (http://www.graphicsmagick.org) and OptiPNG (http://optipng.sourceforge.net)
     for manipulating images.
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Encoding: UTF-8
-URL: https://github.com/wch/webshot/
+URL: http://wch.github.io/webshot/, https://github.com/wch/webshot/
 BugReports: https://github.com/wch/webshot/issues

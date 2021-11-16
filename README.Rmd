@@ -8,7 +8,10 @@ library(webshot)
 webshot
 =======
 
-[![Travis-CI Build Status](https://travis-ci.org/wch/webshot.svg?branch=master)](https://travis-ci.org/wch/webshot) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/wch/webshot?branch=master&svg=true)](https://ci.appveyor.com/project/wch/webshot)
+<!-- badges: start -->
+[![R build status](https://github.com/rstudio/sortable/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rstudio/sortable/actions)
+<!-- badges: end -->
+
 
 **Webshot** makes it easy to take screenshots of web pages from R. It can also:
 
@@ -83,9 +86,9 @@ webshot(c("https://www.r-project.org/", "https://github.com/wch/webshot"),
 # Save screenshots of the same site in different formats
 webshot("https://www.r-project.org/", file = c("r.png", "r.pdf"))
 
-# Take screenshots of different sections of the same site. 
-# Note that unlike arguments "url" and "file", a list is required to specify 
-# multiple selectors. This is also the case for arguments "cliprect" and 
+# Take screenshots of different sections of the same site.
+# Note that unlike arguments "url" and "file", a list is required to specify
+# multiple selectors. This is also the case for arguments "cliprect" and
 # "expand"
 webshot("http://rstudio.github.io/leaflet/",
         file = c("leaflet_features.png", "leaflet_install.png"),
@@ -142,22 +145,22 @@ webshot("https://www.r-project.org/", "r-small.png") %>%
 # Take the screenshots that are shown below
 
 webshot("https://www.r-project.org/", cliprect = c(0, 0, 992, 500),
-        "tools/r-small-resized.png") %>%
+        "man/figures/r-small-resized.png") %>%
   resize("50%") %>%
   shrink() %>%
   invisible()
 
 # Using zoom instead of resize()
 webshot("https://www.r-project.org/", cliprect = c(0, 0, 992, 500),
-        "tools/r-small-zoomed.png", zoom = 0.5) %>%
+        "man/figures/r-small-zoomed.png", zoom = 0.5) %>%
   shrink() %>%
   invisible()
 ```
 
 To illustrate the difference between `resize()` and `zoom`, here is an image with `resize("50%")`:
 
-![](tools/r-small-resized.png)
+![](man/figures/r-small-resized.png)
 
 And here is one with `zoom = 0.5`. If you look closely, you'll see that the text and graphics are sharper. You'll also see that the bullet points and text are positioned slightly differently:
 
-![](tools/r-small-zoomed.png)
+![](man/figures/r-small-zoomed.png)
