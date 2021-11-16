@@ -1,6 +1,12 @@
 
 # webshot
 
+<!-- badges: start -->
+
+[![R build
+status](https://github.com/rstudio/sortable/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rstudio/sortable/actions)
+<!-- badges: end -->
+
 **Webshot** makes it easy to take screenshots of web pages from R. It
 can also:
 
@@ -38,8 +44,7 @@ webshot("https://www.r-project.org/", "r.png")
 webshot("https://www.r-project.org/", "r.pdf") # Can also output to PDF
 ```
 
-You can clip it to just the viewport
-region:
+You can clip it to just the viewport region:
 
 ``` r
 webshot("https://www.r-project.org/", "r-viewport.png", cliprect = "viewport")
@@ -47,8 +52,7 @@ webshot("https://www.r-project.org/", "r-viewport.png", cliprect = "viewport")
 
 You can also get screenshots of a portion of a web page using CSS
 selectors. If there are multiple matches for the CSS selector, it will
-use the first
-match.
+use the first match.
 
 ``` r
 webshot("https://www.r-project.org/", "r-sidebar.png", selector = ".sidebar")
@@ -167,10 +171,10 @@ webshot("https://www.r-project.org/", "r-small.png") %>%
 To illustrate the difference between `resize()` and `zoom`, here is an
 image with `resize("50%")`:
 
-![](tools/r-small-resized.png)
+![](man/figures/r-small-resized.png)
 
 And here is one with `zoom = 0.5`. If you look closely, you’ll see that
 the text and graphics are sharper. You’ll also see that the bullet
 points and text are positioned slightly differently:
 
-![](tools/r-small-zoomed.png)
+![](man/figures/r-small-zoomed.png)
