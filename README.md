@@ -43,8 +43,7 @@ webshot("https://www.r-project.org/", "r.png")
 webshot("https://www.r-project.org/", "r.pdf") # Can also output to PDF
 ```
 
-You can clip it to just the viewport
-region:
+You can clip it to just the viewport region:
 
 ``` r
 webshot("https://www.r-project.org/", "r-viewport.png", cliprect = "viewport")
@@ -52,8 +51,7 @@ webshot("https://www.r-project.org/", "r-viewport.png", cliprect = "viewport")
 
 You can also get screenshots of a portion of a web page using CSS
 selectors. If there are multiple matches for the CSS selector, it will
-use the first
-match.
+use the first match.
 
 ``` r
 webshot("https://www.r-project.org/", "r-sidebar.png", selector = ".sidebar")
