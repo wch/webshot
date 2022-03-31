@@ -3,6 +3,8 @@ webshot 0.5.2.9000
 
 * Fixed logic in `install_phantomjs()` when `force=TRUE` is used. ([#89](https://github.com/wch/webshot/pull/89))
 
+* Fixed handling of `file://` URLs in Windows, when the URL contains a drive letter and colon, such as `"file://localhost/C:\\msys64"`. (#110, Thanks to Tomas Kalibera)
+
 webshot 0.5.2
 =============
 
