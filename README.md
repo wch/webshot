@@ -23,7 +23,7 @@ in addition to the ones below.
 ## Installation
 
 Webshot can be installed from CRAN. Webshot also requires the external
-program [PhantomJS](http://phantomjs.org/). You may either download
+program [PhantomJS](https://phantomjs.org/). You may either download
 PhantomJS from its website, or use the function
 `webshot::install_phantomjs()` to install it automatically.
 

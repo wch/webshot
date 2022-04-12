@@ -22,7 +22,7 @@ See the [introduction article](https://wch.github.io/webshot/articles/intro.html
 
 ## Installation
 
-Webshot can be installed from CRAN. Webshot also requires the external program [PhantomJS](http://phantomjs.org/). You may either download PhantomJS from its website, or use the function `webshot::install_phantomjs()` to install it automatically.
+Webshot can be installed from CRAN. Webshot also requires the external program [PhantomJS](https://phantomjs.org/). You may either download PhantomJS from its website, or use the function `webshot::install_phantomjs()` to install it automatically.
 
 ```{r eval=FALSE}
 install.packages("webshot")

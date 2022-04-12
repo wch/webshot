@@ -38,7 +38,7 @@ if ('process' in this && this.process.title === "node") {
 
 // phantom check
 if (!('phantom' in this)) {
-    console.error('CasperJS needs to be executed in a PhantomJS environment http://phantomjs.org/');
+    console.error('CasperJS needs to be executed in a PhantomJS environment https://phantomjs.org/');
 }
 
 // Common polyfills

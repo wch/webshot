@@ -4,7 +4,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-The [**webshot**](https://github.com/wch/webshot) package makes it easy to take screenshots of web pages from R. It requires an installation of the external program [PhantomJS](http://phantomjs.org) (you may use `webshot::install_phantomjs()` to install PhantomJS, if you do not want to download the binary and put it in `PATH` manually).
+The [**webshot**](https://github.com/wch/webshot) package makes it easy to take screenshots of web pages from R. It requires an installation of the external program [PhantomJS](https://phantomjs.org) (you may use `webshot::install_phantomjs()` to install PhantomJS, if you do not want to download the binary and put it in `PATH` manually).
 
 ```{r setup, include=FALSE, warning=FALSE}
 library(webshot)
