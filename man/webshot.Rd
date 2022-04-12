@@ -72,9 +72,8 @@ device (but using zoom will not report that there is a HiDPI device).}
 \item{eval}{An optional string with JavaScript code which will be evaluated
 after opening the page and waiting for \code{delay}, but before calculating
 the clipping region and taking the screenshot. See the Casper API
-(\url{http://docs.casperjs.org/en/latest/modules/casper.html}) for more
-information about what commands can be used to control the web page. NOTE:
-This is experimental and likely to change!}
+for more information about what commands can be used to control the web
+page. NOTE: This is experimental and likely to change!}
 
 \item{debug}{Print out debugging messages from PhantomJS and CasperJS. This can help to
 diagnose problems.}
