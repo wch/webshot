@@ -22,10 +22,8 @@ Suggests:
     rmarkdown,
     shiny
 License: GPL-2
-SystemRequirements: PhantomJS (http://phantomjs.org) for taking screenshots,
-    ImageMagick (http://www.imagemagick.org) or GraphicsMagick
-    (http://www.graphicsmagick.org) and OptiPNG (http://optipng.sourceforge.net)
-    for manipulating images.
+SystemRequirements: PhantomJS for taking screenshots, ImageMagick or
+    GraphicsMagick and OptiPNG for manipulating images.
 RoxygenNote: 7.1.2
 Encoding: UTF-8
 URL: http://wch.github.io/webshot/, https://github.com/wch/webshot/
