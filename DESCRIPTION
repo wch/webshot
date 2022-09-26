@@ -20,7 +20,8 @@ Suggests:
     httpuv,
     knitr,
     rmarkdown,
-    shiny
+    shiny,
+    testthat (>= 3.0.0)
 License: GPL-2
 SystemRequirements: PhantomJS for taking screenshots, ImageMagick or
     GraphicsMagick and OptiPNG for manipulating images.
@@ -28,3 +29,4 @@ RoxygenNote: 7.1.2
 Encoding: UTF-8
 URL: http://wch.github.io/webshot/, https://github.com/wch/webshot/
 BugReports: https://github.com/wch/webshot/issues
+Config/testthat/edition: 3
