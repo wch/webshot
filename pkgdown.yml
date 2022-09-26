@@ -3,7 +3,7 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   intro: intro.html
-last_built: 2022-09-26T17:56Z
+last_built: 2022-09-26T21:31Z
 urls:
   reference: http://wch.github.io/webshot/reference
   article: http://wch.github.io/webshot/articles
