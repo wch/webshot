@@ -3,16 +3,15 @@
 
 <!-- badges: start -->
 
-[![R build
-status](https://github.com/rstudio/sortable/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rstudio/sortable/actions)
+[![R-CMD-check](https://github.com/wch/webshot/workflows/R-CMD-check/badge.svg)](https://github.com/wch/webshot/actions)
 <!-- badges: end -->
 
 **Webshot** makes it easy to take screenshots of web pages from R. It
 can also:
 
-  - Run Shiny applications locally and take screenshots of the
+-   Run Shiny applications locally and take screenshots of the
     application.
-  - Render R Markdown documents and take screenshots of the document.
+-   Render R Markdown documents and take screenshots of the document.
     Webshot can handle both static Rmd documents and interactive ones
     (those with `runtime: shiny`).
 

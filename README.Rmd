@@ -9,7 +9,7 @@ webshot
 =======
 
 <!-- badges: start -->
-[![R build status](https://github.com/rstudio/sortable/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rstudio/sortable/actions)
+[![R-CMD-check](https://github.com/wch/webshot/workflows/R-CMD-check/badge.svg)](https://github.com/wch/webshot/actions)
 <!-- badges: end -->
 
 
