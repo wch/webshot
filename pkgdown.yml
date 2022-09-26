@@ -1,6 +1,10 @@
-pandoc: 2.2.1
-pkgdown: 1.1.0.9000
-pkgdown_sha: 4d4c58dcdc64e2406e9149c2e99afa2fb1d8fb5d
+pandoc: 2.7.3
+pkgdown: 2.0.6
+pkgdown_sha: ~
 articles:
   intro: intro.html
+last_built: 2022-09-26T17:56Z
+urls:
+  reference: http://wch.github.io/webshot/reference
+  article: http://wch.github.io/webshot/articles
 
