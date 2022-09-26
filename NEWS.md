@@ -1,6 +1,7 @@
 webshot 0.5.3.9000
 =============
 
+* Fixed #112: handling of Windows paths of the form "c:\file\path.html" did not work correctly. ([#114](https://github.com/wch/webshot/pull/114))
 
 webshot 0.5.3
 =============
