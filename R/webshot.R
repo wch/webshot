@@ -220,7 +220,7 @@ webshot <- function(
   # them into a character vector with the desired format.
   argToVec <- function(arg) {
     vapply(arg, FUN.VALUE = character(1), function(x) {
-      if (is.null(x) || is.na(x)) NA_character_
+      if (any(is.null(x)) || any(is.na(x))) NA_character_
       else paste(x, collapse = ",")
     })
   }
