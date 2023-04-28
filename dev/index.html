@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">webshot</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.5.2.9002</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -83,7 +83,6 @@
 <div class="page-header"><h1 id="webshot">webshot<a class="anchor" aria-label="anchor" href="#webshot"></a>
 </h1></div>
 <!-- badges: start -->
-
 <p><strong>Webshot</strong> makes it easy to take screenshots of web pages from R. It can also:</p>
 <ul>
 <li>Run Shiny applications locally and take screenshots of the application.</li>
@@ -93,66 +92,66 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Webshot can be installed from CRAN. Webshot also requires the external program <a href="http://phantomjs.org/" class="external-link">PhantomJS</a>. You may either download PhantomJS from its website, or use the function <code><a href="reference/install_phantomjs.html">webshot::install_phantomjs()</a></code> to install it automatically.</p>
+<p>Webshot can be installed from CRAN. Webshot also requires the external program <a href="https://phantomjs.org/" class="external-link">PhantomJS</a>. You may either download PhantomJS from its website, or use the function <code><a href="reference/install_phantomjs.html">webshot::install_phantomjs()</a></code> to install it automatically.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"webshot"</span><span class="op">)</span>
-<span class="fu">webshot</span><span class="fu">::</span><span class="fu"><a href="reference/install_phantomjs.html">install_phantomjs</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"webshot"</span><span class="op">)</span></span>
+<span><span class="fu">webshot</span><span class="fu">::</span><span class="fu"><a href="reference/install_phantomjs.html">install_phantomjs</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
 <p>By default, <code>webshot</code> will use a 992x744 pixel viewport (a virtual browser window) and take a screenshot of the entire page, even the portion outside the viewport.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://wch.github.io/webshot/">webshot</a></span><span class="op">)</span>
-<span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r.png"</span><span class="op">)</span>
-<span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r.pdf"</span><span class="op">)</span> <span class="co"># Can also output to PDF</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://wch.github.io/webshot/">webshot</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r.png"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r.pdf"</span><span class="op">)</span> <span class="co"># Can also output to PDF</span></span></code></pre></div>
 <p>You can clip it to just the viewport region:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-viewport.png"</span>, cliprect <span class="op">=</span> <span class="st">"viewport"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-viewport.png"</span>, cliprect <span class="op">=</span> <span class="st">"viewport"</span><span class="op">)</span></span></code></pre></div>
 <p>You can also get screenshots of a portion of a web page using CSS selectors. If there are multiple matches for the CSS selector, it will use the first match.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-sidebar.png"</span>, selector <span class="op">=</span> <span class="st">".sidebar"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-sidebar.png"</span>, selector <span class="op">=</span> <span class="st">".sidebar"</span><span class="op">)</span></span></code></pre></div>
 <p>If you supply multiple CSS selectors, it will take a screenshot containing all of the selected items.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-selectors.png"</span>,
-        selector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#getting-started"</span>, <span class="st">"#news"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-selectors.png"</span>,</span>
+<span>        selector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#getting-started"</span>, <span class="st">"#news"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The clipping rectangle can be expanded to capture some area outside the selected items:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-expand.png"</span>,
-        selector <span class="op">=</span> <span class="st">"#getting-started"</span>,
-        expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">20</span>, <span class="fl">40</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-expand.png"</span>,</span>
+<span>        selector <span class="op">=</span> <span class="st">"#getting-started"</span>,</span>
+<span>        expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">20</span>, <span class="fl">40</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>You can take higher-resolution screenshots with the <code>zoom</code> option. This isn’t exactly the same as taking a screenshot with a HiDPI (“Retina”) device: it is like increasing the zoom to 200% in a desktop browser and doubling the height and width of the browser window. This differs from using a HiDPI device because some web pages load different, higher-resolution images when they know they will be displayed on a HiDPI device (but using zoom will not report that there is a HiDPI device).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-sidebar-zoom.png"</span>,
-        selector <span class="op">=</span> <span class="st">".sidebar"</span>, zoom <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-sidebar-zoom.png"</span>,</span>
+<span>        selector <span class="op">=</span> <span class="st">".sidebar"</span>, zoom <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="vectorization">Vectorization<a class="anchor" aria-label="anchor" href="#vectorization"></a>
 </h3>
 <p>All parameters of function <code>webshot</code>. That means that multiple screenshots can be taken with a single command. When taking a lot of screenshots, vectorization can divide by 5 the execution time.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Take a screenshot of different sites</span>
-<span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"https://github.com/wch/webshot"</span><span class="op">)</span>,
-        file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"r.png"</span>, <span class="st">"webshot.png"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># Save screenshots of the same site in different formats</span>
-<span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"r.png"</span>, <span class="st">"r.pdf"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># Take screenshots of different sections of the same site.</span>
-<span class="co"># Note that unlike arguments "url" and "file", a list is required to specify</span>
-<span class="co"># multiple selectors. This is also the case for arguments "cliprect" and</span>
-<span class="co"># "expand"</span>
-<span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"http://rstudio.github.io/leaflet/"</span>,
-        file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"leaflet_features.png"</span>, <span class="st">"leaflet_install.png"</span><span class="op">)</span>,
-        selector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"#features"</span>, <span class="st">"#installation"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Take a screenshot of different sites</span></span>
+<span><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"https://github.com/wch/webshot"</span><span class="op">)</span>,</span>
+<span>        file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"r.png"</span>, <span class="st">"webshot.png"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Save screenshots of the same site in different formats</span></span>
+<span><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"r.png"</span>, <span class="st">"r.pdf"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Take screenshots of different sections of the same site.</span></span>
+<span><span class="co"># Note that unlike arguments "url" and "file", a list is required to specify</span></span>
+<span><span class="co"># multiple selectors. This is also the case for arguments "cliprect" and</span></span>
+<span><span class="co"># "expand"</span></span>
+<span><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"http://rstudio.github.io/leaflet/"</span>,</span>
+<span>        file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"leaflet_features.png"</span>, <span class="st">"leaflet_install.png"</span><span class="op">)</span>,</span>
+<span>        selector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"#features"</span>, <span class="st">"#installation"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="screenshots-of-shiny-applications">Screenshots of Shiny applications<a class="anchor" aria-label="anchor" href="#screenshots-of-shiny-applications"></a>
 </h3>
 <p>The <code><a href="reference/appshot.html">appshot()</a></code> function will run a Shiny app locally in a separate R process, and take a screenshot of it. After taking the screenshot, it will kill the R process that is running the Shiny app.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Get the directory of one of the Shiny examples</span>
-<span class="va">appdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"01_hello"</span>, package<span class="op">=</span><span class="st">"shiny"</span><span class="op">)</span>
-<span class="fu"><a href="reference/appshot.html">appshot</a></span><span class="op">(</span><span class="va">appdir</span>, <span class="st">"01_hello.png"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Get the directory of one of the Shiny examples</span></span>
+<span><span class="va">appdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"01_hello"</span>, package<span class="op">=</span><span class="st">"shiny"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/appshot.html">appshot</a></span><span class="op">(</span><span class="va">appdir</span>, <span class="st">"01_hello.png"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="screenshots-of-r-markdown-documents">Screenshots of R Markdown documents<a class="anchor" aria-label="anchor" href="#screenshots-of-r-markdown-documents"></a>
@@ -160,7 +159,7 @@
 <p>The <code><a href="reference/rmdshot.html">rmdshot()</a></code> function takes screenshots of R Markdown documents. For static R Markdown documents, it renders them to HTML in a temporary directory (using <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">rmarkdown::render()</a></code>)and then takes a screenshot.</p>
 <p>For dynamic R Markdown documents, it runs them using <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/run.html" class="external-link">rmarkdown::run()</a></code> in a separate R process and then takes a screenshot. After taking the screenshot, it will kill the R process that is running the document.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/rmdshot.html">rmdshot</a></span><span class="op">(</span><span class="st">"document.rmd"</span>, <span class="st">"document.png"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/rmdshot.html">rmdshot</a></span><span class="op">(</span><span class="st">"document.rmd"</span>, <span class="st">"document.png"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="manipulating-images">Manipulating images<a class="anchor" aria-label="anchor" href="#manipulating-images"></a>
@@ -168,18 +167,18 @@
 <p>If you have GraphicsMagick (recommended) or ImageMagick installed, you can pass the result to <code><a href="reference/resize.html">resize()</a></code> to resize the image after taking the screenshot. This can take any valid ImageMagick geometry specifictaion, like <code>"75%"</code>, or <code>"400x"</code> (for an image 400 pixels wide). However, you may get different (and often better) results by using the <code>zoom</code> option: the fonts and graphical elements will render more sharply. However, compared to simply resizing, zooming out may result in slightly different positioning of text and layout elements.</p>
 <p>You can also call <code><a href="reference/shrink.html">shrink()</a></code>, which runs <a href="http://optipng.sourceforge.net/" class="external-link">OptiPNG</a> to shrink the PNG file losslessly.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-small-resized.png"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="reference/resize.html">resize</a></span><span class="op">(</span><span class="st">"75%"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="reference/shrink.html">shrink</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># Using zoom instead of resize()</span>
-<span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-small-zoomed.png"</span>, zoom <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="reference/shrink.html">shrink</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># Can specify pixel dimensions for resize()</span>
-<span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-small.png"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="reference/resize.html">resize</a></span><span class="op">(</span><span class="st">"400x"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="reference/shrink.html">shrink</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-small-resized.png"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/resize.html">resize</a></span><span class="op">(</span><span class="st">"75%"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/shrink.html">shrink</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Using zoom instead of resize()</span></span>
+<span><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-small-zoomed.png"</span>, zoom <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/shrink.html">shrink</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Can specify pixel dimensions for resize()</span></span>
+<span><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-small.png"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/resize.html">resize</a></span><span class="op">(</span><span class="st">"400x"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/shrink.html">shrink</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>To illustrate the difference between <code><a href="reference/resize.html">resize()</a></code> and <code>zoom</code>, here is an image with <code>resize("50%")</code>:</p>
 <p><img src="reference/figures/r-small-resized.png"></p>
 <p>And here is one with <code>zoom = 0.5</code>. If you look closely, you’ll see that the text and graphics are sharper. You’ll also see that the bullet points and text are positioned slightly differently:</p>
@@ -225,7 +224,7 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/rstudio/sortable/actions" class="external-link"><img src="https://github.com/rstudio/sortable/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/wch/webshot/actions" class="external-link"><img src="https://github.com/wch/webshot/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 
@@ -240,7 +239,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

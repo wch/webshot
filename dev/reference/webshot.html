@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webshot</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.5.2.9002</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -63,35 +63,43 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">webshot</span><span class="op">(</span>
-  url <span class="op">=</span> <span class="cn">NULL</span>,
-  file <span class="op">=</span> <span class="st">"webshot.png"</span>,
-  vwidth <span class="op">=</span> <span class="fl">992</span>,
-  vheight <span class="op">=</span> <span class="fl">744</span>,
-  cliprect <span class="op">=</span> <span class="cn">NULL</span>,
-  selector <span class="op">=</span> <span class="cn">NULL</span>,
-  expand <span class="op">=</span> <span class="cn">NULL</span>,
-  delay <span class="op">=</span> <span class="fl">0.2</span>,
-  zoom <span class="op">=</span> <span class="fl">1</span>,
-  eval <span class="op">=</span> <span class="cn">NULL</span>,
-  debug <span class="op">=</span> <span class="cn">FALSE</span>,
-  useragent <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">webshot</span><span class="op">(</span></span>
+<span>  url <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  file <span class="op">=</span> <span class="st">"webshot.png"</span>,</span>
+<span>  vwidth <span class="op">=</span> <span class="fl">992</span>,</span>
+<span>  vheight <span class="op">=</span> <span class="fl">744</span>,</span>
+<span>  cliprect <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  selector <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  expand <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  delay <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>  zoom <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  eval <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  debug <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  useragent <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>url</dt>
 <dd><p>A vector of URLs to visit.</p></dd>
+
+
 <dt>file</dt>
 <dd><p>A vector of names of output files. Should end with <code>.png</code>,
 <code>.pdf</code>, or <code>.jpeg</code>. If several screenshots have to be taken and
 only one filename is provided, then the function appends the index number
 of the screenshot to the file name.</p></dd>
+
+
 <dt>vwidth</dt>
 <dd><p>Viewport width. This is the width of the browser "window".</p></dd>
+
+
 <dt>vheight</dt>
 <dd><p>Viewport height This is the height of the browser "window".</p></dd>
+
+
 <dt>cliprect</dt>
 <dd><p>Clipping rectangle. If <code>cliprect</code> and <code>selector</code>
 are both unspecified, the clipping rectangle will contain the entire page.
@@ -102,6 +110,8 @@ of multiple URLs, this parameter can also be a list with same length as
 <code>url</code> with each element of the list being "viewport" or a
 four-elements numeric vector. This option is not compatible with
 <code>selector</code>.</p></dd>
+
+
 <dt>selector</dt>
 <dd><p>One or more CSS selectors specifying a DOM element to set the
 clipping rectangle to. The screenshot will contain these DOM elements. For
@@ -110,6 +120,8 @@ used. This option is not compatible with <code>cliprect</code>. When taking
 screenshots of multiple URLs, this parameter can also be a list with same
 length as <code>url</code> with each element of the list containing a vector of
 CSS selectors to use for the corresponding URL.</p></dd>
+
+
 <dt>expand</dt>
 <dd><p>A numeric vector specifying how many pixels to expand the
 clipping rectangle by. If one number, the rectangle will be expanded by
@@ -118,9 +130,13 @@ right, bottom, and left, in that order. When taking screenshots of multiple
 URLs, this parameter can also be a list with same length as <code>url</code> with
 each element of the list containing a single number or four numbers to use
 for the corresponding URL.</p></dd>
+
+
 <dt>delay</dt>
 <dd><p>Time to wait before taking screenshot, in seconds. Sometimes a
 longer delay is needed for all assets to display properly.</p></dd>
+
+
 <dt>zoom</dt>
 <dd><p>A number specifying the zoom factor. A zoom factor of 2 will
 result in twice as many pixels vertically and horizontally. Note that using
@@ -130,19 +146,25 @@ doubling the height and width of the browser window. This differs from
 using a HiDPI device because some web pages load different,
 higher-resolution images when they know they will be displayed on a HiDPI
 device (but using zoom will not report that there is a HiDPI device).</p></dd>
+
+
 <dt>eval</dt>
 <dd><p>An optional string with JavaScript code which will be evaluated
 after opening the page and waiting for <code>delay</code>, but before calculating
 the clipping region and taking the screenshot. See the Casper API
-(<a href="http://docs.casperjs.org/en/latest/modules/casper.html" class="external-link">http://docs.casperjs.org/en/latest/modules/casper.html</a>) for more
-information about what commands can be used to control the web page. NOTE:
-This is experimental and likely to change!</p></dd>
+for more information about what commands can be used to control the web
+page. NOTE: This is experimental and likely to change!</p></dd>
+
+
 <dt>debug</dt>
 <dd><p>Print out debugging messages from PhantomJS and CasperJS. This can help to
 diagnose problems.</p></dd>
+
+
 <dt>useragent</dt>
 <dd><p>The User-Agent header used to request the URL. Changing the
 User-Agent can mitigate rendering issues for some websites.</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -151,74 +173,74 @@ User-Agent can mitigate rendering issues for some websites.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Whole web page</span></span>
-<span class="r-in"><span class="fu">webshot</span><span class="op">(</span><span class="st">"https://github.com/rstudio/shiny"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Might need a longer delay for all assets to display</span></span>
-<span class="r-in"><span class="fu">webshot</span><span class="op">(</span><span class="st">"http://rstudio.github.io/leaflet"</span>, delay <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># One can also take screenshots of several URLs with only one command.</span></span>
-<span class="r-in"><span class="co"># This is more efficient than calling 'webshot' multiple times.</span></span>
-<span class="r-in"><span class="fu">webshot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://github.com/rstudio/shiny"</span>,</span>
-<span class="r-in">          <span class="st">"http://rstudio.github.io/leaflet"</span><span class="op">)</span>,</span>
-<span class="r-in">        delay <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Clip to the viewport</span></span>
-<span class="r-in"><span class="fu">webshot</span><span class="op">(</span><span class="st">"http://rstudio.github.io/leaflet"</span>, <span class="st">"leaflet-viewport.png"</span>,</span>
-<span class="r-in">        cliprect <span class="op">=</span> <span class="st">"viewport"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Manual clipping rectangle</span></span>
-<span class="r-in"><span class="fu">webshot</span><span class="op">(</span><span class="st">"http://rstudio.github.io/leaflet"</span>, <span class="st">"leaflet-clip.png"</span>,</span>
-<span class="r-in">        cliprect <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">5</span>, <span class="fl">400</span>, <span class="fl">300</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Using CSS selectors to pick out regions</span></span>
-<span class="r-in"><span class="fu">webshot</span><span class="op">(</span><span class="st">"http://rstudio.github.io/leaflet"</span>, <span class="st">"leaflet-menu.png"</span>, selector <span class="op">=</span> <span class="st">".list-group"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">webshot</span><span class="op">(</span><span class="st">"http://reddit.com/"</span>, <span class="st">"reddit-top.png"</span>,</span>
-<span class="r-in">        selector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"input[type='text']"</span>, <span class="st">"#header-bottom-left"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Expand selection region</span></span>
-<span class="r-in"><span class="fu">webshot</span><span class="op">(</span><span class="st">"http://rstudio.github.io/leaflet"</span>, <span class="st">"leaflet-boxes.png"</span>,</span>
-<span class="r-in">        selector <span class="op">=</span> <span class="st">"#installation"</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">50</span>, <span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># If multiple matches for a given selector, it uses the first match</span></span>
-<span class="r-in"><span class="fu">webshot</span><span class="op">(</span><span class="st">"http://rstudio.github.io/leaflet"</span>, <span class="st">"leaflet-p.png"</span>, selector <span class="op">=</span> <span class="st">"p"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">webshot</span><span class="op">(</span><span class="st">"https://github.com/rstudio/shiny/"</span>, <span class="st">"shiny-stats.png"</span>,</span>
-<span class="r-in">         selector <span class="op">=</span> <span class="st">"ul.numbers-summary"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Send commands to eval</span></span>
-<span class="r-in"><span class="fu">webshot</span><span class="op">(</span><span class="st">"http://www.reddit.com/"</span>, <span class="st">"reddit-input.png"</span>,</span>
-<span class="r-in">  selector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#search"</span>, <span class="st">"#login_login-main"</span><span class="op">)</span>,</span>
-<span class="r-in">  eval <span class="op">=</span> <span class="st">"casper.then(function() {</span>
-<span class="r-in">    // Check the remember me box</span>
-<span class="r-in">    this.click('#rem-login-main');</span>
-<span class="r-in">    // Enter username and password</span>
-<span class="r-in">    this.sendKeys('#login_login-main input[type=\"text\"]', 'my_username');</span>
-<span class="r-in">    this.sendKeys('#login_login-main input[type=\"password\"]', 'password');</span>
-<span class="r-in"></span>
-<span class="r-in">    // Now click in the search box. This results in a box expanding below</span>
-<span class="r-in">    this.click('#search input[type=\"text\"]');</span>
-<span class="r-in">    // Wait 500ms</span>
-<span class="r-in">    this.wait(500);</span>
-<span class="r-in">  });"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Result can be piped to other commands like resize() and shrink()</span></span>
-<span class="r-in"><span class="fu">webshot</span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-small.png"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="resize.html">resize</a></span><span class="op">(</span><span class="st">"75%"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in"> <span class="fu"><a href="shrink.html">shrink</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Requests can change the User-Agent header</span></span>
-<span class="r-in"><span class="fu">webshot</span><span class="op">(</span></span>
-<span class="r-in">  <span class="st">"https://www.rstudio.com/products/rstudio/download/"</span>,</span>
-<span class="r-in">  <span class="st">"rstudio.png"</span>,</span>
-<span class="r-in">  useragent <span class="op">=</span> <span class="st">"Mozilla/5.0 (Macintosh; Intel Mac OS X)"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># See more examples in the package vignette</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Whole web page</span></span></span>
+<span class="r-in"><span><span class="fu">webshot</span><span class="op">(</span><span class="st">"https://github.com/rstudio/shiny"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Might need a longer delay for all assets to display</span></span></span>
+<span class="r-in"><span><span class="fu">webshot</span><span class="op">(</span><span class="st">"http://rstudio.github.io/leaflet"</span>, delay <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># One can also take screenshots of several URLs with only one command.</span></span></span>
+<span class="r-in"><span><span class="co"># This is more efficient than calling 'webshot' multiple times.</span></span></span>
+<span class="r-in"><span><span class="fu">webshot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://github.com/rstudio/shiny"</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"http://rstudio.github.io/leaflet"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        delay <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Clip to the viewport</span></span></span>
+<span class="r-in"><span><span class="fu">webshot</span><span class="op">(</span><span class="st">"http://rstudio.github.io/leaflet"</span>, <span class="st">"leaflet-viewport.png"</span>,</span></span>
+<span class="r-in"><span>        cliprect <span class="op">=</span> <span class="st">"viewport"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Manual clipping rectangle</span></span></span>
+<span class="r-in"><span><span class="fu">webshot</span><span class="op">(</span><span class="st">"http://rstudio.github.io/leaflet"</span>, <span class="st">"leaflet-clip.png"</span>,</span></span>
+<span class="r-in"><span>        cliprect <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">5</span>, <span class="fl">400</span>, <span class="fl">300</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Using CSS selectors to pick out regions</span></span></span>
+<span class="r-in"><span><span class="fu">webshot</span><span class="op">(</span><span class="st">"http://rstudio.github.io/leaflet"</span>, <span class="st">"leaflet-menu.png"</span>, selector <span class="op">=</span> <span class="st">".list-group"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">webshot</span><span class="op">(</span><span class="st">"http://reddit.com/"</span>, <span class="st">"reddit-top.png"</span>,</span></span>
+<span class="r-in"><span>        selector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"input[type='text']"</span>, <span class="st">"#header-bottom-left"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Expand selection region</span></span></span>
+<span class="r-in"><span><span class="fu">webshot</span><span class="op">(</span><span class="st">"http://rstudio.github.io/leaflet"</span>, <span class="st">"leaflet-boxes.png"</span>,</span></span>
+<span class="r-in"><span>        selector <span class="op">=</span> <span class="st">"#installation"</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">50</span>, <span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># If multiple matches for a given selector, it uses the first match</span></span></span>
+<span class="r-in"><span><span class="fu">webshot</span><span class="op">(</span><span class="st">"http://rstudio.github.io/leaflet"</span>, <span class="st">"leaflet-p.png"</span>, selector <span class="op">=</span> <span class="st">"p"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">webshot</span><span class="op">(</span><span class="st">"https://github.com/rstudio/shiny/"</span>, <span class="st">"shiny-stats.png"</span>,</span></span>
+<span class="r-in"><span>         selector <span class="op">=</span> <span class="st">"ul.numbers-summary"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Send commands to eval</span></span></span>
+<span class="r-in"><span><span class="fu">webshot</span><span class="op">(</span><span class="st">"http://www.reddit.com/"</span>, <span class="st">"reddit-input.png"</span>,</span></span>
+<span class="r-in"><span>  selector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#search"</span>, <span class="st">"#login_login-main"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  eval <span class="op">=</span> <span class="st">"casper.then(function() {</span></span></span>
+<span class="r-in"><span><span class="st">    // Check the remember me box</span></span></span>
+<span class="r-in"><span><span class="st">    this.click('#rem-login-main');</span></span></span>
+<span class="r-in"><span><span class="st">    // Enter username and password</span></span></span>
+<span class="r-in"><span><span class="st">    this.sendKeys('#login_login-main input[type=\"text\"]', 'my_username');</span></span></span>
+<span class="r-in"><span><span class="st">    this.sendKeys('#login_login-main input[type=\"password\"]', 'password');</span></span></span>
+<span class="r-in"><span><span class="st"></span></span></span>
+<span class="r-in"><span><span class="st">    // Now click in the search box. This results in a box expanding below</span></span></span>
+<span class="r-in"><span><span class="st">    this.click('#search input[type=\"text\"]');</span></span></span>
+<span class="r-in"><span><span class="st">    // Wait 500ms</span></span></span>
+<span class="r-in"><span><span class="st">    this.wait(500);</span></span></span>
+<span class="r-in"><span><span class="st">  });"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Result can be piped to other commands like resize() and shrink()</span></span></span>
+<span class="r-in"><span><span class="fu">webshot</span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-small.png"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="resize.html">resize</a></span><span class="op">(</span><span class="st">"75%"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="shrink.html">shrink</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Requests can change the User-Agent header</span></span></span>
+<span class="r-in"><span><span class="fu">webshot</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"https://www.rstudio.com/products/rstudio/download/"</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"rstudio.png"</span>,</span></span>
+<span class="r-in"><span>  useragent <span class="op">=</span> <span class="st">"Mozilla/5.0 (Macintosh; Intel Mac OS X)"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># See more examples in the package vignette</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -233,7 +255,7 @@ User-Agent can mitigate rendering issues for some websites.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

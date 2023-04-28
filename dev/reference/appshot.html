@@ -28,7 +28,7 @@ way."><meta name="robots" content="noindex"><!-- mathjax --><script src="https:/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webshot</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.5.2.9002</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -85,71 +85,82 @@ way.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">appshot</span><span class="op">(</span>
-  <span class="va">app</span>,
-  file <span class="op">=</span> <span class="st">"webshot.png"</span>,
-  <span class="va">...</span>,
-  port <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"shiny.port"</span><span class="op">)</span>,
-  envvars <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for character</span>
-<span class="fu">appshot</span><span class="op">(</span>
-  <span class="va">app</span>,
-  file <span class="op">=</span> <span class="st">"webshot.png"</span>,
-  <span class="va">...</span>,
-  port <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"shiny.port"</span><span class="op">)</span>,
-  envvars <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for shiny.appobj</span>
-<span class="fu">appshot</span><span class="op">(</span>
-  <span class="va">app</span>,
-  file <span class="op">=</span> <span class="st">"webshot.png"</span>,
-  <span class="va">...</span>,
-  port <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"shiny.port"</span><span class="op">)</span>,
-  envvars <span class="op">=</span> <span class="cn">NULL</span>,
-  webshot_timeout <span class="op">=</span> <span class="fl">60</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">appshot</span><span class="op">(</span></span>
+<span>  <span class="va">app</span>,</span>
+<span>  file <span class="op">=</span> <span class="st">"webshot.png"</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  port <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"shiny.port"</span><span class="op">)</span>,</span>
+<span>  envvars <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for character</span></span>
+<span><span class="fu">appshot</span><span class="op">(</span></span>
+<span>  <span class="va">app</span>,</span>
+<span>  file <span class="op">=</span> <span class="st">"webshot.png"</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  port <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"shiny.port"</span><span class="op">)</span>,</span>
+<span>  envvars <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for shiny.appobj</span></span>
+<span><span class="fu">appshot</span><span class="op">(</span></span>
+<span>  <span class="va">app</span>,</span>
+<span>  file <span class="op">=</span> <span class="st">"webshot.png"</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  port <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"shiny.port"</span><span class="op">)</span>,</span>
+<span>  envvars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  webshot_timeout <span class="op">=</span> <span class="fl">60</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>app</dt>
 <dd><p>A Shiny app object, or a string naming an app directory.</p></dd>
+
+
 <dt>file</dt>
 <dd><p>A vector of names of output files. Should end with <code>.png</code>,
 <code>.pdf</code>, or <code>.jpeg</code>. If several screenshots have to be taken and
 only one filename is provided, then the function appends the index number
 of the screenshot to the file name.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Other arguments to pass on to <code><a href="webshot.html">webshot</a></code>.</p></dd>
+
+
 <dt>port</dt>
 <dd><p>Port that Shiny will listen on.</p></dd>
+
+
 <dt>envvars</dt>
 <dd><p>A named character vector or named list of environment
 variables and values to set for the Shiny app's R process. These will be
 unset after the process exits. This can be used to pass configuration
 information to a Shiny app.</p></dd>
+
+
 <dt>webshot_timeout</dt>
 <dd><p>The maximum number of seconds the phantom application
 is allowed to run before killing the process. If a delay argument is
 supplied (in <code>...</code>), the delay value is added to the timeout value.</p></dd>
+
 </dl></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">appdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"01_hello"</span>, package<span class="op">=</span><span class="st">"shiny"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># With a Shiny directory</span></span>
-<span class="r-in">  <span class="fu">appshot</span><span class="op">(</span><span class="va">appdir</span>, <span class="st">"01_hello.png"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># With a Shiny App object</span></span>
-<span class="r-in">  <span class="va">shinyapp</span> <span class="op">&lt;-</span> <span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyAppDir</a></span><span class="op">(</span><span class="va">appdir</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">appshot</span><span class="op">(</span><span class="va">shinyapp</span>, <span class="st">"01_hello_app.png"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">appdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"01_hello"</span>, package<span class="op">=</span><span class="st">"shiny"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># With a Shiny directory</span></span></span>
+<span class="r-in"><span>  <span class="fu">appshot</span><span class="op">(</span><span class="va">appdir</span>, <span class="st">"01_hello.png"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># With a Shiny App object</span></span></span>
+<span class="r-in"><span>  <span class="va">shinyapp</span> <span class="op">&lt;-</span> <span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html" class="external-link">shinyAppDir</a></span><span class="op">(</span><span class="va">appdir</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">appshot</span><span class="op">(</span><span class="va">shinyapp</span>, <span class="st">"01_hello_app.png"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -164,7 +175,7 @@ supplied (in <code>...</code>), the delay value is added to the timeout value.</
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

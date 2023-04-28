@@ -18,7 +18,7 @@ directory in which webshot can look for the PhantomJS executable."><meta name="r
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webshot</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.5.2.9002</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.5.4.9000</span>
       </span>
     </div>
 
@@ -65,30 +65,37 @@ directory in which <span class="pkg">webshot</span> can look for the PhantomJS e
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">install_phantomjs</span><span class="op">(</span>
-  version <span class="op">=</span> <span class="st">"2.1.1"</span>,
-  baseURL <span class="op">=</span> <span class="st">"https://github.com/wch/webshot/releases/download/v0.3.1/"</span>,
-  force <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">install_phantomjs</span><span class="op">(</span></span>
+<span>  version <span class="op">=</span> <span class="st">"2.1.1"</span>,</span>
+<span>  baseURL <span class="op">=</span> <span class="st">"https://github.com/wch/webshot/releases/download/v0.3.1/"</span>,</span>
+<span>  force <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>version</dt>
 <dd><p>The version number of PhantomJS.</p></dd>
+
+
 <dt>baseURL</dt>
 <dd><p>The base URL for the location of PhantomJS binaries for
 download. If the default download site is unavailable, you may specify an
 alternative mirror, such as
 <code>"https://bitbucket.org/ariya/phantomjs/downloads/"</code>.</p></dd>
+
+
 <dt>force</dt>
 <dd><p>Install PhantomJS even if the version installed is the latest or
 if the requested version is older. This is useful to reinstall or downgrade
 the version of PhantomJS.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>NULL</code> (the executable is written to a system directory).</p>
+    
+
+<p><code>NULL</code> (the executable is written to a system directory).</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -124,7 +131,7 @@ the version of PhantomJS.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
