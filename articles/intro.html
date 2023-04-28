@@ -95,39 +95,31 @@
 <span><span class="va">URL</span> <span class="op">&lt;-</span> <span class="st">"http://rstudio.github.io/leaflet/"</span></span>
 <span><span class="co"># Might need a longer delay for all assets to display</span></span>
 <span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="va">URL</span>, delay <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
-<p><img src="../../../../../../tmp/RtmpHZGI8e/file32a17b3c8c5e/articles/intro_files/figure-html/webshot1.png" style="display: block; margin: auto;"></p>
+<p><img src="../../../../../../tmp/Rtmpj6VHxB/file2d8868ac4ca4/articles/intro_files/figure-html/webshot1.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Clip to the viewport</span></span>
 <span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="va">URL</span>, cliprect <span class="op">=</span> <span class="st">"viewport"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning in is.null(x) || is.na(x): 'length(x) = 4 &gt; 1' in coercion to</span></span>
-<span><span class="co">## 'logical(1)'</span></span></code></pre>
-<p><img src="../../../../../../tmp/RtmpHZGI8e/file32a17b3c8c5e/articles/intro_files/figure-html/webshot2.png" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p><img src="../../../../../../tmp/Rtmpj6VHxB/file2d8868ac4ca4/articles/intro_files/figure-html/webshot2.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Manual clipping rectangle</span></span>
 <span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="va">URL</span>, cliprect <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">5</span>, <span class="fl">400</span>, <span class="fl">300</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning in is.null(x) || is.na(x): 'length(x) = 4 &gt; 1' in coercion to</span></span>
-<span><span class="co">## 'logical(1)'</span></span></code></pre>
-<p><img src="../../../../../../tmp/RtmpHZGI8e/file32a17b3c8c5e/articles/intro_files/figure-html/webshot3.png" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p><img src="../../../../../../tmp/Rtmpj6VHxB/file2d8868ac4ca4/articles/intro_files/figure-html/webshot3.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Using CSS selectors to pick out regions</span></span>
 <span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="va">URL</span>, selector <span class="op">=</span> <span class="st">".list-group"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="../../../../../../tmp/RtmpHZGI8e/file32a17b3c8c5e/articles/intro_files/figure-html/webshot4.png" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p><img src="../../../../../../tmp/Rtmpj6VHxB/file2d8868ac4ca4/articles/intro_files/figure-html/webshot4.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="va">URL</span>, selector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#features"</span>, <span class="st">"#installation"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning in is.null(x) || is.na(x): 'length(x) = 2 &gt; 1' in coercion to</span></span>
-<span><span class="co">## 'logical(1)'</span></span></code></pre>
-<p><img src="../../../../../../tmp/RtmpHZGI8e/file32a17b3c8c5e/articles/intro_files/figure-html/webshot5.png" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p><img src="../../../../../../tmp/Rtmpj6VHxB/file2d8868ac4ca4/articles/intro_files/figure-html/webshot5.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Expand selection region</span></span>
 <span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="va">URL</span>, selector <span class="op">=</span> <span class="st">"#installation"</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">50</span>, <span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning in is.null(x) || is.na(x): 'length(x) = 4 &gt; 1' in coercion to</span></span>
-<span><span class="co">## 'logical(1)'</span></span></code></pre>
-<p><img src="../../../../../../tmp/RtmpHZGI8e/file32a17b3c8c5e/articles/intro_files/figure-html/webshot6.png" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<p><img src="../../../../../../tmp/Rtmpj6VHxB/file2d8868ac4ca4/articles/intro_files/figure-html/webshot6.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># If multiple matches for a given selector, it uses the first match</span></span>
 <span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="va">URL</span>, selector <span class="op">=</span> <span class="st">"p"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="../../../../../../tmp/RtmpHZGI8e/file32a17b3c8c5e/articles/intro_files/figure-html/webshot7.png" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<p><img src="../../../../../../tmp/Rtmpj6VHxB/file2d8868ac4ca4/articles/intro_files/figure-html/webshot7.png" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://github.com/rstudio/shiny/"</span>, selector <span class="op">=</span> <span class="st">"ul.numbers-summary"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## PHANTOM ERROR: CasperError: No element matching selector found: ul.numbers-summary</span></span>
 <span><span class="co">## TRACE:</span></span>
@@ -139,7 +131,7 @@
 <span><span class="co">##  -&gt; phantomjs://platform/casper.js: 1615 (in function runStep)</span></span>
 <span><span class="co">##  -&gt; phantomjs://platform/casper.js: 406 (in function checkStep)</span></span></code></pre>
 <p>If you are familiar with JavaScript, you may run some JavaScript code on the page before taking the screenshot. Here is an example of logging into reddit:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Send commands to eval</span></span>
 <span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"http://www.reddit.com/"</span>, <span class="st">"reddit-input.png"</span>,</span>
 <span>  selector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#search"</span>, <span class="st">"#login_login-main"</span><span class="op">)</span>,</span>
@@ -157,11 +149,11 @@
 <span><span class="st">  });"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>You can also take screenshots of Shiny apps using the <code><a href="../reference/appshot.html">appshot()</a></code> function, e.g.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">appdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"01_hello"</span>, package<span class="op">=</span><span class="st">"shiny"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/appshot.html">appshot</a></span><span class="op">(</span><span class="va">appdir</span>, delay <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <p>There are two functions <code><a href="../reference/resize.html">resize()</a></code> and <code><a href="../reference/shrink.html">shrink()</a></code> to manipulate images, which require GraphicsMagick (or ImageMagick) and OptiPNG, respectively. A simple example:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Result can be piped to other commands like resize() and shrink()</span></span>
 <span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-small.png"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span> <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="st">"75%"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -183,7 +175,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
