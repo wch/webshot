@@ -1,4 +1,4 @@
-webshot 0.5.4.9000
+webshot 0.5.5
 =============
 
 * Fixed #101, #116: When some parameters (like `cliprect` and `expand`) were used, it would raise `Warning: 'length(x) = 4 > 1' in coercion to 'logical(1)'`. In R 4.3, this warning changed to an error. (#117)
