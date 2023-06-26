@@ -9,11 +9,11 @@
 **Webshot** makes it easy to take screenshots of web pages from R. It
 can also:
 
--   Run Shiny applications locally and take screenshots of the
-    application.
--   Render R Markdown documents and take screenshots of the document.
-    Webshot can handle both static Rmd documents and interactive ones
-    (those with `runtime: shiny`).
+- Run Shiny applications locally and take screenshots of the
+  application.
+- Render R Markdown documents and take screenshots of the document.
+  Webshot can handle both static Rmd documents and interactive ones
+  (those with `runtime: shiny`).
 
 See the [introduction
 article](https://wch.github.io/webshot/articles/intro.html) for examples
@@ -149,7 +149,7 @@ compared to simply resizing, zooming out may result in slightly
 different positioning of text and layout elements.
 
 You can also call `shrink()`, which runs
-[OptiPNG](http://optipng.sourceforge.net/) to shrink the PNG file
+[OptiPNG](https://optipng.sourceforge.net/) to shrink the PNG file
 losslessly.
 
 ``` r

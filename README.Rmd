@@ -123,7 +123,7 @@ rmdshot("document.rmd", "document.png")
 
 If you have GraphicsMagick (recommended) or ImageMagick installed, you can pass the result to `resize()` to resize the image after taking the screenshot. This can take any valid ImageMagick geometry specifictaion, like `"75%"`, or `"400x"` (for an image 400 pixels wide). However, you may get different (and often better) results by using the `zoom` option: the fonts and graphical elements will render more sharply. However, compared to simply resizing, zooming out may result in slightly different positioning of text and layout elements.
 
-You can also call `shrink()`, which runs [OptiPNG](http://optipng.sourceforge.net/) to shrink the PNG file losslessly.
+You can also call `shrink()`, which runs [OptiPNG](https://optipng.sourceforge.net/) to shrink the PNG file losslessly.
 
 ```{r eval=FALSE}
 webshot("https://www.r-project.org/", "r-small-resized.png") %>%
