@@ -25,7 +25,7 @@ Suggests:
 License: GPL-2
 SystemRequirements: PhantomJS for taking screenshots, ImageMagick or
     GraphicsMagick and OptiPNG for manipulating images.
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Encoding: UTF-8
 URL: http://wch.github.io/webshot/, https://github.com/wch/webshot/
 BugReports: https://github.com/wch/webshot/issues
