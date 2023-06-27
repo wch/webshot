@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webshot</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.5</span>
       </span>
     </div>
 
@@ -75,7 +75,7 @@
 
       
 
-      </header><script src="intro_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>An Introduction to the webshot Package</h1>
@@ -88,37 +88,43 @@
 
     
     
-<p>The <a href="https://github.com/wch/webshot" class="external-link"><strong>webshot</strong></a> package makes it easy to take screenshots of web pages from R. It requires an installation of the external program <a href="https://phantomjs.org" class="external-link">PhantomJS</a> (you may use <code><a href="../reference/install_phantomjs.html">webshot::install_phantomjs()</a></code> to install PhantomJS, if you do not want to download the binary and put it in <code>PATH</code> manually).</p>
-<p>The main function in this package is <code><a href="../reference/webshot.html">webshot()</a></code>. Below are some examples of taking screenshots of the website <a href="http://rstudio.github.io/leaflet/" class="external-link uri">http://rstudio.github.io/leaflet/</a>:</p>
+<p>The <a href="https://github.com/wch/webshot" class="external-link"><strong>webshot</strong></a>
+package makes it easy to take screenshots of web pages from R. It
+requires an installation of the external program <a href="https://phantomjs.org" class="external-link">PhantomJS</a> (you may use
+<code><a href="../reference/install_phantomjs.html">webshot::install_phantomjs()</a></code> to install PhantomJS, if you
+do not want to download the binary and put it in <code>PATH</code>
+manually).</p>
+<p>The main function in this package is <code><a href="../reference/webshot.html">webshot()</a></code>. Below
+are some examples of taking screenshots of the website <a href="http://rstudio.github.io/leaflet/" class="external-link uri">http://rstudio.github.io/leaflet/</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://wch.github.io/webshot/">webshot</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://wch.github.io/webshot/" class="external-link">webshot</a></span><span class="op">)</span></span>
 <span><span class="va">URL</span> <span class="op">&lt;-</span> <span class="st">"http://rstudio.github.io/leaflet/"</span></span>
 <span><span class="co"># Might need a longer delay for all assets to display</span></span>
 <span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="va">URL</span>, delay <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
-<p><img src="../../../../../../tmp/Rtmpj6VHxB/file2d8868ac4ca4/articles/intro_files/figure-html/webshot1.png" style="display: block; margin: auto;"></p>
+<p><img src="../../../../../../tmp/RtmpfKHItn/file2cf431d4341a/articles/intro_files/figure-html/webshot1.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Clip to the viewport</span></span>
 <span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="va">URL</span>, cliprect <span class="op">=</span> <span class="st">"viewport"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="../../../../../../tmp/Rtmpj6VHxB/file2d8868ac4ca4/articles/intro_files/figure-html/webshot2.png" style="display: block; margin: auto;"></p>
+<p><img src="../../../../../../tmp/RtmpfKHItn/file2cf431d4341a/articles/intro_files/figure-html/webshot2.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Manual clipping rectangle</span></span>
 <span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="va">URL</span>, cliprect <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fl">5</span>, <span class="fl">400</span>, <span class="fl">300</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="../../../../../../tmp/Rtmpj6VHxB/file2d8868ac4ca4/articles/intro_files/figure-html/webshot3.png" style="display: block; margin: auto;"></p>
+<p><img src="../../../../../../tmp/RtmpfKHItn/file2cf431d4341a/articles/intro_files/figure-html/webshot3.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Using CSS selectors to pick out regions</span></span>
 <span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="va">URL</span>, selector <span class="op">=</span> <span class="st">".list-group"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="../../../../../../tmp/Rtmpj6VHxB/file2d8868ac4ca4/articles/intro_files/figure-html/webshot4.png" style="display: block; margin: auto;"></p>
+<p><img src="../../../../../../tmp/RtmpfKHItn/file2cf431d4341a/articles/intro_files/figure-html/webshot4.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="va">URL</span>, selector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#features"</span>, <span class="st">"#installation"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="../../../../../../tmp/Rtmpj6VHxB/file2d8868ac4ca4/articles/intro_files/figure-html/webshot5.png" style="display: block; margin: auto;"></p>
+<p><img src="../../../../../../tmp/RtmpfKHItn/file2cf431d4341a/articles/intro_files/figure-html/webshot5.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Expand selection region</span></span>
 <span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="va">URL</span>, selector <span class="op">=</span> <span class="st">"#installation"</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">50</span>, <span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="../../../../../../tmp/Rtmpj6VHxB/file2d8868ac4ca4/articles/intro_files/figure-html/webshot6.png" style="display: block; margin: auto;"></p>
+<p><img src="../../../../../../tmp/RtmpfKHItn/file2cf431d4341a/articles/intro_files/figure-html/webshot6.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># If multiple matches for a given selector, it uses the first match</span></span>
 <span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="va">URL</span>, selector <span class="op">=</span> <span class="st">"p"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="../../../../../../tmp/Rtmpj6VHxB/file2d8868ac4ca4/articles/intro_files/figure-html/webshot7.png" style="display: block; margin: auto;"></p>
+<p><img src="../../../../../../tmp/RtmpfKHItn/file2cf431d4341a/articles/intro_files/figure-html/webshot7.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://github.com/rstudio/shiny/"</span>, selector <span class="op">=</span> <span class="st">"ul.numbers-summary"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## PHANTOM ERROR: CasperError: No element matching selector found: ul.numbers-summary</span></span>
@@ -130,7 +136,9 @@
 <span><span class="co">##  -&gt; phantomjs://code/webshot.js: 107</span></span>
 <span><span class="co">##  -&gt; phantomjs://platform/casper.js: 1615 (in function runStep)</span></span>
 <span><span class="co">##  -&gt; phantomjs://platform/casper.js: 406 (in function checkStep)</span></span></code></pre>
-<p>If you are familiar with JavaScript, you may run some JavaScript code on the page before taking the screenshot. Here is an example of logging into reddit:</p>
+<p>If you are familiar with JavaScript, you may run some JavaScript code
+on the page before taking the screenshot. Here is an example of logging
+into reddit:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Send commands to eval</span></span>
 <span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"http://www.reddit.com/"</span>, <span class="st">"reddit-input.png"</span>,</span>
@@ -148,11 +156,14 @@
 <span><span class="st">    this.wait(500);</span></span>
 <span><span class="st">  });"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>You can also take screenshots of Shiny apps using the <code><a href="../reference/appshot.html">appshot()</a></code> function, e.g.</p>
+<p>You can also take screenshots of Shiny apps using the
+<code><a href="../reference/appshot.html">appshot()</a></code> function, e.g.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">appdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"01_hello"</span>, package<span class="op">=</span><span class="st">"shiny"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/appshot.html">appshot</a></span><span class="op">(</span><span class="va">appdir</span>, delay <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p>There are two functions <code><a href="../reference/resize.html">resize()</a></code> and <code><a href="../reference/shrink.html">shrink()</a></code> to manipulate images, which require GraphicsMagick (or ImageMagick) and OptiPNG, respectively. A simple example:</p>
+<p>There are two functions <code><a href="../reference/resize.html">resize()</a></code> and
+<code><a href="../reference/shrink.html">shrink()</a></code> to manipulate images, which require GraphicsMagick
+(or ImageMagick) and OptiPNG, respectively. A simple example:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Result can be piped to other commands like resize() and shrink()</span></span>
 <span><span class="fu"><a href="../reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-small.png"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>

@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">webshot</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.5</span>
       </span>
     </div>
 
@@ -82,6 +82,7 @@
 <div class="page-header"><h1 id="webshot">webshot<a class="anchor" aria-label="anchor" href="#webshot"></a>
 </h1></div>
 <!-- badges: start -->
+
 <p><strong>Webshot</strong> makes it easy to take screenshots of web pages from R. It can also:</p>
 <ul>
 <li>Run Shiny applications locally and take screenshots of the application.</li>
@@ -101,7 +102,7 @@
 </h2>
 <p>By default, <code>webshot</code> will use a 992x744 pixel viewport (a virtual browser window) and take a screenshot of the entire page, even the portion outside the viewport.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://wch.github.io/webshot/">webshot</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://wch.github.io/webshot/" class="external-link">webshot</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r.png"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r.pdf"</span><span class="op">)</span> <span class="co"># Can also output to PDF</span></span></code></pre></div>
 <p>You can clip it to just the viewport region:</p>
@@ -164,7 +165,7 @@
 <h3 id="manipulating-images">Manipulating images<a class="anchor" aria-label="anchor" href="#manipulating-images"></a>
 </h3>
 <p>If you have GraphicsMagick (recommended) or ImageMagick installed, you can pass the result to <code><a href="reference/resize.html">resize()</a></code> to resize the image after taking the screenshot. This can take any valid ImageMagick geometry specifictaion, like <code>"75%"</code>, or <code>"400x"</code> (for an image 400 pixels wide). However, you may get different (and often better) results by using the <code>zoom</code> option: the fonts and graphical elements will render more sharply. However, compared to simply resizing, zooming out may result in slightly different positioning of text and layout elements.</p>
-<p>You can also call <code><a href="reference/shrink.html">shrink()</a></code>, which runs <a href="http://optipng.sourceforge.net/" class="external-link">OptiPNG</a> to shrink the PNG file losslessly.</p>
+<p>You can also call <code><a href="reference/shrink.html">shrink()</a></code>, which runs <a href="https://optipng.sourceforge.net/" class="external-link">OptiPNG</a> to shrink the PNG file losslessly.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/webshot.html">webshot</a></span><span class="op">(</span><span class="st">"https://www.r-project.org/"</span>, <span class="st">"r-small-resized.png"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/resize.html">resize</a></span><span class="op">(</span><span class="st">"75%"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
