@@ -12,6 +12,7 @@ webshot
 [![R-CMD-check](https://github.com/wch/webshot/workflows/R-CMD-check/badge.svg)](https://github.com/wch/webshot/actions)
 <!-- badges: end -->
 
+**Note:** webshot uses PhantomJS, which is a headless browser that stopped development in 2018. Please use [webshot2](https://github.com/rstudio/webshot2), which uses Chromium-based browsers.
 
 **Webshot** makes it easy to take screenshots of web pages from R. It can also:
 
